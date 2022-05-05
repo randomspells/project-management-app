@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import style from './index.scss';
+import style from './index.module.scss';
 
 export type PrimaryButtonProps = {
   buttonHandler: () => void;

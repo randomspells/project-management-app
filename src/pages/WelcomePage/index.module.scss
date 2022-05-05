@@ -1,0 +1,6 @@
+@import '../../mixins.scss';
+@import '../../vars.scss';
+
+.wrapper {
+  @include text;
+}
