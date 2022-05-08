@@ -3,13 +3,13 @@ import React, { FC } from 'react';
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import style from './Footer.module.scss';
 
-type githubInfoType = {
+type GithubInfoType = {
   name: string;
   link: string;
   avatar: string;
 };
 
-const GITHUB_INFO: githubInfoType[] = [
+const GITHUB_INFO: GithubInfoType[] = [
   {
     name: 'ViktorElenich',
     link: 'https://github.com/ViktorElenich',
