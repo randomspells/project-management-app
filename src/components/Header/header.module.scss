@@ -1,0 +1,37 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    padding: 10px 16px;
+    background: rgb(52, 50, 50) !important;
+    transition: all 0.5s ease;
+    animation: smoothScroll 1s forwards;
+}
+.navbar {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(216, 213, 213, 0.433);
+}
+
+.headerOption {
+    display: flex;
+}
+
+.board {
+    display: flex;
+}
+
+.primary {
+    color: #1976d2 !important;
+}
+
+@keyframes smoothScroll {
+    0% {
+        transform: translateY(-142px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
