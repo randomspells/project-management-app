@@ -1,4 +1,4 @@
-export type SomeType = {
-  prop1: string;
-  prop2: number;
+export type BoardProps = {
+  id: string;
+  title: string;
 };

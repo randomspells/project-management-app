@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import Layout from './components/Layout/Layout';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainPage/MainPage';
 import BoardPage from './pages/BoardPage';
 import LoginForm from './components/LoginForm/LoginForm';
 import SignUpForm from './components/SignUpForm/SignUpForm';
