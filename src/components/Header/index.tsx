@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import styles from './header.module.scss';
 
 const Header: FC = () => {
+  const {navbar, headerContainer, board, headerOption, primary} = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
   const headerRef = useRef<null | HTMLDivElement>(null);
 
@@ -34,17 +35,17 @@ const Header: FC = () => {
   return (
     <header
     id="sticky-header"
-    className={`${styles.navbar}${sticky.isSticky ? ` ${ styles.headerContainer}` : ''}`}
+    className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`}
     ref={headerRef}
     >
-      <div className={styles.board}>
+      <div className={board}>
         <Button>Create board</Button>
       </div>
-      <div className={styles.headerOption}>
+      <div className={headerOption}>
         <Button>Edit profile</Button>
         <Button>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size="small">
-          <InputLabel id="demo-simple-select-autowidth-label" className={styles.primary}>Lang</InputLabel>
+          <InputLabel id="demo-simple-select-autowidth-label" className={primary}>Lang</InputLabel>
           <Select
             label="Lang"
             autoWidth
