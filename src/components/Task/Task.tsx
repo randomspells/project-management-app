@@ -5,42 +5,36 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { stringAvatar } from '../../utils';
 import { TaskInterface } from '../../interfaces';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
+import Confirmation from '../Confirmation/Confirmation';
 
 const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+
+  const toggleConfirmationOpened = () => {
+    setIsConfirmationOpen(!isConfirmationOpen);
+  };
+
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
 
   const {
     sx: { bgcolor },
     children,
   } = stringAvatar('jorn hsa');
 
-  const handleTitleClick = () => {
-    setIsEditMode(true);
-  };
-
-  const handleSaveButtonClick = () => {
-    setIsEditMode(false);
-  };
-
-  const handleCloseButtonClick = () => {
-    setIsEditMode(false);
-  };
-
   return (
-    <Paper id={id} elevation={2} sx={{ color: 'text.secondary', p: 2, mb: 2, mr: 1 }}>
+    <Paper component='li' id={id} elevation={2} sx={{ color: 'text.secondary', p: 2, mb: 2, mr: 1 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', columnGap: 1 }}>
         <Box sx={{ flex: 1 }}>
           {isEditMode ? (
-            <TaskTitleEditInput
-              saveHandler={handleSaveButtonClick}
-              closeHandler={handleCloseButtonClick}
-              title={title}
-            />
+            <TaskTitleEditInput saveHandler={toggleEditMode} closeHandler={toggleEditMode} title={title} />
           ) : (
             <Typography
               component='h5'
               variant='h5'
-              onClick={handleTitleClick}
+              onClick={toggleEditMode}
               sx={{ textDecoration: `${done ? 'line-through' : 'none'}` }}
             >
               {title}
@@ -55,9 +49,15 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
       <Divider variant='middle' sx={{ my: 1 }} />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <FormControlLabel control={<Checkbox defaultChecked={done} />} label='Done' />
-        <IconButton color='secondary'>
+        <IconButton color='secondary' onClick={toggleConfirmationOpened}>
           <DeleteRoundedIcon />
         </IconButton>
+        <Confirmation
+          itemTitle={title}
+          isOpen={isConfirmationOpen}
+          toggleOpened={toggleConfirmationOpened}
+          handleAccept={() => console.log('Deleting task...')}
+        />
       </Box>
     </Paper>
   );
