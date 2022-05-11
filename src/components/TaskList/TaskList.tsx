@@ -20,8 +20,8 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
   };
 
   return (
-    <Box component='article' sx={{ bgcolor: 'primary.dark', borderRadius: 1, p: 1, mb: 1 }}>
-      <Typography component='h4' variant='h5' sx={{ color: 'text.primary' }}>
+    <Box component='article' sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}>
+      <Typography component='h4' variant='h5'>
         {taskListTitle}
       </Typography>
       <Box
