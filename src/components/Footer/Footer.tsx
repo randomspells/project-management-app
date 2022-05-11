@@ -26,9 +26,9 @@ const GITHUB_INFO: GithubInfoType[] = [
 const Footer: FC = () => {
   const { footer, userInfo, userAvatar, userLink, year, rsschoolInfoWrapper, rsschoolLogo } = style;
   return (
-    <Container className={footer} component='footer' maxWidth={false} sx={{ display: 'flex', py: 2 }}>
+    <Container className={footer} component='footer' maxWidth={false} sx={{ display: 'flex', py: 2, flex: 'none' }}>
       <Box
-        component='section'
+        component='ul'
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
@@ -36,7 +36,7 @@ const Footer: FC = () => {
         }}
       >
         {GITHUB_INFO.map((user) => (
-          <Box className={userInfo} mr={4} key={user.name}>
+          <Box component='li' className={userInfo} mr={4} key={user.name}>
             <Avatar className={userAvatar} alt={user.name} src={user.avatar} sx={{ width: 30, height: 30 }} />
             <Link
               className={userLink}
@@ -50,7 +50,7 @@ const Footer: FC = () => {
           </Box>
         ))}
       </Box>
-      <Box className={rsschoolInfoWrapper} component='section' sx={{ alignSelf: { xs: 'end', md: 'center' } }}>
+      <Box className={rsschoolInfoWrapper} sx={{ alignSelf: { xs: 'end', md: 'center' } }}>
         <Typography
           className={year}
           component='span'

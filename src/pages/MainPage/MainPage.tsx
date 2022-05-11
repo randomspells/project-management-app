@@ -3,13 +3,13 @@ import React, { FC } from 'react';
 import BoardList from '../../components/BoardList/BoardList';
 
 export const MainPage: FC = () => (
-  <Container sx={{ height: '100%' }}>
+  <Container component='main' sx={{ height: '100%' }}>
     <Box
+      component='section'
       sx={{
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         justifyContent: 'space-between',
-        my: 2,
         rowGap: { xs: 2, sm: 4 },
       }}
     >
