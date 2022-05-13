@@ -1,6 +1,6 @@
 // functions from MUI Docs
 
-export function stringToColor(string: string) {
+export const stringToColor = (string: string) => {
   let hash = 0;
   let i;
 
@@ -18,13 +18,19 @@ export function stringToColor(string: string) {
   /* eslint-enable no-bitwise */
 
   return color;
-}
+};
 
-export function stringAvatar(name: string) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-  };
-}
+export const getFirstLetters = (name: string) => {
+  const nameParts = name.split(' ');
+  return nameParts
+    .map((word) => word[0])
+    .slice(0, 2)
+    .join('');
+};
+
+export const stringAvatar = (name: string) => ({
+  sx: {
+    bgcolor: stringToColor(name),
+  },
+  children: getFirstLetters(name),
+});
