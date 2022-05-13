@@ -1,9 +1,9 @@
 import { Card, CardContent, IconButton, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
-import { BoardProps } from '../../types';
+import { BoardInterface } from '../../interfaces';
 
-const Board: FC<BoardProps> = ({ id, title }) => (
+const Board: FC<BoardInterface> = ({ id, title }) => (
   <Card id={id} sx={{ bgcolor: 'primary.dark' }}>
     <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <Typography component='h5' variant='h5'>

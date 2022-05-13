@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header';
 
 const Layout: FC = () => (
-  <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+  <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', rowGap: 2 }}>
     <Box sx={{ flex: 'none' }}>
       <Header />
     </Box>

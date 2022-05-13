@@ -17,6 +17,12 @@ const theme = responsiveFontSizes(
         primary: '#fff',
         secondary: '#000',
       },
+      background: {
+        paper: '#eeefff',
+      },
+      success: {
+        main: '#2d941b',
+      },
     },
   }),
 );
