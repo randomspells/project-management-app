@@ -4,20 +4,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { useAppDispatch } from '../../hooks/index';
-import { toggleNewBoardForm } from '../../slices/formsSlice';
+import { Avatar } from '@mui/material';
+import { stringAvatar } from '../../utils';
 import styles from './Header.module.scss';
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
   const headerRef = useRef<null | HTMLDivElement>(null);
-
-  const dispatch = useAppDispatch();
-
-  const handleNewBoardClick = () => {
-    dispatch(toggleNewBoardForm());
-  };
 
   const handleScroll = (elTopOffset: number, elHeight: number) => {
     if (window.pageYOffset > elTopOffset + elHeight) {
@@ -26,6 +20,11 @@ const Header: FC = () => {
       setSticky({ isSticky: false, offset: 0 });
     }
   };
+
+  const {
+    sx: { bgcolor },
+    children,
+  } = stringAvatar('Oawd Kwdawd');
 
   useEffect(() => {
     const header = headerRef.current?.getBoundingClientRect();
@@ -41,18 +40,32 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <header id='sticky-header' className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`} ref={headerRef}>
+    <header
+      id='sticky-header'
+      className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`}
+      ref={headerRef}
+    >
       <div className={board}>
-        <Button onClick={handleNewBoardClick}>Create board</Button>
+        <Avatar sx={{ bgcolor, width: 35, height: 35, fontSize: 14 }}>
+          {children}
+        </Avatar>
       </div>
       <div className={headerOption}>
         <Button>Edit profile</Button>
         <Button>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
-          <InputLabel id='demo-simple-select-autowidth-label' className={primary}>
+          <InputLabel
+            id='demo-simple-select-autowidth-label'
+            className={primary}
+          >
             Lang
           </InputLabel>
-          <Select label='Lang' autoWidth labelId='demo-simple-select-autowidth-label' id='demo-simple-select-autowidth'>
+          <Select
+            label='Lang'
+            autoWidth
+            labelId='demo-simple-select-autowidth-label'
+            id='demo-simple-select-autowidth'
+          >
             <MenuItem value='ru'>Ru</MenuItem>
             <MenuItem value='en'>En</MenuItem>
           </Select>
