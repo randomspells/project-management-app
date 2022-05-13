@@ -23,7 +23,11 @@ const Header: FC = () => {
 
   const handleOpenEditProfile = () => {
     navigate('edit-profile');
-  }
+  };
+
+  const handleSignOut = () => {
+    navigate('main');
+  };
 
   const handleScroll = (elTopOffset: number, elHeight: number) => {
     if (window.pageYOffset > elTopOffset + elHeight) {
@@ -53,7 +57,7 @@ const Header: FC = () => {
       </div>
       <div className={headerOption}>
         <Button onClick={handleOpenEditProfile}>Edit profile</Button>
-        <Button>Sign out</Button>
+        <Button onClick={handleSignOut}>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
           <InputLabel id='label' className={primary}>
             Lang
