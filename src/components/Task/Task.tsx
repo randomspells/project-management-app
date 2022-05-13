@@ -1,15 +1,26 @@
 import React, { FC, useState } from 'react';
 import { Avatar, Box, Checkbox, Divider, FormControlLabel, IconButton, Paper, Typography } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import ModeEditRoundedIcon from '@mui/icons-material/ModeEditRounded';
 
 import { stringAvatar } from '../../utils';
 import { TaskInterface } from '../../interfaces';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
 import Confirmation from '../Confirmation/Confirmation';
+import { useAppDispatch } from '../../hooks';
+import { toggleEditTaskForm } from '../../slices/formsSlice';
+import { setCurrentTask } from '../../slices/taskSlice';
 
 const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+
+  const handleEditTaskClick = () => {
+    dispatch(setCurrentTask({ id, title, done, description }));
+    dispatch(toggleEditTaskForm());
+  };
 
   const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
@@ -49,9 +60,14 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
       <Divider variant='middle' sx={{ my: 1 }} />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <FormControlLabel control={<Checkbox defaultChecked={done} />} label='Done' />
-        <IconButton color='secondary' onClick={toggleConfirmation}>
-          <DeleteRoundedIcon />
-        </IconButton>
+        <Box>
+          <IconButton color='primary' onClick={handleEditTaskClick}>
+            <ModeEditRoundedIcon />
+          </IconButton>
+          <IconButton color='secondary' onClick={toggleConfirmation}>
+            <DeleteRoundedIcon />
+          </IconButton>
+        </Box>
         <Confirmation
           itemTitle={title}
           isOpen={isConfirmationOpen}
