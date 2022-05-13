@@ -33,3 +33,7 @@ export interface BoardInterface {
   id: string;
   title: string;
 }
+
+export interface FormDataInterface {
+  [x: string]: string;
+};

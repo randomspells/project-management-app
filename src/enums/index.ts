@@ -4,8 +4,7 @@ export enum ColorKey {
   Yellow = 'yellow',
 }
 
-export enum SizeKey {
-  Small = 's',
-  Medium = 'm',
-  Big = 'b',
+export enum FormTitleEnum {
+  NewTaskList = 'New task list',
+  NewBoard = 'New board',
 }
