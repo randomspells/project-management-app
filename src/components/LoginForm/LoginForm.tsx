@@ -3,7 +3,7 @@ import { Container, TextField, Button, Link, Typography, Box, Avatar } from '@mu
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const LoginForm: FC = () => (
-  <Container component="form" maxWidth='xs'>
+  <Container component="form" maxWidth='xs' sx={{ height: '100%' }}>
     <Box sx={{mt: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Avatar sx={{ m: 2, bgcolor: 'primary.main' }}>
         <LockOutlinedIcon />

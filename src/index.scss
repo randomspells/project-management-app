@@ -1,4 +1,7 @@
-html, body {
+@import './vars.scss';
+
+html,
+body {
   height: 100%;
   min-height: 100%;
 }
@@ -11,4 +14,18 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $p-light;
+  border-radius: 1rem;
 }
