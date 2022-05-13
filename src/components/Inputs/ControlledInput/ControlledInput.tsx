@@ -33,6 +33,7 @@ const ControlledInput: FC<ControlledInputProps> = ({
         helperText={error ? errorText : ' '}
         margin='dense'
         fullWidth
+        autoComplete='off'
       />
     )}
   />
