@@ -16,12 +16,7 @@ export const MainPage: FC = () => (
       <Button variant='outlined' sx={{ width: { xs: '100%', md: 'auto' }, order: { xs: 1, md: 0 } }}>
         Create Board
       </Button>
-      <TextField
-        id='filled-search'
-        label='Search field'
-        type='search'
-        sx={{ width: { xs: '100%', md: 'auto' } }}
-      />
+      <TextField id='filled-search' label='Search field' type='search' sx={{ width: { xs: '100%', md: 'auto' } }} />
     </Box>
     <BoardList />
   </Container>

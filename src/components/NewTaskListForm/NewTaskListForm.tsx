@@ -4,19 +4,19 @@ import { useForm } from 'react-hook-form';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormDataInterface } from '../../interfaces';
-import { toggleNewBoardForm } from '../../slices/formsSlice';
+import { toggleNewTaskListForm } from '../../slices/formsSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
-const BOARD_TITLE_INPUT = {
+const TASK_LIST_TITLE_INPUT = {
   type: 'text',
-  name: 'boardTitle',
-  label: 'Board title',
-  errorText: 'Title is required',
+  name: 'taskListTitle',
+  label: 'Task list title',
+  error: 'Title is required',
   rules: { required: true },
 };
 
-const NewBoardForm: FC = () => {
+const NewTaskListForm: FC = () => {
   const {
     handleSubmit,
     control,
@@ -24,12 +24,12 @@ const NewBoardForm: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const isNewBoardFormOpen = useAppSelector((state) => state.forms.isNewBoardFormOpen);
+  const isNewTaskListFormOpen = useAppSelector((state) => state.forms.isNewTaskListFormOpen);
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
     reset();
-    dispatch(toggleNewBoardForm());
+    dispatch(toggleNewTaskListForm());
   };
 
   const onSubmit = (data: FormDataInterface) => {
@@ -37,27 +37,28 @@ const NewBoardForm: FC = () => {
     handleClose();
   };
 
-  // POST /boards request
+  // POST /boards/:boardId/columns request
 
-  const { name, label, errorText, rules, type } = BOARD_TITLE_INPUT;
+  const { type, name, label, error, rules } = TASK_LIST_TITLE_INPUT;
+
   return (
-    <FormModal isOpen={isNewBoardFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.NewBoard}>
+    <FormModal isOpen={isNewTaskListFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.NewTaskList}>
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           type={type}
           name={name}
           label={label}
-          errorText={errorText}
+          errorText={error}
           rules={rules}
           control={control}
           defaultValue=''
         />
         <Button type='submit' fullWidth variant='contained' size='large' sx={{ mt: 2, mb: 2 }} disabled={!isValid}>
-          Create board
+          Create task list
         </Button>
       </Box>
     </FormModal>
   );
 };
 
-export default NewBoardForm;
+export default NewTaskListForm;

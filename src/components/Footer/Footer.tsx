@@ -15,7 +15,11 @@ const GITHUB_INFO: GithubInfoType[] = [
     link: 'https://github.com/ViktorElenich',
     avatar: 'https://avatars.githubusercontent.com/u/89132609?v=4',
   },
-  { name: 'kchrgn', link: 'https://github.com/kchrgn', avatar: 'https://avatars.githubusercontent.com/u/88321335?v=4' },
+  {
+    name: 'kchrgn',
+    link: 'https://github.com/kchrgn',
+    avatar: 'https://avatars.githubusercontent.com/u/88321335?v=4',
+  },
   {
     name: 'randomspells',
     link: 'https://github.com/randomspells',
@@ -24,9 +28,22 @@ const GITHUB_INFO: GithubInfoType[] = [
 ];
 
 const Footer: FC = () => {
-  const { footer, userInfo, userAvatar, userLink, year, rsschoolInfoWrapper, rsschoolLogo } = style;
+  const {
+    footer,
+    userInfo,
+    userAvatar,
+    userLink,
+    year,
+    rsschoolInfoWrapper,
+    rsschoolLogo,
+  } = style;
   return (
-    <Container className={footer} component='footer' maxWidth={false} sx={{ display: 'flex', py: 2, flex: 'none' }}>
+    <Container
+      className={footer}
+      component='footer'
+      maxWidth={false}
+      sx={{ display: 'flex', py: 2, flex: 'none' }}
+    >
       <Box
         component='ul'
         sx={{
@@ -37,29 +54,53 @@ const Footer: FC = () => {
       >
         {GITHUB_INFO.map((user) => (
           <Box component='li' className={userInfo} mr={4} key={user.name}>
-            <Avatar className={userAvatar} alt={user.name} src={user.avatar} sx={{ width: 30, height: 30 }} />
+            <Avatar
+              className={userAvatar}
+              alt={user.name}
+              src={user.avatar}
+              sx={{ width: 30, height: 30 }}
+            />
             <Link
               className={userLink}
               href={user.link}
               target='_blank'
               underline='hover'
-              sx={{ color: '#fff', ml: 1 }}
+              sx={{ color: 'common.white', ml: 1 }}
             >
               {user.name}
             </Link>
           </Box>
         ))}
       </Box>
-      <Box className={rsschoolInfoWrapper} sx={{ alignSelf: { xs: 'end', md: 'center' } }}>
+      <Box
+        className={rsschoolInfoWrapper}
+        sx={{ alignSelf: { xs: 'end', md: 'center' } }}
+      >
         <Typography
           className={year}
           component='span'
-          sx={{ display: { xs: 'none', sm: 'block' }, opacity: { sm: '0', md: '1' }, fontSize: 14 }}
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            opacity: { sm: '0', md: '1' },
+            fontSize: 14,
+          }}
         >
           2022
         </Typography>
-        <RocketLaunchRoundedIcon sx={{ color: '#fff', width: 20, height: 20, mx: 1, opacity: 0.8 }} />
-        <Link className={rsschoolLogo} href='https://rs.school/index.html' target='_blank' />
+        <RocketLaunchRoundedIcon
+          sx={{
+            color: 'common.white',
+            width: 20,
+            height: 20,
+            mx: 1,
+            opacity: 0.8,
+          }}
+        />
+        <Link
+          className={rsschoolLogo}
+          href='https://rs.school/index.html'
+          target='_blank'
+        />
       </Box>
     </Container>
   );
