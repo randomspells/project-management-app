@@ -7,7 +7,6 @@ import FormControl from '@mui/material/FormControl';
 import { useAppDispatch } from '../../hooks/index';
 import { toggleNewBoardForm } from '../../slices/formsSlice';
 import styles from './Header.module.scss';
-import NewBoardForm from '../NewBoardForm/NewBoardForm';
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
@@ -45,7 +44,6 @@ const Header: FC = () => {
     <header id='sticky-header' className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`} ref={headerRef}>
       <div className={board}>
         <Button onClick={handleNewBoardClick}>Create board</Button>
-        <NewBoardForm />
       </div>
       <div className={headerOption}>
         <Button>Edit profile</Button>

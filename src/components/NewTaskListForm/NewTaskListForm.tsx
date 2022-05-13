@@ -9,11 +9,11 @@ import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
 const TASK_LIST_TITLE_INPUT = {
-  inputType: 'text',
-  inputName: 'taskListTitle',
-  labelText: 'Task list title',
-  errorText: 'Title is required',
-  validationRules: { required: true },
+  type: 'text',
+  name: 'taskListTitle',
+  label: 'Task list title',
+  error: 'Title is required',
+  rules: { required: true },
 };
 
 const NewTaskListForm: FC = () => {
@@ -39,21 +39,22 @@ const NewTaskListForm: FC = () => {
 
   // POST /boards/:boardId/columns request
 
-  const { inputName, labelText, errorText, validationRules, inputType } = TASK_LIST_TITLE_INPUT;
+  const { type, name, label, error, rules } = TASK_LIST_TITLE_INPUT;
 
   return (
     <FormModal isOpen={isNewTaskListFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.NewTaskList}>
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
-          inputType={inputType}
-          inputName={inputName}
-          labelText={labelText}
-          errorText={errorText}
-          validationRules={validationRules}
-          inputControl={control}
+          type={type}
+          name={name}
+          label={label}
+          errorText={error}
+          rules={rules}
+          control={control}
+          defaultValue=''
         />
         <Button type='submit' fullWidth variant='contained' size='large' sx={{ mt: 2, mb: 2 }} disabled={!isValid}>
-          Create board
+          Create task list
         </Button>
       </Box>
     </FormModal>

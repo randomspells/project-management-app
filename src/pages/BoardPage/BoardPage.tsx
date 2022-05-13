@@ -4,7 +4,6 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import TaskList from '../../components/TaskList/TaskList';
 import { FAKE_TASKS } from '../../constants';
 import { ColumnInterface } from '../../interfaces';
-import NewTaskListForm from '../../components/NewTaskListForm/NewTaskListForm';
 import { toggleNewTaskListForm } from '../../slices/formsSlice';
 import { useAppDispatch } from '../../hooks';
 
@@ -28,7 +27,6 @@ const BoardPage: FC = () => {
           <ArrowBackRoundedIcon />
         </IconButton>
         <Button onClick={handleNewTaskListClick}>Add task list</Button>
-        <NewTaskListForm />
       </Box>
       <Box component='section' sx={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'scroll', columnGap: 3, my: 1 }}>
         {FAKE_COLUMNS.map((column) => {

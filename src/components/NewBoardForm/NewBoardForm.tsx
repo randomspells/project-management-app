@@ -9,11 +9,11 @@ import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
 const BOARD_TITLE_INPUT = {
-  inputType: 'text',
-  inputName: 'boardTitle',
-  labelText: 'Board title',
+  type: 'text',
+  name: 'boardTitle',
+  label: 'Board title',
   errorText: 'Title is required',
-  validationRules: { required: true },
+  rules: { required: true },
 };
 
 const NewBoardForm: FC = () => {
@@ -39,17 +39,18 @@ const NewBoardForm: FC = () => {
 
   // POST /boards request
 
-  const { inputName, labelText, errorText, validationRules, inputType } = BOARD_TITLE_INPUT;
+  const { name, label, errorText, rules, type } = BOARD_TITLE_INPUT;
   return (
     <FormModal isOpen={isNewBoardFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.NewBoard}>
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
-          inputType={inputType}
-          inputName={inputName}
-          labelText={labelText}
+          type={type}
+          name={name}
+          label={label}
           errorText={errorText}
-          validationRules={validationRules}
-          inputControl={control}
+          rules={rules}
+          control={control}
+          defaultValue=''
         />
         <Button type='submit' fullWidth variant='contained' size='large' sx={{ mt: 2, mb: 2 }} disabled={!isValid}>
           Create board
