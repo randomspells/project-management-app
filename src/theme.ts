@@ -13,9 +13,6 @@ const theme = responsiveFontSizes(
         light: '#ff7961',
         dark: '#ba000d',
       },
-      text: {
-        primary: '#000',
-      },
       success: {
         main: '#2d941b',
       },

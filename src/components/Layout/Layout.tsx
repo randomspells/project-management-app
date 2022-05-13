@@ -8,7 +8,14 @@ import NewBoardForm from '../NewBoardForm/NewBoardForm';
 import NewTaskListForm from '../NewTaskListForm/NewTaskListForm';
 
 const Layout: FC = () => (
-  <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', rowGap: 2 }}>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      rowGap: 2,
+    }}
+  >
     <Header />
     <Outlet />
     <Footer />
