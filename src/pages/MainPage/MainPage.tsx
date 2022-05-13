@@ -21,7 +21,6 @@ export const MainPage: FC = () => (
         label='Search field'
         type='search'
         sx={{ width: { xs: '100%', md: 'auto' } }}
-        color='primary'
       />
     </Box>
     <BoardList />

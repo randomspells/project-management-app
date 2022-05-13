@@ -9,7 +9,7 @@ import MainPage from './pages/MainPage/MainPage';
 import BoardPage from './pages/BoardPage/BoardPage';
 import LoginForm from './components/LoginForm/LoginForm';
 import SignUpForm from './components/SignUpForm/SignUpForm';
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { store } from './store';
 import theme from './theme';
 import './reset.scss';
