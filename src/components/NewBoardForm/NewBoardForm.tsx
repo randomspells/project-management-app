@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -44,7 +44,7 @@ const NewBoardForm: FC = () => {
   const { inputName, labelText, errorText, validationRules, inputType } = BOARD_TITLE_INPUT;
   return (
     <FormModal isOpen={isNewBoardFormOpen} handleClose={handleClose} formTitle='New board'>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           inputType={inputType}
           inputName={inputName}
@@ -56,7 +56,7 @@ const NewBoardForm: FC = () => {
         <Button type='submit' fullWidth variant='contained' size='large' sx={{ mt: 2, mb: 2 }} disabled={!isValid}>
           Create board
         </Button>
-      </form>
+      </Box>
     </FormModal>
   );
 };
