@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,22 +13,34 @@ type ConfirmationProps = {
   handleAccept: () => void;
 };
 
-const Confirmation: FC<ConfirmationProps> = ({ itemTitle, isOpen, toggleConfirmation, handleAccept }) => {
-  const handleDeclineClick = () => {
+const Confirmation: FC<ConfirmationProps> = ({
+  itemTitle,
+  isOpen,
+  toggleConfirmation,
+  handleAccept,
+}) => {
+  const handleDeclineClick = (e: MouseEvent) => {
+    e.stopPropagation();
     toggleConfirmation();
   };
 
-  const handleAcceptClick = () => {
+  const handleAcceptClick = (e: MouseEvent) => {
+    e.stopPropagation();
     toggleConfirmation();
     handleAccept();
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleDeclineClick} aria-describedby='confirmation dialog'>
+    <Dialog
+      open={isOpen}
+      onClose={handleDeclineClick}
+      aria-describedby='confirmation dialog'
+    >
       <DialogTitle sx={{ color: 'text.secondary' }}>Are you sure?</DialogTitle>
       <DialogContent>
         <DialogContentText id='confirmation'>
-          You are going to delete &#34;{itemTitle}&#34;. This action is irreversible.
+          You are going to delete &#34;{itemTitle}&#34;. This action is
+          irreversible.
         </DialogContentText>
       </DialogContent>
       <DialogActions>

@@ -29,7 +29,7 @@ root.render(
             <Route path='/' element={<Layout />}>
               <Route index element={<WelcomePage />} />
               <Route path='main' element={<MainPage />} />
-              <Route path='board' element={<BoardPage />} />
+              <Route path='board/:boardId' element={<BoardPage />} />
               <Route path='login' element={<LoginForm />} />
               <Route path='signup' element={<SignUpForm />} />
               {/* <Route path='edit-profile' element={<EditProfileForm />} /> */}

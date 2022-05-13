@@ -1,18 +1,39 @@
+import React, { FC, MouseEvent, useState } from 'react';
 import { Card, CardContent, IconButton, Typography } from '@mui/material';
-import React, { FC, useState } from 'react';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { useNavigate } from 'react-router-dom';
 import { BoardInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
+import { useAppDispatch } from '../../hooks';
+import { setCurrentBoard } from '../../slices/boardSlice';
 
 const Board: FC<BoardInterface> = ({ id, title }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
+  const handleDeleteClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    toggleConfirmation();
+  };
+
+  const handleBoardClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    dispatch(setCurrentBoard(id));
+    navigate(`/board/${id}`);
+  };
+
   return (
-    <Card id={id} sx={{ bgcolor: 'primary.dark' }}>
+    <Card
+      id={id}
+      sx={{ bgcolor: 'primary.dark', cursor: 'pointer' }}
+      onClick={handleBoardClick}
+    >
       <CardContent
         sx={{
           display: 'flex',
@@ -26,7 +47,7 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
         <IconButton
           aria-label='delete board'
           color='secondary'
-          onClick={toggleConfirmation}
+          onClick={handleDeleteClick}
         >
           <DeleteRoundedIcon />
         </IconButton>
