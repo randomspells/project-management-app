@@ -1,5 +1,6 @@
-import { Box, Button, Container, IconButton } from '@mui/material';
 import React, { FC } from 'react';
+import { Box, Button, Container, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import TaskList from '../../components/TaskList/TaskList';
 import { FAKE_TASKS } from '../../constants';
@@ -30,15 +31,20 @@ const FAKE_COLUMNS: ColumnInterface[] = [
 
 const BoardPage: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleNewTaskListClick = () => {
     dispatch(toggleNewTaskListForm());
   };
 
+  const handleBackClick = () => {
+    navigate('/main');
+  };
+
   return (
     <Container component='main' maxWidth='xl' sx={{ height: '100%' }}>
       <Box component='section' sx={{ display: 'flex', columnGap: 4 }}>
-        <IconButton href='/main' color='primary'>
+        <IconButton color='primary' onClick={handleBackClick}>
           <ArrowBackRoundedIcon />
         </IconButton>
         <Button onClick={handleNewTaskListClick}>Add task list</Button>
