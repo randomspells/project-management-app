@@ -1,3 +1,5 @@
+import { Control } from "react-hook-form";
+
 export interface SignInInterface {
   login: string;
   password: string;
@@ -36,4 +38,15 @@ export interface BoardInterface {
 
 export interface FormDataInterface {
   [x: string]: string;
-};
+}
+
+export interface ControlledInputInterface {
+  inputName: string;
+  labelText: string;
+  errorText: string;
+  validationRules: Record<string, unknown>;
+  inputControl: Control;
+  inputType: string;
+  multiline?: boolean;
+  maxRows?: number;
+}
