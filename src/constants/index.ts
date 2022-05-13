@@ -59,3 +59,6 @@ export const FAKE_BOARDS: BoardInterface[] = [
   { id: '9a111e19-24ec-43e1-b8c4-13776842b8d2', title: 'Other tasks' },
   { id: '9a111e19-24ec-43e1-b8c4-13776842b8d3', title: 'Other tasks' },
 ];
+
+export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;
+export const VALID_PASSWORD_INPUT = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;

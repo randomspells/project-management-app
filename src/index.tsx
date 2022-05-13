@@ -10,6 +10,7 @@ import BoardPage from './pages/BoardPage/BoardPage';
 import LoginForm from './components/LoginForm/LoginForm';
 import SignUpForm from './components/SignUpForm/SignUpForm';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
+import EditProfileForm from './components/EditProfileForm';
 import { store } from './store';
 import theme from './theme';
 import './reset.scss';
@@ -32,7 +33,7 @@ root.render(
               <Route path='board' element={<BoardPage />} />
               <Route path='login' element={<LoginForm />} />
               <Route path='signup' element={<SignUpForm />} />
-              {/* <Route path='edit-profile' element={<EditProfileForm />} /> */}
+              <Route path='edit-profile' element={<EditProfileForm />} />
               <Route path='*' element={<ErrorPage />} />
             </Route>
           </Routes>

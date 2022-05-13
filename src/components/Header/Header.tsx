@@ -46,7 +46,7 @@ const Header: FC = () => {
         <Button onClick={handleNewBoardClick}>Create board</Button>
       </div>
       <div className={headerOption}>
-        <Button>Edit profile</Button>
+        <Button href="edit-profile">Edit profile</Button>
         <Button>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
           <InputLabel id='demo-simple-select-autowidth-label' className={primary}>
