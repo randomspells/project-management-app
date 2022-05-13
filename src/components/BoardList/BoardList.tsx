@@ -13,7 +13,7 @@ const BoardList: FC = () => (
     {FAKE_BOARDS.map((board) => {
       const { id, title } = board;
       return (
-        <Grid item component='li' key={id} xs={12} md={6} lg={4}>
+        <Grid item component='li' key={id} xs={12} md={6} lg={3}>
           <Board title={title} id={id} />
         </Grid>
       );
