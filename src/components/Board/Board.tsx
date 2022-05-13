@@ -7,7 +7,7 @@ import Confirmation from '../Confirmation/Confirmation';
 const Board: FC<BoardInterface> = ({ id, title }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
-  const toggleConfirmationOpened = () => {
+  const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
@@ -17,13 +17,13 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
         <Typography component='h5' variant='h5'>
           {title}
         </Typography>
-        <IconButton aria-label='delete board' color='secondary' onClick={toggleConfirmationOpened}>
+        <IconButton aria-label='delete board' color='secondary' onClick={toggleConfirmation}>
           <DeleteRoundedIcon />
         </IconButton>
         <Confirmation
           itemTitle={title}
           isOpen={isConfirmationOpen}
-          toggleOpened={toggleConfirmationOpened}
+          toggleConfirmation={toggleConfirmation}
           handleAccept={() => console.log('Deleting board...')}
         />
       </CardContent>

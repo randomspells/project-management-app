@@ -11,7 +11,7 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
-  const toggleConfirmationOpened = () => {
+  const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
@@ -49,13 +49,13 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
       <Divider variant='middle' sx={{ my: 1 }} />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <FormControlLabel control={<Checkbox defaultChecked={done} />} label='Done' />
-        <IconButton color='secondary' onClick={toggleConfirmationOpened}>
+        <IconButton color='secondary' onClick={toggleConfirmation}>
           <DeleteRoundedIcon />
         </IconButton>
         <Confirmation
           itemTitle={title}
           isOpen={isConfirmationOpen}
-          toggleOpened={toggleConfirmationOpened}
+          toggleConfirmation={toggleConfirmation}
           handleAccept={() => console.log('Deleting task...')}
         />
       </Box>

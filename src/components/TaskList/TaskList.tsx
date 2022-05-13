@@ -15,7 +15,7 @@ const COLUMN_WIDTH = 270;
 const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
-  const toggleConfirmationOpened = () => {
+  const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
@@ -54,13 +54,13 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
         <IconButton>
           <AddRoundedIcon color='primary' />
         </IconButton>
-        <Button color='secondary' onClick={toggleConfirmationOpened}>
+        <Button color='secondary' onClick={toggleConfirmation}>
           Delete task list
         </Button>
         <Confirmation
           itemTitle={taskListTitle}
           isOpen={isConfirmationOpen}
-          toggleOpened={toggleConfirmationOpened}
+          toggleConfirmation={toggleConfirmation}
           handleAccept={() => console.log('Deleting task list...')}
         />
       </Box>
