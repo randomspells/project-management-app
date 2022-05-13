@@ -38,7 +38,7 @@ const BoardPage: FC = () => {
   return (
     <Container component='main' maxWidth='xl' sx={{ height: '100%' }}>
       <Box component='section' sx={{ display: 'flex', columnGap: 4 }}>
-        <IconButton color='primary'>
+        <IconButton href='/main' color='primary'>
           <ArrowBackRoundedIcon />
         </IconButton>
         <Button onClick={handleNewTaskListClick}>Add task list</Button>

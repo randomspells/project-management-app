@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import BoardList from '../../components/BoardList/BoardList';
 
 export const MainPage: FC = () => (
-  <Container component='main' sx={{ height: '100%' }}>
+  <Container component='main' maxWidth='xl' sx={{ height: '100%' }}>
     <Box
       component='section'
       sx={{
