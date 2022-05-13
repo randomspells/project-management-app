@@ -6,6 +6,7 @@ import { BoardInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentBoard } from '../../slices/boardSlice';
+import { RouteEnum } from '../../enums';
 
 const Board: FC<BoardInterface> = ({ id, title }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
@@ -25,7 +26,7 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
   const handleBoardClick = (e: MouseEvent) => {
     e.stopPropagation();
     dispatch(setCurrentBoard(id));
-    navigate(`/board/${id}`);
+    navigate(`${RouteEnum.Board}/${id}`);
   };
 
   return (

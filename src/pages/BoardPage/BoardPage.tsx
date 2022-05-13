@@ -7,6 +7,7 @@ import { FAKE_TASKS } from '../../constants';
 import { ColumnInterface } from '../../interfaces';
 import { toggleNewTaskListForm } from '../../slices/formsSlice';
 import { useAppDispatch } from '../../hooks';
+import { RouteEnum } from '../../enums';
 
 const FAKE_COLUMNS: ColumnInterface[] = [
   {
@@ -38,7 +39,7 @@ const BoardPage: FC = () => {
   };
 
   const handleBackClick = () => {
-    navigate('/main');
+    navigate(RouteEnum.Main);
   };
 
   return (

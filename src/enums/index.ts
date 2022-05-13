@@ -9,3 +9,12 @@ export enum FormTitleEnum {
   NewBoard = 'New board',
   EditTask = 'Edit task',
 }
+
+export enum RouteEnum {
+  Welcome = '/',
+  Main = '/main',
+  Board = '/board',
+  Login = '/login',
+  Signup = '/signup',
+  EditProfile = '/edit-profile',
+}
