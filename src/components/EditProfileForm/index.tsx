@@ -26,7 +26,6 @@ const EditProfileForm: FC = () => {
         justifyContent: 'center',
         flexDirection: 'column',
         height: '100%',
-        '& > :not(style)': { m: 1 },
       }}
     >
       <Box
