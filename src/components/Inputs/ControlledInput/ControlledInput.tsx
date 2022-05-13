@@ -2,41 +2,54 @@ import React, { FC } from 'react';
 import { TextField } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
 
-type ControlledInputProps = {
-  inputName: string;
-  labelText: string;
+export type ControlledInputProps = {
+  name: string;
+  label: string;
   errorText: string;
-  validationRules: Record<string, unknown>;
-  inputControl: Control;
-  inputType: string;
+  rules: Record<string, unknown>;
+  control: Control;
+  type: string;
+  defaultValue: string;
+  multiline?: boolean;
+  rows?: number;
 };
 
 const ControlledInput: FC<ControlledInputProps> = ({
-  inputName,
-  validationRules,
-  labelText,
+  name,
+  label,
   errorText,
-  inputControl,
-  inputType,
+  rules,
+  control,
+  type,
+  multiline,
+  defaultValue,
+  rows,
 }) => (
   <Controller
-    name={inputName}
-    control={inputControl}
-    defaultValue=''
-    rules={validationRules}
+    name={name}
+    control={control}
+    rules={rules}
     render={({ field: { onChange }, fieldState: { error } }) => (
       <TextField
-        type={inputType}
-        label={labelText}
+        type={type}
+        label={label}
         onChange={onChange}
         error={!!error}
         helperText={error ? errorText : ' '}
+        multiline={multiline}
+        rows={rows}
+        defaultValue={defaultValue}
         margin='dense'
-        fullWidth
         autoComplete='off'
+        fullWidth
       />
     )}
   />
 );
+
+ControlledInput.defaultProps = {
+  multiline: false,
+  rows: 1,
+};
 
 export default ControlledInput;
