@@ -41,7 +41,7 @@ const WELCOME_INFO: WelcomeInfoType[] = [
 const WelcomePage: FC = () => {
   const { wrapper } = style;
   return (
-    <Container component='main' className={wrapper} sx={{ mb: 4 }}>
+    <Container component='main' className={wrapper} sx={{ mb: 4, flex: 'auto' }}>
       <Box component='nav' sx={{ display: 'flex', columnGap: 1, justifyContent: 'flex-end' }}>
         <Button variant='contained' color='primary'>
           Log In

@@ -13,10 +13,10 @@ const TaskTitleEditInput: FC<TaskTitleInputProps> = ({ title, saveHandler, close
     value={title}
     endAdornment={
       <InputAdornment position='end'>
-        <IconButton aria-label='toggle password visibility' edge='end' onClick={saveHandler}>
+        <IconButton aria-label='save title handler' edge='end' onClick={saveHandler}>
           <CheckRoundedIcon />
         </IconButton>
-        <IconButton aria-label='toggle password visibility' edge='end' onClick={closeHandler}>
+        <IconButton aria-label='close edit handler' edge='end' onClick={closeHandler}>
           <CloseRoundedIcon />
         </IconButton>
       </InputAdornment>
