@@ -14,7 +14,7 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
   return (
     <Card id={id} sx={{ bgcolor: 'primary.dark' }}>
       <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography component='h5' variant='h5'>
+        <Typography component='h5' variant='h5' sx={{ color: '#fff' }}>
           {title}
         </Typography>
         <IconButton aria-label='delete board' color='secondary' onClick={toggleConfirmation}>

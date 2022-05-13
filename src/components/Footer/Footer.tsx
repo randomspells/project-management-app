@@ -43,7 +43,7 @@ const Footer: FC = () => {
               href={user.link}
               target='_blank'
               underline='hover'
-              sx={{ color: 'text.primary', ml: 1 }}
+              sx={{ color: '#fff', ml: 1 }}
             >
               {user.name}
             </Link>
@@ -58,7 +58,7 @@ const Footer: FC = () => {
         >
           2022
         </Typography>
-        <RocketLaunchRoundedIcon sx={{ color: 'text.primary', width: 20, height: 20, mx: 1, opacity: 0.8 }} />
+        <RocketLaunchRoundedIcon sx={{ color: '#fff', width: 20, height: 20, mx: 1, opacity: 0.8 }} />
         <Link className={rsschoolLogo} href='https://rs.school/index.html' target='_blank' />
       </Box>
     </Container>
