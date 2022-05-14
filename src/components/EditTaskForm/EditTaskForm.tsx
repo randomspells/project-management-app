@@ -50,7 +50,7 @@ const EditTaskForm: FC = () => {
     handleClose();
   };
 
-  // POST /boards request
+  // PUT /boards/:boardId/columns/:columnId/tasks request
 
   return (
     <FormModal isOpen={isEditTaskFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.EditTask}>

@@ -8,7 +8,13 @@ const BoardList: FC = () => (
     component='ul'
     container
     spacing={2}
-    sx={{ height: { xs: 'auto', sm: '60vh', md: '75vh' }, overflowY: 'auto', alignContent: 'start', my: 2, pr: 1 }}
+    sx={{
+      height: { xs: 'auto', sm: '60vh', md: '75vh' },
+      overflowY: 'auto',
+      alignContent: 'start',
+      my: 2,
+      pr: 1,
+    }}
   >
     {FAKE_BOARDS.map((board) => {
       const { id, title } = board;

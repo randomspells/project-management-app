@@ -19,21 +19,27 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { RouteEnum } from './enums';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Layout />}>
+            <Route path={RouteEnum.Welcome} element={<Layout />}>
               <Route index element={<WelcomePage />} />
-              <Route path='main' element={<MainPage />} />
-              <Route path='board' element={<BoardPage />} />
-              <Route path='login' element={<LoginForm />} />
-              <Route path='signup' element={<SignUpForm />} />
-              <Route path='edit-profile' element={<EditProfileForm />} />
+              <Route path={RouteEnum.Main} element={<MainPage />} />
+              <Route
+                path={`${RouteEnum.Board}/:boardId`}
+                element={<BoardPage />}
+              />
+              <Route path={RouteEnum.Login} element={<LoginForm />} />
+              <Route path={RouteEnum.Signup} element={<SignUpForm />} />
+              <Route path={RouteEnum.EditProfile} element={<EditProfileForm />} />
               <Route path='*' element={<ErrorPage />} />
             </Route>
           </Routes>

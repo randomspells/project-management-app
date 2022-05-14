@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { useAppDispatch } from '../../hooks/index';
-import { toggleNewBoardForm } from '../../slices/formsSlice';
+import { Avatar } from '@mui/material';
+import { stringAvatar } from '../../utils';
 import styles from './Header.module.scss';
 import { RouteEnum } from '../../enums';
 
@@ -38,6 +38,11 @@ const Header: FC = () => {
     }
   };
 
+  const {
+    sx: { bgcolor },
+    children,
+  } = stringAvatar('Oawd Kwdawd');
+
   useEffect(() => {
     const header = headerRef.current?.getBoundingClientRect();
     const handleScrollEvent = () => {
@@ -52,9 +57,15 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <header id='sticky-header' className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`} ref={headerRef}>
+    <header
+      id='sticky-header'
+      className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`}
+      ref={headerRef}
+    >
       <div className={board}>
-        <Button onClick={handleNewBoardClick}>Create board</Button>
+        <Avatar sx={{ bgcolor, width: 35, height: 35, fontSize: 14 }}>
+          {children}
+        </Avatar>
       </div>
       <div className={headerOption}>
         <Button onClick={handleOpenEditProfile}>Edit profile</Button>
