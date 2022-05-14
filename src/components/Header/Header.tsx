@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -7,11 +8,27 @@ import FormControl from '@mui/material/FormControl';
 import { Avatar } from '@mui/material';
 import { stringAvatar } from '../../utils';
 import styles from './Header.module.scss';
+import { RouteEnum } from '../../enums';
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
   const headerRef = useRef<null | HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const handleNewBoardClick = () => {
+    dispatch(toggleNewBoardForm());
+  };
+
+  const handleOpenEditProfile = () => {
+    navigate(RouteEnum.EditProfile);
+  };
+
+  const handleSignOut = () => {
+    navigate(RouteEnum.Main);
+  };
 
   const handleScroll = (elTopOffset: number, elHeight: number) => {
     if (window.pageYOffset > elTopOffset + elHeight) {
@@ -51,21 +68,18 @@ const Header: FC = () => {
         </Avatar>
       </div>
       <div className={headerOption}>
-        <Button>Edit profile</Button>
-        <Button>Sign out</Button>
+        <Button onClick={handleOpenEditProfile}>Edit profile</Button>
+        <Button onClick={handleSignOut}>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
-          <InputLabel
-            id='demo-simple-select-autowidth-label'
-            className={primary}
-          >
+          <InputLabel id='label' className={primary}>
             Lang
           </InputLabel>
           <Select
             label='Lang'
             autoWidth
-            labelId='demo-simple-select-autowidth-label'
-            id='demo-simple-select-autowidth'
+            labelId='label'
           >
+            <MenuItem defaultValue=""> </MenuItem>
             <MenuItem value='ru'>Ru</MenuItem>
             <MenuItem value='en'>En</MenuItem>
           </Select>
