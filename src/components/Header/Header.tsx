@@ -7,20 +7,14 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { Avatar } from '@mui/material';
 import { stringAvatar } from '../../utils';
-import styles from './Header.module.scss';
 import { RouteEnum } from '../../enums';
+import styles from './Header.module.scss';
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
   const headerRef = useRef<null | HTMLDivElement>(null);
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-
-  const handleNewBoardClick = () => {
-    dispatch(toggleNewBoardForm());
-  };
 
   const handleOpenEditProfile = () => {
     navigate(RouteEnum.EditProfile);
@@ -74,12 +68,8 @@ const Header: FC = () => {
           <InputLabel id='label' className={primary}>
             Lang
           </InputLabel>
-          <Select
-            label='Lang'
-            autoWidth
-            labelId='label'
-          >
-            <MenuItem defaultValue=""> </MenuItem>
+          <Select label='Lang' autoWidth labelId='label'>
+            <MenuItem defaultValue=''> </MenuItem>
             <MenuItem value='ru'>Ru</MenuItem>
             <MenuItem value='en'>En</MenuItem>
           </Select>
