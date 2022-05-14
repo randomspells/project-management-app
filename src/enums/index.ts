@@ -7,6 +7,7 @@ export enum ColorKey {
 export enum FormTitleEnum {
   NewTaskList = 'New task list',
   NewBoard = 'New board',
+  NewTask = 'New task',
   EditTask = 'Edit task',
 }
 
