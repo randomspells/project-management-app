@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import { useAppDispatch } from '../../hooks/index';
 import { toggleNewBoardForm } from '../../slices/formsSlice';
 import styles from './Header.module.scss';
+import { RouteEnum } from '../../enums';
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
@@ -22,11 +23,11 @@ const Header: FC = () => {
   };
 
   const handleOpenEditProfile = () => {
-    navigate('edit-profile');
+    navigate(RouteEnum.EditProfile);
   };
 
   const handleSignOut = () => {
-    navigate('main');
+    navigate(RouteEnum.Main);
   };
 
   const handleScroll = (elTopOffset: number, elHeight: number) => {
