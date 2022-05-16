@@ -1,9 +1,11 @@
 import { Box, Button, Container, SxProps, Typography } from '@mui/material';
 import React, { FC, ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import SchemaRoundedIcon from '@mui/icons-material/SchemaRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import style from './WelcomePage.module.scss';
+import { RouteEnum } from '../../enums';
 
 type WelcomeInfoType = {
   title: string;
@@ -40,13 +42,31 @@ const WELCOME_INFO: WelcomeInfoType[] = [
 
 const WelcomePage: FC = () => {
   const { wrapper } = style;
+  const navigate = useNavigate();
+
+  const handleLogIn = () => {
+    navigate(RouteEnum.Login);
+  };
+
+  const handleSignUp = () => {
+    navigate(RouteEnum.Signup);
+  };
+
   return (
     <Container component='main' className={wrapper} sx={{ mb: 4, flex: 'auto' }}>
       <Box component='nav' sx={{ display: 'flex', columnGap: 1, justifyContent: 'flex-end' }}>
-        <Button variant='contained' color='primary'>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={handleLogIn}
+        >
           Log In
         </Button>
-        <Button variant='contained' color='primary'>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={handleSignUp}
+        >
           Sign Up
         </Button>
       </Box>
