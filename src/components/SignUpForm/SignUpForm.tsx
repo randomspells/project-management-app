@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
 import { useSignupMutation } from '../../api/auth.api';
+import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum }  from '../../enums';
 
 const SignUpForm: FC = () => {
@@ -29,8 +30,8 @@ const SignUpForm: FC = () => {
           name="name"
           label="Name"
           type="text"
-          rules={{ required: true }}
-          errorText="This field can`t be empty"
+          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
+          errorText="Please enter only letters (>2)"
           defaultValue=""
           control={control}
         />
@@ -38,8 +39,8 @@ const SignUpForm: FC = () => {
           name="login"
           label="Login"
           type="text"
-          rules={{ required: true }}
-          errorText="This field can`t be empty"
+          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
+          errorText="Please enter only letters (>2)"
           defaultValue=""
           control={control}
         />
@@ -47,8 +48,8 @@ const SignUpForm: FC = () => {
           name="password"
           label="Password"
           type="password"
-          rules={{ required: true }}
-          errorText="This field can`t be empty"
+          rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
+          errorText="Please enter EN letters and numbers (min length 6)"
           defaultValue=""
           control={control}
         />
