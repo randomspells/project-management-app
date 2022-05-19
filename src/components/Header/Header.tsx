@@ -8,6 +8,8 @@ import FormControl from '@mui/material/FormControl';
 import { Avatar } from '@mui/material';
 import { stringAvatar } from '../../utils';
 import { RouteEnum } from '../../enums';
+import { logout} from '../../slices/authSlice';
+import { useAppDispatch } from '../../hooks/index';
 import styles from './Header.module.scss';
 
 const Header: FC = () => {
@@ -15,13 +17,15 @@ const Header: FC = () => {
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
   const headerRef = useRef<null | HTMLDivElement>(null);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleOpenEditProfile = () => {
     navigate(RouteEnum.EditProfile);
   };
 
   const handleSignOut = () => {
-    navigate(RouteEnum.Main);
+    dispatch(logout());
+    navigate(RouteEnum.Welcome);
   };
 
   const handleScroll = (elTopOffset: number, elHeight: number) => {
