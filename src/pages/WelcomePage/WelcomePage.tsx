@@ -6,7 +6,6 @@ import SchemaRoundedIcon from '@mui/icons-material/SchemaRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import { RouteEnum }  from '../../enums';
 import style from './WelcomePage.module.scss';
-import { RouteEnum } from '../../enums';
 
 type WelcomeInfoType = {
   title: string;
@@ -44,7 +43,6 @@ const WELCOME_INFO: WelcomeInfoType[] = [
 const WelcomePage: FC = () => {
   const navigate = useNavigate();
   const { wrapper } = style;
-  const navigate = useNavigate();
 
   const handleLogIn = () => {
     navigate(RouteEnum.Login);
