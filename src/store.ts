@@ -3,6 +3,7 @@ import formsReducer from './slices/formsSlice';
 import taskReducer from './slices/taskSlice';
 import boardReducer from './slices/boardSlice';
 import authReducer from './slices/authSlice';
+import baseApi from './api/base.api';
 import { authApi } from './api/auth.api';
 
 export const store = configureStore({
@@ -13,7 +14,7 @@ export const store = configureStore({
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
-  middleware: (getDefaultMiddlware) => getDefaultMiddlware().concat(authApi.middleware)
+  middleware: (getDefaultMiddlware) => getDefaultMiddlware().concat(baseApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;
