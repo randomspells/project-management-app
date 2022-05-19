@@ -1,14 +1,14 @@
 import React, { FC, MouseEvent, useState } from 'react';
-import { Card, CardContent, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import { useNavigate } from 'react-router-dom';
-import { BoardInterface } from '../../interfaces';
+import { BoardsGetInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentBoard } from '../../slices/boardSlice';
 import { RouteEnum } from '../../enums';
 
-const Board: FC<BoardInterface> = ({ id, title }) => {
+const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -18,16 +18,18 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
-  const handleDeleteClick = (e: MouseEvent) => {
-    e.stopPropagation();
-    toggleConfirmation();
-  };
-
   const handleBoardClick = (e: MouseEvent) => {
     e.stopPropagation();
     dispatch(setCurrentBoard(id));
     navigate(`${RouteEnum.Board}/${id}`);
   };
+
+  const handleDeleteClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    toggleConfirmation();
+  };
+
+  const handleAcceptClick = () => {};
 
   return (
     <Card
@@ -39,12 +41,25 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
         }}
       >
-        <Typography component='h5' variant='h5' sx={{ color: 'common.white' }}>
-          {title}
-        </Typography>
+        <Box>
+          <Typography
+            component='h5'
+            variant='h5'
+            sx={{ color: 'common.white' }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            component='p'
+            variant='body1'
+            sx={{ color: 'common.white' }}
+          >
+            {description}
+          </Typography>
+        </Box>
         <IconButton
           aria-label='delete board'
           color='secondary'
@@ -56,7 +71,7 @@ const Board: FC<BoardInterface> = ({ id, title }) => {
           itemTitle={title}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={() => console.log('Deleting board...')}
+          handleAccept={handleAcceptClick}
         />
       </CardContent>
     </Card>

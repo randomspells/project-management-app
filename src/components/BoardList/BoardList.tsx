@@ -17,10 +17,10 @@ const BoardList: FC = () => (
     }}
   >
     {FAKE_BOARDS.map((board) => {
-      const { id, title } = board;
+      const { id, title, description } = board;
       return (
         <Grid item component='li' key={id} xs={12} md={6} lg={3}>
-          <Board title={title} id={id} />
+          <Board title={title} id={id} description={description} />
         </Grid>
       );
     })}
