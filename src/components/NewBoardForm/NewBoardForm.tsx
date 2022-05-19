@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useCreateBoardMutation } from '../../api/board.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { InputInterface, FormDataInterface } from '../../interfaces';
@@ -42,8 +43,18 @@ const NewBoardForm: FC = () => {
     dispatch(toggleNewBoardForm());
   };
 
-  const onSubmit = (data: FormDataInterface) => {
-    console.log(data);
+  const [ createBoard, {isError, error, status} ] = useCreateBoardMutation();
+
+  const onSubmit = (formData: FormDataInterface) => {
+    // template
+    console.log(formData, isError, error, status);
+    createBoard(	
+      {
+        title: formData.boardTitle,
+        description: "My board tasks"
+      })
+    .catch((e) => console.error(e)); 
+    // end template
     handleClose();
   };
 
