@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import SchemaRoundedIcon from '@mui/icons-material/SchemaRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
+import { RouteEnum }  from '../../enums';
 import style from './WelcomePage.module.scss';
 import { RouteEnum } from '../../enums';
 
@@ -41,6 +42,7 @@ const WELCOME_INFO: WelcomeInfoType[] = [
 ];
 
 const WelcomePage: FC = () => {
+  const navigate = useNavigate();
   const { wrapper } = style;
   const navigate = useNavigate();
 
