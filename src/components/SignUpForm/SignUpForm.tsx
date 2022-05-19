@@ -32,7 +32,7 @@ const SignUpForm: FC = () => {
           label="Name"
           type="text"
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText="Please enter only letters (>2)"
+          errorText="Please enter only EN letters. Min length 3."
           defaultValue=""
           control={control}
         />
@@ -41,7 +41,7 @@ const SignUpForm: FC = () => {
           label="Login"
           type="text"
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText="Please enter only letters (>2)"
+          errorText="Please enter only EN letters. Min length 3."
           defaultValue=""
           control={control}
         />
@@ -50,7 +50,7 @@ const SignUpForm: FC = () => {
           label="Password"
           type="password"
           rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
-          errorText="Please enter EN letters and numbers (min length 6)"
+          errorText="Please enter EN letters and numbers. Min length 6."
           defaultValue=""
           control={control}
         />

@@ -8,6 +8,7 @@ import { FormDataInterface } from '../../interfaces';
 import { useSigninMutation } from '../../api/auth.api';
 import { useAppDispatch } from '../../hooks/index';
 import { login } from '../../slices/authSlice';
+import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum }  from '../../enums';
 
 const LoginForm: FC = () => {
@@ -41,8 +42,8 @@ const LoginForm: FC = () => {
           name="login"
           label="Login"
           type="text"
-          rules={{ required: true }}
-          errorText="This field can`t be empty"
+          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
+          errorText="Please enter only EN letters. Min length 3."
           defaultValue=""
           control={control}
         />
@@ -50,8 +51,8 @@ const LoginForm: FC = () => {
           name="password"
           label="Password"
           type="password"
-          rules={{ required: true }}
-          errorText="This field can`t be empty"
+          rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
+          errorText="Please enter EN letters and numbers. Min length 6."
           defaultValue=""
           control={control}
         />
