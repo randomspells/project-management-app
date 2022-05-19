@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import Layout from './components/Layout/Layout';
@@ -20,6 +20,17 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { RouteEnum } from './enums';
+import { protectedRouteInterface } from './interfaces';
+
+const ProtectedRoute: FC<protectedRouteInterface> = ({ isAuthentificated, component: RouteComponent }) => {
+  if (!isAuthentificated) {
+    return <Navigate to={RouteEnum.Login} replace />;
+  }
+
+  return <RouteComponent />;
+};
+
+const isAuthentificated = false;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -39,7 +50,9 @@ root.render(
               />
               <Route path={RouteEnum.Login} element={<LoginForm />} />
               <Route path={RouteEnum.Signup} element={<SignUpForm />} />
-              <Route path={RouteEnum.EditProfile} element={<EditProfileForm />} />
+              <Route path={RouteEnum.EditProfile} element={
+                <ProtectedRoute isAuthentificated={isAuthentificated} component={EditProfileForm} />
+              } />
               <Route path='*' element={<ErrorPage />} />
             </Route>
           </Routes>
