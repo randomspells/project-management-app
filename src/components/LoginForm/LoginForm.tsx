@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Button, Link, Typography, Box, Avatar, Alert } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
+import { Container, Button, Typography, Box, Avatar, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
@@ -60,9 +60,7 @@ const LoginForm: FC = () => {
         <Button type="submit" fullWidth variant="contained" size="large" sx={{ mt: 3, mb: 2 }} disabled={!isValid}>
           Login
         </Button>
-        <Link href={RouteEnum.Signup} variant="body2" sx={{ mx: 'auto' }} onClick={()=>{console.log('dddd')}}>
-          {`Don't have an account? Sign Up`}
-        </Link>
+        <Link to={RouteEnum.Signup}>{`Don't have an account? Sign Up`}</Link>
       </Box>
     </Container> 
   )
