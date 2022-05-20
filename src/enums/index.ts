@@ -19,4 +19,27 @@ export enum ErrorMessageEnum {
   NotAuthorized = 'User should be authorized',
   NotFound = 'Resource is not found',
   UnknownError = 'An error occured',
+  AppError = 'An application error occured',
+  ClientError = 'Client network error occured',
+  ServerError = 'Server network error occured',
+}
+
+export enum StorageEnum {
+  Token = 'token',
+  User = 'user',
+}
+
+export enum TagsEnum {
+  Boards = 'Boards',
+}
+
+export enum EndpointsEnum {
+  Boards = 'boards',
+}
+
+export enum MethodsEnum {
+  Get = 'GET',
+  Put = 'PUT',
+  Delete = 'DELETE',
+  Post = 'POST',
 }

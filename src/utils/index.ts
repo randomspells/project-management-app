@@ -1,5 +1,8 @@
 // functions from MUI Docs
 
+import { ErrorMessageEnum } from '../enums';
+import { ApiErrorType } from '../interfaces';
+
 export const stringToColor = (string: string) => {
   let hash = 0;
   let i;
@@ -34,3 +37,36 @@ export const stringAvatar = (name: string) => ({
   },
   children: getFirstLetters(name),
 });
+
+// Session storage tools
+
+export const getItemFromStorage = (key: string): unknown => {
+  if (sessionStorage.getItem(key)) {
+    return JSON.parse(sessionStorage.getItem(key) || '');
+  }
+  return '';
+};
+
+export const saveItemToStorage = (key: string, value: unknown): void => {
+  sessionStorage.setItem(key, JSON.stringify(value));
+};
+
+export const clearStorage = (): void => {
+  sessionStorage.clear();
+};
+
+// Error handling
+
+export const getErrorMessage = (error: ApiErrorType): string => {
+  if (error === undefined) return '';
+  if (!('status' in error)) {
+    return ErrorMessageEnum.AppError;
+  }
+  if (error.status >= 400 && error.status < 500) {
+    return ErrorMessageEnum.ClientError;
+  }
+  if (error.status >= 500 && error.status < 600) {
+    return ErrorMessageEnum.ServerError;
+  }
+  return ErrorMessageEnum.UnknownError;
+};

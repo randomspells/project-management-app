@@ -1,3 +1,5 @@
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import React from 'react';
 import { Control } from 'react-hook-form';
 
@@ -68,3 +70,5 @@ export interface protectedRouteInterface {
   isAuthentificated: boolean;
   component: React.ComponentType;
 };
+
+export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;
