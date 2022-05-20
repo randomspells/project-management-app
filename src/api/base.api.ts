@@ -14,6 +14,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseApi = createApi({
   baseQuery,
+  tagTypes: ['Boards'],
   endpoints: () => ({}),
 })
 
