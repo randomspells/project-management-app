@@ -12,7 +12,7 @@ import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
 const BOARD_TITLE_INPUT: InputInterface = {
   type: 'text',
-  name: 'boardTitle',
+  name: 'title',
   label: 'Board title',
   errorText: 'Title is required',
   rules: { required: true },
@@ -20,7 +20,7 @@ const BOARD_TITLE_INPUT: InputInterface = {
 
 const BOARD_DESCRIPTION_INPUT: InputInterface = {
   type: 'text',
-  name: 'boardDescription',
+  name: 'description',
   label: 'Board description',
   errorText: 'Description is required',
   rules: { required: true },
@@ -51,10 +51,10 @@ const NewBoardForm: FC = () => {
     dispatch(setAlertError({ error }));
   }, [status, error]);
 
-  const onSubmit = (formData: FormDataInterface) => {
+  const onSubmit = ({title, description}: FormDataInterface) => {
     createBoard({
-      title: formData.boardTitle,
-      description: formData.boardDescription,
+      title,
+      description,
     }).catch((e) => dispatch(setAlertError({ e })));
     dispatch(toggleAlertIsOpen());
     handleClose();
