@@ -5,7 +5,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import TaskList from '../../components/TaskList/TaskList';
 import { FAKE_TASKS } from '../../constants';
 import { ColumnInterface } from '../../interfaces';
-import { toggleNewTaskListForm } from '../../slices/formsSlice';
+import { toggleNewTaskListForm } from '../../slices/formSlice';
 import { useAppDispatch } from '../../hooks';
 import { RouteEnum } from '../../enums';
 

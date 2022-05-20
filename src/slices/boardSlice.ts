@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface currentBoardInterface {
+interface CurrentBoardInterface {
   id: string;
   title: string;
 }
 
-interface boardState {
-  currentBoard: currentBoardInterface | null;
+interface BoardState {
+  currentBoard: CurrentBoardInterface | null;
 }
 
-const initialState: boardState = {
+const initialState: BoardState = {
   currentBoard: null,
 };
 

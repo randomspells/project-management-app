@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormDataInterface } from '../../interfaces';
-import { toggleEditTaskForm } from '../../slices/formsSlice';
+import { toggleEditTaskForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
@@ -34,7 +34,7 @@ const EditTaskForm: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const isEditTaskFormOpen = useAppSelector((state) => state.forms.isEditTaskFormOpen);
+  const isEditTaskFormOpen = useAppSelector((state) => state.form.isEditTaskFormOpen);
   const currentTaskTitle = useAppSelector((state) => state.task.currentTask?.title);
   const currentTaskDescription = useAppSelector((state) => state.task.currentTask?.description);
 
