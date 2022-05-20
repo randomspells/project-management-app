@@ -1,12 +1,14 @@
 import { Box, Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormDataInterface } from '../../interfaces';
 import { toggleNewTaskListForm } from '../../slices/formsSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
+import { useCreateColumnMutation } from '../../api/columns.api';
 
 const TASK_LIST_TITLE_INPUT = {
   type: 'text',
@@ -27,17 +29,27 @@ const NewTaskListForm: FC = () => {
   const isNewTaskListFormOpen = useAppSelector((state) => state.forms.isNewTaskListFormOpen);
   const dispatch = useAppDispatch();
 
+  const [ createColumn ] = useCreateColumnMutation();
+  const { boardId } = useParams();
+
   const handleClose = () => {
     reset();
     dispatch(toggleNewTaskListForm());
   };
 
   const onSubmit = (data: FormDataInterface) => {
-    console.log(data);
+    const columnData = {
+      body: {
+        title: data.taskListTitle,
+        order: 1
+      },
+      boardId
+    }
+
+    createColumn(columnData)
+      .catch((e) => console.error(e)); 
     handleClose();
   };
-
-  // POST /boards/:boardId/columns request
 
   const { type, name, label, error, rules } = TASK_LIST_TITLE_INPUT;
 
