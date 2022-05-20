@@ -10,7 +10,7 @@ export const boardApi = baseApi.injectEndpoints({
     }),
     createBoard: builder.mutation<void, BoardsPostInterface>({
       query: (body) => ({
-        url: `${EndpointsEnum.Boards}awd`,
+        url: EndpointsEnum.Boards,
         method: MethodsEnum.Post,
         body,
       }),
