@@ -1,11 +1,12 @@
 import { Box, Button } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateBoardMutation } from '../../api/board.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { InputInterface, FormDataInterface } from '../../interfaces';
-import { toggleNewBoardForm } from '../../slices/formsSlice';
+import { setAlertError, setAlertStatus, toggleAlertIsOpen } from '../../slices/alertSlice';
+import { toggleNewBoardForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
@@ -34,7 +35,7 @@ const NewBoardForm: FC = () => {
   } = useForm({ mode: 'onChange' });
 
   const isNewBoardFormOpen = useAppSelector(
-    (state) => state.forms.isNewBoardFormOpen,
+    (state) => state.form.isNewBoardFormOpen,
   );
   const dispatch = useAppDispatch();
 
@@ -43,22 +44,21 @@ const NewBoardForm: FC = () => {
     dispatch(toggleNewBoardForm());
   };
 
-  const [ createBoard, {isError, error, status} ] = useCreateBoardMutation();
+  const [createBoard, { error, status }] = useCreateBoardMutation();
+
+  useEffect(() => {
+    dispatch(setAlertStatus({ status }));
+    dispatch(setAlertError({ error }));
+  }, [status, error]);
 
   const onSubmit = (formData: FormDataInterface) => {
-    // template
-    console.log(formData, isError, error, status);
-    createBoard(	
-      {
-        title: formData.boardTitle,
-        description: "My board tasks"
-      })
-    .catch((e) => console.error(e)); 
-    // end template
+    createBoard({
+      title: formData.boardTitle,
+      description: formData.boardDescription,
+    }).catch((e) => dispatch(setAlertError({ e })));
+    dispatch(toggleAlertIsOpen());
     handleClose();
   };
-
-  // POST /boards request
 
   const {
     name: titleName,

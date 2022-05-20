@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
+import Alerts from '../Alerts/Alerts';
 import EditTaskForm from '../EditTaskForm/EditTaskForm';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -16,6 +17,7 @@ const Layout: FC = () => (
       rowGap: 2,
     }}
   >
+    <Alerts />
     <Header />
     <Outlet />
     <Footer />
