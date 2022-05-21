@@ -53,6 +53,5 @@ export interface ControlledInputInterface {
 }
 
 export interface protectedRouteInterface {
-  isAuthentificated: boolean;
-  component: React.ComponentType;
+  children?: React.ReactElement;
 };

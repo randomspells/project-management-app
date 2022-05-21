@@ -53,7 +53,7 @@ const WelcomePage: FC = () => {
   };
 
   return (
-    <Container component='main' className={wrapper} sx={{ mb: 4, flex: 'auto' }}>
+    <Container component='main' className={wrapper} sx={{ mb: 4, flex: 'auto', mt: 2 }}>
       <Box component='nav' sx={{ display: 'flex', columnGap: 1, justifyContent: 'flex-end' }}>
         <Button
           variant='contained'

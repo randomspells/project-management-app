@@ -1,14 +1,16 @@
 import { Box } from '@mui/material';
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import EditTaskForm from '../EditTaskForm/EditTaskForm';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import NewBoardForm from '../NewBoardForm/NewBoardForm';
 import NewTaskListForm from '../NewTaskListForm/NewTaskListForm';
 
-const Layout: FC = () => (
-  <Box
+const Layout: FC = () => {
+  const isAuthenticated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
+  return <Box
     sx={{
       display: 'flex',
       flexDirection: 'column',
@@ -16,13 +18,13 @@ const Layout: FC = () => (
       rowGap: 2,
     }}
   >
-    <Header />
+    {isAuthenticated && <Header />}
     <Outlet />
     <Footer />
     <NewBoardForm />
     <NewTaskListForm />
     <EditTaskForm />
   </Box>
-);
+};
 
 export default Layout;
