@@ -24,8 +24,8 @@ import { protectedRouteInterface } from './interfaces';
 import { useAppSelector } from './hooks';
 
 const ProtectedRoute: FC<protectedRouteInterface> = ({ children }) => {
-  const isAuthentificated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
-  if (!isAuthentificated) {
+  const isAuthenticated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
+  if (!isAuthenticated) {
     return <Navigate to={RouteEnum.Login} replace />;
   }
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Control } from 'react-hook-form';
 
 export interface SignInInterface {
@@ -52,5 +53,5 @@ export interface ControlledInputInterface {
 }
 
 export interface protectedRouteInterface {
-  children?: any;
+  children?: React.ReactElement;
 };

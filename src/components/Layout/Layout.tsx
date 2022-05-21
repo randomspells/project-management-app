@@ -9,7 +9,7 @@ import NewBoardForm from '../NewBoardForm/NewBoardForm';
 import NewTaskListForm from '../NewTaskListForm/NewTaskListForm';
 
 const Layout: FC = () => {
-  const isAuthentificated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
+  const isAuthenticated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
   return <Box
     sx={{
       display: 'flex',
@@ -18,7 +18,7 @@ const Layout: FC = () => {
       rowGap: 2,
     }}
   >
-    {isAuthentificated && <Header />}
+    {isAuthenticated && <Header />}
     <Outlet />
     <Footer />
     <NewBoardForm />
