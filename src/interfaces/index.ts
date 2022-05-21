@@ -1,3 +1,5 @@
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import React from 'react';
 import { Control } from 'react-hook-form';
 
@@ -32,26 +34,40 @@ export interface ColumnInterface {
   tasks: TaskInterface[];
 }
 
-export interface BoardInterface {
-  id: string;
+export interface BoardsPostInterface {
   title: string;
+  description: string;
+}
+
+export interface BoardsGetInterface extends BoardsPostInterface {
+  id: string;
+}
+
+export interface BoardInterface extends BoardsGetInterface {
+  columns: ColumnInterface[];
 }
 
 export interface FormDataInterface {
   [x: string]: string;
 }
 
-export interface ControlledInputInterface {
-  inputName: string;
-  labelText: string;
+export interface InputInterface {
+  type: string;
+  name: string;
+  label: string;
   errorText: string;
-  validationRules: Record<string, unknown>;
-  inputControl: Control;
-  inputType: string;
+  rules: Record<string, unknown>;
   multiline?: boolean;
-  maxRows?: number;
+  rows?: number;
+}
+
+export interface ControlledInputInterface extends InputInterface {
+  defaultValue: string;
+  control: Control;
 }
 
 export interface protectedRouteInterface {
   children?: React.ReactElement;
 };
+
+export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;

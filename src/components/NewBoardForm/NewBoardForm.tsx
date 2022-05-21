@@ -1,19 +1,28 @@
 import { Box, Button } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateBoardMutation } from '../../api/board.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { FormDataInterface } from '../../interfaces';
-import { toggleNewBoardForm } from '../../slices/formsSlice';
+import { InputInterface, FormDataInterface } from '../../interfaces';
+import { setAlertError, setAlertStatus, toggleAlertIsOpen } from '../../slices/alertSlice';
+import { toggleNewBoardForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
-const BOARD_TITLE_INPUT = {
+const BOARD_TITLE_INPUT: InputInterface = {
   type: 'text',
-  name: 'boardTitle',
+  name: 'title',
   label: 'Board title',
   errorText: 'Title is required',
+  rules: { required: true },
+};
+
+const BOARD_DESCRIPTION_INPUT: InputInterface = {
+  type: 'text',
+  name: 'description',
+  label: 'Board description',
+  errorText: 'Description is required',
   rules: { required: true },
 };
 
@@ -25,7 +34,9 @@ const NewBoardForm: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const isNewBoardFormOpen = useAppSelector((state) => state.forms.isNewBoardFormOpen);
+  const isNewBoardFormOpen = useAppSelector(
+    (state) => state.form.isNewBoardFormOpen,
+  );
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -33,37 +44,73 @@ const NewBoardForm: FC = () => {
     dispatch(toggleNewBoardForm());
   };
 
-  const [ createBoard, {isError, error, status} ] = useCreateBoardMutation();
+  const [createBoard, { error, status }] = useCreateBoardMutation();
 
-  const onSubmit = (formData: FormDataInterface) => {
-    // template
-    console.log(formData, isError, error, status);
-    createBoard(	
-      {
-        title: formData.boardTitle,
-        description: "My board tasks"
-      })
-    .catch((e) => console.error(e)); 
-    // end template
+  useEffect(() => {
+    dispatch(setAlertStatus({ status }));
+    dispatch(setAlertError({ error }));
+  }, [status, error]);
+
+  const onSubmit = ({title, description}: FormDataInterface) => {
+    createBoard({
+      title,
+      description,
+    }).catch((e) => dispatch(setAlertError({ e })));
+    dispatch(toggleAlertIsOpen());
     handleClose();
   };
 
-  // POST /boards request
+  const {
+    name: titleName,
+    label: titleLabel,
+    errorText: titleErrorText,
+    rules: titleRules,
+    type: titleType,
+  } = BOARD_TITLE_INPUT;
 
-  const { name, label, errorText, rules, type } = BOARD_TITLE_INPUT;
+  const {
+    type: descriptionType,
+    name: descriptionName,
+    label: descriptionLabel,
+    errorText: descriptionErrorText,
+    rules: descriptionRules,
+  } = BOARD_DESCRIPTION_INPUT;
+
   return (
-    <FormModal isOpen={isNewBoardFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.NewBoard}>
+    <FormModal
+      isOpen={isNewBoardFormOpen}
+      handleClose={handleClose}
+      formTitle={FormTitleEnum.NewBoard}
+    >
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
-          type={type}
-          name={name}
-          label={label}
-          errorText={errorText}
-          rules={rules}
+          type={titleType}
+          name={titleName}
+          label={titleLabel}
+          errorText={titleErrorText}
+          rules={titleRules}
           control={control}
           defaultValue=''
         />
-        <Button type='submit' fullWidth variant='contained' size='large' sx={{ mt: 2, mb: 2 }} disabled={!isValid}>
+        <ControlledInput
+          type={descriptionType}
+          name={descriptionName}
+          label={descriptionLabel}
+          errorText={descriptionErrorText}
+          rules={descriptionRules}
+          control={control}
+          defaultValue=''
+          rows={4}
+          multiline
+        />
+        <Button
+          type='submit'
+          fullWidth
+          variant='contained'
+          size='large'
+          sx={{ mt: 2, mb: 2 }}
+          disabled={!isValid}
+        >
           Create board
         </Button>
       </Box>

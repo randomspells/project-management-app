@@ -1,4 +1,4 @@
-import { BoardInterface, TaskInterface } from '../interfaces';
+import { BoardsGetInterface, TaskInterface } from '../interfaces';
 
 export const FAKE_TASKS: TaskInterface[] = [
   {
@@ -14,7 +14,8 @@ export const FAKE_TASKS: TaskInterface[] = [
     id: '40af606c-c0bb-47d1-bc20-a2857242cde4',
     title: 'Task 2',
     order: 2,
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. More words... And more...',
+    description:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. More words... And more...',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
     done: true,
     files: [],
@@ -23,7 +24,8 @@ export const FAKE_TASKS: TaskInterface[] = [
     id: '40af606c-c0bb-47d1-bc20-a2857242cde5',
     title: 'Task 3',
     order: 3,
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    description:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
     done: false,
     files: [],
@@ -32,7 +34,8 @@ export const FAKE_TASKS: TaskInterface[] = [
     id: '40af606c-c0bb-47d1-bc20-a2857242cde6',
     title: 'Task 4',
     order: 4,
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    description:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
     done: false,
     files: [],
@@ -41,23 +44,25 @@ export const FAKE_TASKS: TaskInterface[] = [
     id: '40af606c-c0bb-47d1-bc20-a2857242cde7',
     title: 'Task 5',
     order: 5,
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    description:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
     done: false,
     files: [],
   },
 ];
 
-export const FAKE_BOARDS: BoardInterface[] = [
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d5', title: 'Homework tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d6', title: 'Work tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d7', title: 'Home tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d8', title: 'Other tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d9', title: 'Homework tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d0', title: 'Work tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d1', title: 'Home tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d2', title: 'Other tasks' },
-  { id: '9a111e19-24ec-43e1-b8c4-13776842b8d3', title: 'Other tasks' },
+export const FAKE_BOARDS: BoardsGetInterface[] = [
+  {
+    id: '9a111e19-24ec-43e1-b8c4-13776842b8d5',
+    title: 'Homework tasks',
+    description: 'Some description',
+  },
+  {
+    id: '9a111e19-24ec-43e1-b8c4-13776842b8d6',
+    title: 'Work tasks',
+    description: 'Some description',
+  },
 ];
 
 export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;

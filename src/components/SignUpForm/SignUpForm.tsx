@@ -8,14 +8,18 @@ import { FormDataInterface } from '../../interfaces';
 import { useSignupMutation } from '../../api/auth.api';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum }  from '../../enums';
+import { setAlertError } from '../../slices/alertSlice';
+import { useAppDispatch } from '../../hooks';
 
 const SignUpForm: FC = () => {
   const { handleSubmit, control, formState: { isValid }} = useForm({ mode: 'onChange' });
   const [ signup, {isError, error, status} ] = useSignupMutation();
 
+  const dispatch = useAppDispatch();
+
   const onSubmit = async (formData: FormDataInterface) => {
     await signup(formData)
-      .catch((e) => console.error(e)); 
+      .catch((e) => dispatch(setAlertError(e))); 
   }
 
   return (

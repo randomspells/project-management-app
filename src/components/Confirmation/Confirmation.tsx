@@ -19,13 +19,17 @@ const Confirmation: FC<ConfirmationProps> = ({
   toggleConfirmation,
   handleAccept,
 }) => {
-  const handleDeclineClick = (e: MouseEvent) => {
+  const stopDialogPropagation = (e: MouseEvent) => {
     e.stopPropagation();
+  };
+
+  const handleDeclineClick = (e: MouseEvent) => {
+    stopDialogPropagation(e);
     toggleConfirmation();
   };
 
   const handleAcceptClick = (e: MouseEvent) => {
-    e.stopPropagation();
+    stopDialogPropagation(e);
     toggleConfirmation();
     handleAccept();
   };
@@ -33,6 +37,7 @@ const Confirmation: FC<ConfirmationProps> = ({
   return (
     <Dialog
       open={isOpen}
+      onClick={stopDialogPropagation}
       onClose={handleDeclineClick}
       aria-describedby='confirmation dialog'
     >

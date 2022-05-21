@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../hooks/index';
 import { login } from '../../slices/authSlice';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum }  from '../../enums';
+import { setAlertError } from '../../slices/alertSlice';
 
 const LoginForm: FC = () => {
   const { handleSubmit, control, getValues, formState: { isValid }} = useForm({ mode: 'onChange' });
@@ -19,7 +20,7 @@ const LoginForm: FC = () => {
 
   const onSubmit = (formData: FormDataInterface) => {
     signin(formData)
-      .catch((e) => console.error(e)); 
+      .catch((e) => dispatch(setAlertError(e))); 
   }
 
   useEffect(() => {
