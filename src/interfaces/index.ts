@@ -67,8 +67,7 @@ export interface ControlledInputInterface extends InputInterface {
 }
 
 export interface protectedRouteInterface {
-  isAuthentificated: boolean;
-  component: React.ComponentType;
+  children?: React.ReactElement;
 };
 
 export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;

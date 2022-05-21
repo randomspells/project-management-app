@@ -12,6 +12,7 @@ import { logout} from '../../slices/authSlice';
 import { useAppDispatch } from '../../hooks/index';
 import styles from './Header.module.scss';
 
+
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
