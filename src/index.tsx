@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, Outlet } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import Layout from './components/Layout/Layout';
@@ -21,16 +21,17 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { RouteEnum } from './enums';
 import { protectedRouteInterface } from './interfaces';
+import { useAppSelector } from './hooks';
 
-const ProtectedRoute: FC<protectedRouteInterface> = ({ isAuthentificated, component: RouteComponent }) => {
+const ProtectedRoute: FC<protectedRouteInterface> = ({ children }) => {
+  const isAuthentificated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
   if (!isAuthentificated) {
     return <Navigate to={RouteEnum.Login} replace />;
   }
 
-  return <RouteComponent />;
+  return children || <Outlet />;
 };
 
-const isAuthentificated = false;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -43,16 +44,15 @@ root.render(
           <Routes>
             <Route path={RouteEnum.Welcome} element={<Layout />}>
               <Route index element={<WelcomePage />} />
-              <Route path={RouteEnum.Main} element={<MainPage />} />
-              <Route
-                path={`${RouteEnum.Board}/:boardId`}
-                element={<BoardPage />}
-              />
+              <Route element={<ProtectedRoute />}>
+                <Route path={RouteEnum.Main} element={<MainPage />} />
+                <Route path={RouteEnum.Board} element={<BoardPage />}>
+                  <Route path=':boardId' element={<BoardPage />} />
+                </Route>
+                <Route path={RouteEnum.EditProfile} element={<EditProfileForm />} />
+              </Route>
               <Route path={RouteEnum.Login} element={<LoginForm />} />
               <Route path={RouteEnum.Signup} element={<SignUpForm />} />
-              <Route path={RouteEnum.EditProfile} element={
-                <ProtectedRoute isAuthentificated={isAuthentificated} component={EditProfileForm} />
-              } />
               <Route path='*' element={<ErrorPage />} />
             </Route>
           </Routes>
