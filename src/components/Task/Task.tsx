@@ -13,14 +13,12 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import ModeEditRoundedIcon from '@mui/icons-material/ModeEditRounded';
 import { stringAvatar } from '../../utils';
 import { TaskInterface } from '../../interfaces';
-import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
 import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { toggleEditTaskForm } from '../../slices/formSlice';
 import { setCurrentTask } from '../../slices/taskSlice';
 
 const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
@@ -32,10 +30,6 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
 
   const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
-  };
-
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
   };
 
   const {
@@ -54,22 +48,13 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
         sx={{ display: 'flex', justifyContent: 'space-between', columnGap: 1 }}
       >
         <Box sx={{ flex: 1 }}>
-          {isEditMode ? (
-            <TaskTitleEditInput
-              saveHandler={toggleEditMode}
-              closeHandler={toggleEditMode}
-              title={title}
-            />
-          ) : (
-            <Typography
-              component='h5'
-              variant='h5'
-              onClick={toggleEditMode}
-              sx={{ textDecoration: `${done ? 'line-through' : 'none'}` }}
-            >
-              {title}
-            </Typography>
-          )}
+          <Typography
+            component='h5'
+            variant='h5'
+            sx={{ textDecoration: `${done ? 'line-through' : 'none'}` }}
+          >
+            {title}
+          </Typography>
         </Box>
         <Avatar sx={{ bgcolor, width: 30, height: 30, fontSize: 14 }}>
           {children}
@@ -96,7 +81,8 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
           itemTitle={title}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={() => console.log('Deleting task...')} />
+          handleAccept={() => console.log('Deleting task...')}
+        />
       </Box>
     </Paper>
   );

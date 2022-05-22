@@ -19,6 +19,7 @@ const TaskTitleEditInput: FC<TaskTitleInputProps> = ({
     id='title'
     size='small'
     value={title}
+    sx={{ width: '270px' }}
     endAdornment={
       <InputAdornment position='end'>
         <IconButton
