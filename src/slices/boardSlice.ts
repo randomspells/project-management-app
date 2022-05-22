@@ -20,12 +20,9 @@ export const boardSlice = createSlice({
     setCurrentBoard: (state, action) => {
       state.currentBoard = action.payload;
     },
-    deleteBoard: (state) => {
-      state.currentBoard = null;
-    }
   },
 });
 
-export const { setCurrentBoard, deleteBoard } = boardSlice.actions;
+export const { setCurrentBoard } = boardSlice.actions;
 
 export default boardSlice.reducer;
