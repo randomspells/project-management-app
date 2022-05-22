@@ -39,7 +39,7 @@ const ControlledInput: FC<ControlledInputProps> = ({
         multiline={multiline}
         rows={rows}
         defaultValue={defaultValue}
-        margin='dense'
+        margin='normal'
         autoComplete='off'
         fullWidth
       />

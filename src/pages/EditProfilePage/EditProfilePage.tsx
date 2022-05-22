@@ -3,11 +3,11 @@ import {Button, Box, Stack} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
-import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { FormDataInterface } from "../../interfaces/index";
 
-const EditProfileForm: FC = () => {
+const EditProfilePage: FC = () => {
   const {
     handleSubmit,
     control,
@@ -80,4 +80,4 @@ const EditProfileForm: FC = () => {
   )
 };
 
-export default EditProfileForm;
+export default EditProfilePage;

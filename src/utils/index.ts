@@ -1,7 +1,9 @@
-// functions from MUI Docs
+import { MouseEvent } from 'react';
+
+// Avatar color generator
 
 import { ErrorMessageEnum } from '../enums';
-import { ApiErrorType } from '../interfaces';
+import { ApiErrorType, UserInterface } from '../interfaces';
 
 export const stringToColor = (string: string) => {
   let hash = 0;
@@ -69,4 +71,31 @@ export const getErrorMessage = (error: ApiErrorType): string => {
     return ErrorMessageEnum.ServerError;
   }
   return ErrorMessageEnum.UnknownError;
+};
+
+// Stop Propagation
+
+export const stopPropagation = (e: MouseEvent) => {
+  e.stopPropagation();
+};
+
+// get current user ID
+
+export const getCurrentUserId = (
+  users: UserInterface[],
+  login: string,
+): string | null => {
+  const currentUser = users.find((user) => user.login === login);
+  if (currentUser) {
+    return currentUser.id;
+  }
+  return null;
+};
+
+export const getUserLoginById = (users: UserInterface[], id: string) => {
+  const foundUser = users.find((user) => user.id === id);
+  if (foundUser) {
+    return foundUser.login;
+  }
+  return null;
 };

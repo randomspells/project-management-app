@@ -49,9 +49,7 @@ const EditTaskForm: FC = () => {
     console.log(data);
     handleClose();
   };
-
-  // PUT /boards/:boardId/columns/:columnId/tasks request
-
+  
   return (
     <FormModal isOpen={isEditTaskFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.EditTask}>
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>

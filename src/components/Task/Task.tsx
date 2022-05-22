@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -11,15 +11,19 @@ import {
 } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import ModeEditRoundedIcon from '@mui/icons-material/ModeEditRounded';
-import { stringAvatar } from '../../utils';
+import { getUserLoginById, stringAvatar } from '../../utils';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { toggleEditTaskForm } from '../../slices/formSlice';
 import { setCurrentTask } from '../../slices/taskSlice';
+import { useGetUsersQuery } from '../../api/auth.api';
 
-const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
+const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+  const [avatarColor, setAvatarColor] = useState<string>();
+  const [avatarChildren, setAvatarChildren] = useState<string>();
+  const { data: users } = useGetUsersQuery();
 
   const dispatch = useAppDispatch();
 
@@ -32,10 +36,18 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
-  const {
-    sx: { bgcolor },
-    children,
-  } = stringAvatar('jorn hsa');
+  useEffect(() => {
+    if (!users) return;
+    const login = getUserLoginById(users, userId);
+    if (login) {
+      const {
+        sx: { bgcolor },
+        children,
+      } = stringAvatar(login);
+      setAvatarChildren(children);
+      setAvatarColor(bgcolor);
+    }
+  }, [users]);
 
   return (
     <Paper
@@ -56,8 +68,10 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
             {title}
           </Typography>
         </Box>
-        <Avatar sx={{ bgcolor, width: 30, height: 30, fontSize: 14 }}>
-          {children}
+        <Avatar
+          sx={{ bgcolor: avatarColor, width: 30, height: 30, fontSize: 14 }}
+        >
+          {avatarChildren}
         </Avatar>
       </Box>
       <Typography component='p' variant='body1'>

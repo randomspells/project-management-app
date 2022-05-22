@@ -1,16 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { QueryStatus } from '@reduxjs/toolkit/dist/query';
 import { ApiErrorType } from '../interfaces';
 
 interface AlertState {
-  status: QueryStatus;
   error: ApiErrorType;
+  isSuccess: boolean;
   isOpen: boolean;
 }
 
 const initialState: AlertState = {
-  status: QueryStatus.uninitialized,
   error: undefined,
+  isSuccess: false,
   isOpen: false,
 };
 
@@ -18,10 +17,8 @@ export const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    setAlertStatus: (state, action) => {
-      state.status = action.payload.status;
-    },
-    setAlertError: (state, action) => {
+    setAlertResult: (state, action) => {
+      state.isSuccess = action.payload.isSuccess;
       state.error = action.payload.error;
     },
     toggleAlertIsOpen: (state) => {
@@ -30,6 +27,6 @@ export const alertSlice = createSlice({
   },
 });
 
-export const { setAlertStatus, setAlertError, toggleAlertIsOpen } = alertSlice.actions;
+export const { setAlertResult, toggleAlertIsOpen } = alertSlice.actions;
 
 export default alertSlice.reducer;

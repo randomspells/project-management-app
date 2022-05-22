@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { StorageEnum } from '../enums';
 import { saveItemToStorage, getItemFromStorage, clearStorage } from '../utils/index';
 
 interface AuthInterface {
@@ -10,12 +11,12 @@ interface AuthInterface {
 
 interface AuthState {
   currentUser: AuthInterface | null;
-  token: string;
+  currentId: string | null;
 }
 
 const initialState: AuthState = {
-  currentUser: getItemFromStorage('user') as AuthInterface,
-  token: getItemFromStorage('token') as string,
+  currentUser: getItemFromStorage(StorageEnum.User) as AuthInterface,
+  currentId: null,
 };
 
 export const authSlice = createSlice({
@@ -23,17 +24,20 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      state.currentUser = { ...action.payload, isAuthenticated: true };
-      saveItemToStorage('token', action.payload.token);
-      saveItemToStorage('user', action.payload);
+      const userData = { ...action.payload, isAuthenticated: true };
+      state.currentUser = userData;
+      saveItemToStorage(StorageEnum.User, userData);
     },
     logout: (state) => {
       state.currentUser = null;
       clearStorage();
     },
+    setUserId: (state, action) => {
+      state.currentId = action.payload.userId;
+    }
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setUserId } = authSlice.actions;
 
 export default authSlice.reducer;
