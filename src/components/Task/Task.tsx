@@ -96,8 +96,7 @@ const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
           itemTitle={title}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={() => console.log('Deleting task...')}
-        />
+          handleAccept={() => console.log('Deleting task...')} />
       </Box>
     </Paper>
   );

@@ -46,11 +46,6 @@ const NewBoardForm: FC = () => {
 
   const [createBoard, { error, status }] = useCreateBoardMutation();
 
-  useEffect(() => {
-    dispatch(setAlertStatus({ status }));
-    dispatch(setAlertError({ error }));
-  }, [status, error]);
-
   const onSubmit = ({title, description}: FormDataInterface) => {
     createBoard({
       title,
@@ -75,6 +70,11 @@ const NewBoardForm: FC = () => {
     errorText: descriptionErrorText,
     rules: descriptionRules,
   } = BOARD_DESCRIPTION_INPUT;
+
+  useEffect(() => {
+    dispatch(setAlertStatus({ status }));
+    dispatch(setAlertError({ error }));
+  }, [status, error]);
 
   return (
     <FormModal
