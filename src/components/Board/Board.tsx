@@ -7,9 +7,12 @@ import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentBoard } from '../../slices/boardSlice';
 import { RouteEnum } from '../../enums';
+import { useDeleteBoardMutation, useGetBoardIdQuery } from '../../api/board.api';
 
 const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+  const { data } = useGetBoardIdQuery(id);
+  const [deleteBoard] = useDeleteBoardMutation();
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -21,7 +24,7 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   const handleBoardClick = (e: MouseEvent) => {
     e.stopPropagation();
     dispatch(setCurrentBoard(id));
-    navigate(`${RouteEnum.Board}/${id}`);
+    navigate(`${RouteEnum.Board}/${data!.id}`);
   };
 
   const handleDeleteClick = (e: MouseEvent) => {
@@ -29,7 +32,9 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
     toggleConfirmation();
   };
 
-  const handleAcceptClick = () => {};
+  const handleAcceptClick = (boardId: string) => {
+    deleteBoard(boardId);
+  };
 
   return (
     <Card
@@ -69,6 +74,7 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
         </IconButton>
         <Confirmation
           itemTitle={title}
+          boardId={id}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
           handleAccept={handleAcceptClick}
