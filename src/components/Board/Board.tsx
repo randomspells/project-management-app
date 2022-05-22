@@ -7,15 +7,17 @@ import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentBoard } from '../../slices/boardSlice';
 import { RouteEnum } from '../../enums';
-import { useDeleteBoardMutation, useGetBoardIdQuery } from '../../api/board.api';
-import { setAlertError, setAlertStatus } from '../../slices/alertSlice';
+import { useDeleteBoardMutation, useGetBoardQuery } from '../../api/board.api';
+import { setAlertResult } from '../../slices/alertSlice';
+import { stopPropagation } from '../../utils';
 
 const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
-  const { data } = useGetBoardIdQuery(id);
-  const [deleteBoard, { error, status }] = useDeleteBoardMutation();
-  const navigate = useNavigate();
 
+  const { data: board = [] } = useGetBoardQuery(id);
+  const [deleteBoard, { error, isSuccess }] = useDeleteBoardMutation();
+
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const toggleConfirmation = () => {
@@ -23,26 +25,23 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   };
 
   const handleBoardClick = (e: MouseEvent) => {
-    e.stopPropagation();
-    dispatch(setCurrentBoard(id));
-    if (data?.id) {
-      navigate(`${RouteEnum.Board}/${data.id}`);
-    }
+    stopPropagation(e);
+    dispatch(setCurrentBoard(board));
+    navigate(`${RouteEnum.Board}/${id}`);
   };
 
   const handleDeleteClick = (e: MouseEvent) => {
-    e.stopPropagation();
+    stopPropagation(e);
     toggleConfirmation();
   };
 
   const handleAcceptClick = () => {
-    deleteBoard(id).catch((e) => dispatch(setAlertError(e)));
+    deleteBoard(id).catch((e) => dispatch(setAlertResult({ error: e })));
   };
 
   useEffect(() => {
-    dispatch(setAlertError({ error }));
-    dispatch(setAlertStatus({ status }));
-  }, [error, status]);
+    dispatch(setAlertResult({ error, isSuccess }));
+  }, [error, isSuccess]);
 
   return (
     <Card

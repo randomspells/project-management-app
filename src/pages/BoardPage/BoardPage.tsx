@@ -3,34 +3,13 @@ import { Box, Button, Container, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import TaskList from '../../components/TaskList/TaskList';
-import { FAKE_TASKS } from '../../constants';
-import { ColumnInterface } from '../../interfaces';
 import { toggleNewTaskListForm } from '../../slices/formSlice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RouteEnum } from '../../enums';
 
-const FAKE_COLUMNS: ColumnInterface[] = [
-  {
-    id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4d',
-    title: 'Project',
-    order: 1,
-    tasks: FAKE_TASKS,
-  },
-  {
-    id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4f',
-    title: 'In progress',
-    order: 2,
-    tasks: FAKE_TASKS.slice(0, 2),
-  },
-  {
-    id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4e',
-    title: 'Done',
-    order: 3,
-    tasks: [],
-  },
-];
-
 const BoardPage: FC = () => {
+  const currentBoard = useAppSelector((state) => state.board.currentBoard);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -60,10 +39,11 @@ const BoardPage: FC = () => {
           my: 1,
         }}
       >
-        {FAKE_COLUMNS.map((column) => {
-          const { id, title, tasks } = column;
-          return <TaskList key={id} title={title} tasks={tasks} />;
-        })}
+        {currentBoard &&
+          currentBoard.columns.map((column) => {
+            const { id, title, tasks } = column;
+            return <TaskList key={id} title={title} tasks={tasks} />;
+          })}
       </Box>
     </Container>
   );

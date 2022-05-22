@@ -1,16 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getItemFromStorage, saveItemToStorage } from '../utils/index';
 
-interface CurrentBoardInterface {
-  id: string;
-  title: string;
-}
+import { BoardInterface } from '../interfaces';
 
 interface BoardState {
-  currentBoard: CurrentBoardInterface | null;
+  currentBoard: BoardInterface | null;
 }
 
 const initialState: BoardState = {
-  currentBoard: null,
+  currentBoard: (getItemFromStorage('currentBoard') as BoardInterface) || null,
 };
 
 export const boardSlice = createSlice({
@@ -19,6 +17,7 @@ export const boardSlice = createSlice({
   reducers: {
     setCurrentBoard: (state, action) => {
       state.currentBoard = action.payload;
+      saveItemToStorage('currentBoard', action.payload);
     },
   },
 });
