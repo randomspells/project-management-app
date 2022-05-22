@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormDataInterface } from '../../interfaces';
-import { toggleNewTaskListForm } from '../../slices/formsSlice';
+import { toggleNewTaskListForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 import { useCreateColumnMutation } from '../../api/columns.api';
@@ -26,7 +26,7 @@ const NewTaskListForm: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const isNewTaskListFormOpen = useAppSelector((state) => state.forms.isNewTaskListFormOpen);
+  const isNewTaskListFormOpen = useAppSelector((state) => state.form.isNewTaskListFormOpen);
   const dispatch = useAppDispatch();
 
   const [ createColumn ] = useCreateColumnMutation();

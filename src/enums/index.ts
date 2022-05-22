@@ -1,9 +1,3 @@
-export enum ColorKey {
-  Red = 'red',
-  Blue = 'blue',
-  Yellow = 'yellow',
-}
-
 export enum FormTitleEnum {
   NewTaskList = 'New task list',
   NewBoard = 'New board',
@@ -18,4 +12,34 @@ export enum RouteEnum {
   Login = '/login',
   Signup = '/signup',
   EditProfile = '/edit-profile',
+}
+
+export enum ErrorMessageEnum {
+  NoResponse = 'No response from server',
+  NotAuthorized = 'User should be authorized',
+  NotFound = 'Resource is not found',
+  UnknownError = 'An error occured',
+  AppError = 'An application error occured',
+  ClientError = 'Client network error occured',
+  ServerError = 'Server network error occured',
+}
+
+export enum StorageEnum {
+  Token = 'token',
+  User = 'user',
+}
+
+export enum TagsEnum {
+  Boards = 'Boards',
+}
+
+export enum EndpointsEnum {
+  Boards = 'boards',
+}
+
+export enum MethodsEnum {
+  Get = 'GET',
+  Put = 'PUT',
+  Delete = 'DELETE',
+  Post = 'POST',
 }

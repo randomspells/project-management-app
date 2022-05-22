@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField } from '@mui/material';
 import React, { FC } from 'react';
 import BoardList from '../../components/BoardList/BoardList';
 import { useAppDispatch } from '../../hooks/index';
-import { toggleNewBoardForm } from '../../slices/formsSlice';
+import { toggleNewBoardForm } from '../../slices/formSlice';
 
 export const MainPage: FC = () => {
   const dispatch = useAppDispatch();

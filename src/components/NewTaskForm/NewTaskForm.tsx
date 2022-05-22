@@ -5,12 +5,12 @@ import FormModal from '../FormModal/FormModal';
 import { FormTitleEnum } from '../../enums';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { toggleNewTaskForm } from '../../slices/formsSlice';
+import { toggleNewTaskForm } from '../../slices/formSlice';
 
 const NewTaskForm: FC = () => {
   const { handleSubmit, control, formState: { isValid }} = useForm({ mode: 'onChange' });
 
-  const isNewTaskFormOpen = useAppSelector((state) => state.forms.isNewTaskFormOpen);
+  const isNewTaskFormOpen = useAppSelector((state) => state.form.isNewTaskFormOpen);
   const dispatch = useAppDispatch();
 
   const onSubmit = () => {

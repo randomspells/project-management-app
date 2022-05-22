@@ -16,7 +16,7 @@ import { TaskInterface } from '../../interfaces';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
 import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
-import { toggleEditTaskForm } from '../../slices/formsSlice';
+import { toggleEditTaskForm } from '../../slices/formSlice';
 import { setCurrentTask } from '../../slices/taskSlice';
 
 const Task: FC<TaskInterface> = ({ id, title, done, description }) => {
