@@ -29,4 +29,9 @@ export const boardApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateBoardMutation, useGetBoardsQuery, useGetBoardIdQuery, useDeleteBoardMutation } = boardApi;
+export const { 
+  useCreateBoardMutation, 
+  useGetBoardsQuery, 
+  useGetBoardIdQuery, 
+  useDeleteBoardMutation 
+} = boardApi;

@@ -61,7 +61,7 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
           itemTitle={taskListTitle}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={() => console.log('Deleting task list...')} boardId=""        />
+          handleAccept={() => console.log('Deleting task list...')} />
       </Box>
     </Box>
   );

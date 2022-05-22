@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent, useEffect, useState } from 'react';
 import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import { useNavigate } from 'react-router-dom';
@@ -8,11 +8,12 @@ import { useAppDispatch } from '../../hooks';
 import { setCurrentBoard } from '../../slices/boardSlice';
 import { RouteEnum } from '../../enums';
 import { useDeleteBoardMutation, useGetBoardIdQuery } from '../../api/board.api';
+import { setAlertError, setAlertStatus } from '../../slices/alertSlice';
 
 const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const { data } = useGetBoardIdQuery(id);
-  const [deleteBoard] = useDeleteBoardMutation();
+  const [deleteBoard, { error, status }] = useDeleteBoardMutation();
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -24,7 +25,9 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
   const handleBoardClick = (e: MouseEvent) => {
     e.stopPropagation();
     dispatch(setCurrentBoard(id));
-    navigate(`${RouteEnum.Board}/${data!.id}`);
+    if (data?.id) {
+      navigate(`${RouteEnum.Board}/${data.id}`);
+    }
   };
 
   const handleDeleteClick = (e: MouseEvent) => {
@@ -32,9 +35,14 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
     toggleConfirmation();
   };
 
-  const handleAcceptClick = (boardId: string) => {
-    deleteBoard(boardId);
+  const handleAcceptClick = () => {
+    deleteBoard(id).catch((e) => dispatch(setAlertError(e)));
   };
+
+  useEffect(() => {
+    dispatch(setAlertError({ error }));
+    dispatch(setAlertStatus({ status }));
+  }, [error, status]);
 
   return (
     <Card
@@ -74,7 +82,6 @@ const Board: FC<BoardsGetInterface> = ({ id, title, description }) => {
         </IconButton>
         <Confirmation
           itemTitle={title}
-          boardId={id}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
           handleAccept={handleAcceptClick}

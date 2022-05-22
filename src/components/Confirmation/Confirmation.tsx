@@ -9,15 +9,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 type ConfirmationProps = {
   itemTitle: string;
   isOpen: boolean;
-  boardId: string;
   toggleConfirmation: () => void;
-  handleAccept: (boardId: string) => void;
+  handleAccept: () => void;
 };
 
 const Confirmation: FC<ConfirmationProps> = ({
   itemTitle,
   isOpen,
-  boardId,
   toggleConfirmation,
   handleAccept,
 }) => {
@@ -33,7 +31,7 @@ const Confirmation: FC<ConfirmationProps> = ({
   const handleAcceptClick = (e: MouseEvent) => {
     stopDialogPropagation(e);
     toggleConfirmation();
-    handleAccept(boardId);
+    handleAccept();
   };
 
   return (
