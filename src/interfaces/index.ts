@@ -72,7 +72,7 @@ export interface ControlledInputInterface extends InputInterface {
   control: Control;
 }
 
-export interface protectedRouteInterface {
+export interface ProtectedRouteInterface {
   children?: React.ReactElement;
 }
 

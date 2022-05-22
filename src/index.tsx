@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import Layout from './components/Layout/Layout';
@@ -20,18 +20,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { RouteEnum } from './enums';
-import { protectedRouteInterface } from './interfaces';
-import { useAppSelector } from './hooks';
-
-const ProtectedRoute: FC<protectedRouteInterface> = ({ children }) => {
-  const isAuthenticated = useAppSelector(state => state.auth.currentUser?.isAuthenticated);
-  if (!isAuthenticated) {
-    return <Navigate to={RouteEnum.Welcome} replace />;
-  }
-
-  return children || <Outlet />;
-};
-
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -49,7 +38,10 @@ root.render(
                 <Route path={RouteEnum.Board} element={<BoardPage />}>
                   <Route path=':boardId' element={<BoardPage />} />
                 </Route>
-                <Route path={RouteEnum.EditProfile} element={<EditProfilePage />} />
+                <Route
+                  path={RouteEnum.EditProfile}
+                  element={<EditProfilePage />}
+                />
               </Route>
               <Route path={RouteEnum.Login} element={<LoginPage />} />
               <Route path={RouteEnum.Signup} element={<SignUpPage />} />
