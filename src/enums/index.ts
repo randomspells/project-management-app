@@ -31,6 +31,7 @@ export enum StorageEnum {
 
 export enum TagsEnum {
   Boards = 'Boards',
+  Columns = 'Columns',
 }
 
 export enum EndpointsEnum {

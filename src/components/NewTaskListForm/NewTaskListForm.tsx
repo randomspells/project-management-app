@@ -8,7 +8,7 @@ import { FormDataInterface } from '../../interfaces';
 import { toggleNewTaskListForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
-import { useCreateColumnMutation } from '../../api/columns.api';
+import { useCreateColumnMutation, useGetAllColumnQuery } from '../../api/columns.api';
 import { setAlertError, setAlertStatus, toggleAlertIsOpen } from '../../slices/alertSlice';
 
 const TASK_LIST_TITLE_INPUT = {
@@ -32,17 +32,18 @@ const NewTaskListForm: FC = () => {
 
   const [ createColumn, { error, status } ] = useCreateColumnMutation();
   const { boardId } = useParams();
-
+  const { data = [] } = useGetAllColumnQuery(boardId);
+ 
   const handleClose = () => {
     reset();
     dispatch(toggleNewTaskListForm());
   };
 
-  const onSubmit = (data: FormDataInterface) => {
+  const onSubmit = (formData: FormDataInterface) => {
     const columnData = {
       body: {
-        title: data.taskListTitle,
-        order: 1
+        title: formData.taskListTitle,
+        order: data.length + 1
       },
       boardId
     }
@@ -50,7 +51,7 @@ const NewTaskListForm: FC = () => {
     createColumn(columnData)
       .catch((e) => dispatch(setAlertError({ e })));
       dispatch(toggleAlertIsOpen()); 
-    handleClose();
+      handleClose();
   };
 
   const { type, name, label, errorText, rules } = TASK_LIST_TITLE_INPUT;

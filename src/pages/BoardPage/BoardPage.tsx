@@ -11,7 +11,7 @@ import { RouteEnum } from '../../enums';
 
 const FAKE_COLUMNS: ColumnInterface[] = [
   {
-    id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4d',
+    id: 'c56efc2d-98ad-4465-b712-7bb461515bcf',
     title: 'Project',
     order: 1,
     tasks: FAKE_TASKS,
@@ -23,7 +23,7 @@ const FAKE_COLUMNS: ColumnInterface[] = [
     tasks: FAKE_TASKS.slice(0, 2),
   },
   {
-    id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4e',
+    id: 'b8c709fb-c017-49f4-b46f-96f371263b3e',
     title: 'Done',
     order: 3,
     tasks: [],
@@ -62,7 +62,7 @@ const BoardPage: FC = () => {
       >
         {FAKE_COLUMNS.map((column) => {
           const { id, title, tasks } = column;
-          return <TaskList key={id} title={title} tasks={tasks} />;
+          return <TaskList key={id} columnId={id} title={title} tasks={tasks} />;
         })}
       </Box>
     </Container>
