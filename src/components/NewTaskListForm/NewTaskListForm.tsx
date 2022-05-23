@@ -40,10 +40,11 @@ const NewTaskListForm: FC = () => {
   };
 
   const onSubmit = (formData: FormDataInterface) => {
+
     const columnData = {
       body: {
         title: formData.taskListTitle,
-        order: data.length + 1
+        order: data[data.length - 1].order + 1
       },
       boardId
     }
