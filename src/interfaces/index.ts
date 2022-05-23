@@ -82,4 +82,9 @@ export interface WelcomeInfoInterface {
   icon: ReactElement;
 }
 
+export interface QueryErrorInterface {
+  statusCode: number;
+  message: string;
+}
+
 export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;
