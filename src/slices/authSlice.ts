@@ -19,7 +19,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   currentUser: getItemFromStorage(StorageEnum.User) as AuthInterface,
-  currentId: null,
+  currentId: getItemFromStorage(StorageEnum.UserId) as string,
 };
 
 export const authSlice = createSlice({
