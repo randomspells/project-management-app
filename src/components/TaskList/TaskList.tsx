@@ -1,20 +1,28 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { useParams } from 'react-router-dom';
 import Task from '../Task/Task';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
+import { useDeleteColumnMutation } from '../../api/columns.api';
+import { setAlertResult } from '../../slices/alertSlice';
+import { useAppDispatch } from '../../hooks';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../constants';
 
 type TaskListProps = {
+  columnId: string;
   title: string;
   tasks: TaskInterface[];
 };
 
-const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
+const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [ deleteColumn, { error, isSuccess } ] = useDeleteColumnMutation();
+  const { boardId } = useParams();
+  const dispatch = useAppDispatch();
 
   const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
@@ -27,6 +35,15 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
   const changeTitleClick = () => {
     toggleEditMode();
   };
+
+  const handleTaskListDelete = () => {
+    deleteColumn({boardId, columnId})
+    .catch((e) => dispatch(setAlertResult({ error: e })));
+  }
+  
+  useEffect(() => {
+    dispatch(setAlertResult({ isSuccess, error }));
+  }, [isSuccess, error]);
 
   return (
     <Box
@@ -92,7 +109,7 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
           itemTitle={taskListTitle}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={() => console.log('Deleting task list...')}
+          handleAccept={handleTaskListDelete}
         />
       </Box>
     </Box>

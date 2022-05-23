@@ -33,11 +33,13 @@ export enum StorageEnum {
 
 export enum TagsEnum {
   Boards = 'Boards',
+  Columns = 'Columns',
   Board = 'Board',
 }
 
 export enum EndpointsEnum {
   Boards = 'boards',
+  Columns = 'columns',
   Users = 'users',
 }
 
