@@ -6,7 +6,7 @@ import { useCreateBoardMutation } from '../../api/board.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { InputInterface, FormDataInterface } from '../../interfaces';
-import { setAlertResult, toggleAlertIsOpen } from '../../slices/alertSlice';
+import { setAlertResult } from '../../slices/alertSlice';
 import { toggleNewBoardForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
@@ -53,7 +53,6 @@ const NewBoardForm: FC = () => {
       title,
       description,
     }).catch((e) => dispatch(setAlertResult({ error: e })));
-    dispatch(toggleAlertIsOpen());
     handleClose();
   };
 
