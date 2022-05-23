@@ -8,8 +8,11 @@ import { FormDataInterface } from '../../interfaces';
 import { toggleNewTaskListForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
-import { useCreateColumnMutation, useGetAllColumnQuery } from '../../api/columns.api';
-import { setAlertError, setAlertStatus, toggleAlertIsOpen } from '../../slices/alertSlice';
+import {
+  useCreateColumnMutation,
+  useGetAllColumnQuery,
+} from '../../api/columns.api';
+import { setAlertResult } from '../../slices/alertSlice';
 
 const TASK_LIST_TITLE_INPUT = {
   type: 'text',
@@ -27,43 +30,47 @@ const NewTaskListForm: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const isNewTaskListFormOpen = useAppSelector((state) => state.form.isNewTaskListFormOpen);
+  const isNewTaskListFormOpen = useAppSelector(
+    (state) => state.form.isNewTaskListFormOpen,
+  );
   const dispatch = useAppDispatch();
 
-  const [ createColumn, { error, status } ] = useCreateColumnMutation();
+  const [createColumn, { error, isSuccess }] = useCreateColumnMutation();
   const { boardId } = useParams();
-  const { data = [] } = useGetAllColumnQuery(boardId);
- 
+  const { data: columns = [] } = useGetAllColumnQuery(boardId);
+
   const handleClose = () => {
     reset();
     dispatch(toggleNewTaskListForm());
   };
 
   const onSubmit = (formData: FormDataInterface) => {
-
     const columnData = {
       body: {
         title: formData.taskListTitle,
-        order: data[data.length - 1].order + 1
+        order: columns[columns.length - 1].order + 1,
       },
-      boardId
-    }
+      boardId,
+    };
 
-    createColumn(columnData)
-      .catch((e) => dispatch(setAlertError({ e })));
-      dispatch(toggleAlertIsOpen()); 
-      handleClose();
+    createColumn(columnData).catch((e) =>
+      dispatch(setAlertResult({ error: e })),
+    );
+    handleClose();
   };
 
   const { type, name, label, errorText, rules } = TASK_LIST_TITLE_INPUT;
 
   useEffect(() => {
-    dispatch(setAlertStatus({ status }));
-    dispatch(setAlertError({ error }));
-  }, [status, error]);
+    dispatch(setAlertResult({ isSuccess, error }));
+  }, [isSuccess, error]);
 
   return (
-    <FormModal isOpen={isNewTaskListFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.NewTaskList}>
+    <FormModal
+      isOpen={isNewTaskListFormOpen}
+      handleClose={handleClose}
+      formTitle={FormTitleEnum.NewTaskList}
+    >
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           type={type}
@@ -74,7 +81,14 @@ const NewTaskListForm: FC = () => {
           control={control}
           defaultValue=''
         />
-        <Button type='submit' fullWidth variant='contained' size='large' sx={{ mt: 2, mb: 2 }} disabled={!isValid}>
+        <Button
+          type='submit'
+          fullWidth
+          variant='contained'
+          size='large'
+          sx={{ mt: 2, mb: 2 }}
+          disabled={!isValid}
+        >
           Create task list
         </Button>
       </Box>

@@ -13,14 +13,14 @@ export const columnsApi = baseApi.injectEndpoints({
         method: MethodsEnum.Post,
         body
       }),
-      invalidatesTags: [TagsEnum.Columns],
+      invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
     }),
     deleteColumn: builder.mutation({
       query: ({boardId, columnId}) => ({
         url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}`,
         method: MethodsEnum.Delete,
       }),
-      invalidatesTags: [TagsEnum.Columns],
+      invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
     }),
   })
 })
