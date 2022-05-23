@@ -8,6 +8,8 @@ import Confirmation from '../Confirmation/Confirmation';
 import { useDeleteColumnMutation } from '../../api/columns.api';
 import { setAlertError, setAlertStatus, toggleAlertIsOpen } from '../../slices/alertSlice';
 import { useAppDispatch } from '../../hooks';
+import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
+import { COLUMN_WIDTH } from '../../constants';
 
 type TaskListProps = {
   columnId: string;
@@ -19,6 +21,7 @@ const COLUMN_WIDTH = 270;
 
 const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [ deleteColumn, { error, status } ] = useDeleteColumnMutation();
   const { boardId } = useParams();
   const dispatch = useAppDispatch();
@@ -27,16 +30,43 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
+
+  const changeTitleClick = () => {
+    toggleEditMode();
+  };
+  
   useEffect(() => {
     dispatch(setAlertStatus({ status }));
     dispatch(setAlertError({ error }));
   }, [status, error]);
 
   return (
-    <Box component='article' sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}>
-      <Typography component='h4' variant='h5'>
-        {taskListTitle}
-      </Typography>
+    <Box
+      component='article'
+      sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}
+    >
+      <Box sx={{ flex: 1, height: '40px' }}>
+        {isEditMode ? (
+          <TaskTitleEditInput
+            saveHandler={changeTitleClick}
+            closeHandler={toggleEditMode}
+            title={taskListTitle}
+          />
+        ) : (
+          <Typography
+            component='h4'
+            variant='h5'
+            onClick={toggleEditMode}
+            sx={{ width: COLUMN_WIDTH }}
+          >
+            {taskListTitle}
+          </Typography>
+        )}
+      </Box>
+
       <Box
         component='ul'
         sx={{
@@ -63,7 +93,10 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
           );
         })}
       </Box>
-      <Box component='section' sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box
+        component='section'
+        sx={{ display: 'flex', justifyContent: 'space-between' }}
+      >
         <IconButton>
           <AddRoundedIcon color='primary' />
         </IconButton>

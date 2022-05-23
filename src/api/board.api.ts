@@ -1,5 +1,5 @@
 import { MethodsEnum, EndpointsEnum, TagsEnum } from '../enums/index';
-import { BoardsPostInterface, BoardsGetInterface } from '../interfaces/index';
+import { BoardsPostInterface, BoardsGetInterface, BoardInterface } from '../interfaces/index';
 import baseApi from './base.api';
 
 export const boardApi = baseApi.injectEndpoints({
@@ -8,6 +8,12 @@ export const boardApi = baseApi.injectEndpoints({
       query: () => EndpointsEnum.Boards,
       providesTags: [TagsEnum.Boards],
     }),
+
+    getBoard: builder.query<BoardInterface, string>({
+      query: (boardId: string) => `${EndpointsEnum.Boards}/${boardId}`,
+      providesTags: [TagsEnum.Board],
+    }),
+
     createBoard: builder.mutation<void, BoardsPostInterface>({
       query: (body) => ({
         url: EndpointsEnum.Boards,
@@ -16,7 +22,20 @@ export const boardApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TagsEnum.Boards],
     }),
+
+    deleteBoard: builder.mutation<void, string>({
+      query: (boardId: string) => ({
+        url: `${EndpointsEnum.Boards}/${boardId}`,
+        method: MethodsEnum.Delete,
+      }),
+      invalidatesTags: [TagsEnum.Boards],
+    })
   }),
 });
 
-export const { useCreateBoardMutation, useGetBoardsQuery } = boardApi;
+export const { 
+  useCreateBoardMutation, 
+  useGetBoardsQuery, 
+  useGetBoardQuery, 
+  useDeleteBoardMutation 
+} = boardApi;

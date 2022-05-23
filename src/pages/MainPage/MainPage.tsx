@@ -1,5 +1,6 @@
-import { Box, Button, Container, TextField } from '@mui/material';
 import React, { FC } from 'react';
+import { Box, Button, Container, TextField } from '@mui/material';
+
 import BoardList from '../../components/BoardList/BoardList';
 import { useAppDispatch } from '../../hooks/index';
 import { toggleNewBoardForm } from '../../slices/formSlice';

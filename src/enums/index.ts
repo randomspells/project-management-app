@@ -27,16 +27,19 @@ export enum ErrorMessageEnum {
 export enum StorageEnum {
   Token = 'token',
   User = 'user',
+  CurrentBoard = 'currentBoard',
 }
 
 export enum TagsEnum {
   Boards = 'Boards',
   Columns = 'Columns',
+  Board = 'Board',
 }
 
 export enum EndpointsEnum {
   Boards = 'boards',
   Columns = 'columns',
+  Users = 'users',
 }
 
 export enum MethodsEnum {

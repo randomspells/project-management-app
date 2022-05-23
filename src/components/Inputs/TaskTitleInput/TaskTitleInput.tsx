@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { InputAdornment, OutlinedInput, IconButton } from '@mui/material';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { COLUMN_WIDTH } from '../../../constants';
 
 type TaskTitleInputProps = {
   title: string;
@@ -19,6 +20,7 @@ const TaskTitleEditInput: FC<TaskTitleInputProps> = ({
     id='title'
     size='small'
     value={title}
+    sx={{ width: COLUMN_WIDTH }}
     endAdornment={
       <InputAdornment position='end'>
         <IconButton

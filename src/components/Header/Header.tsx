@@ -9,14 +9,17 @@ import { Avatar } from '@mui/material';
 import { stringAvatar } from '../../utils';
 import { RouteEnum } from '../../enums';
 import { logout} from '../../slices/authSlice';
-import { useAppDispatch } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import styles from './Header.module.scss';
 
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption, primary } = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
+  const login = useAppSelector(state => state.auth.currentUser?.login);
+
   const headerRef = useRef<null | HTMLDivElement>(null);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -40,7 +43,7 @@ const Header: FC = () => {
   const {
     sx: { bgcolor },
     children,
-  } = stringAvatar('Oawd Kwdawd');
+  } = stringAvatar(login || 'Unknown User');
 
   useEffect(() => {
     const header = headerRef.current?.getBoundingClientRect();
