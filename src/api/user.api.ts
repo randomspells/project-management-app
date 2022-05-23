@@ -1,4 +1,4 @@
-import { MethodsEnum, EndpointsEnum } from '../enums/index';
+import { MethodsEnum, EndpointsEnum, TagsEnum } from '../enums/index';
 
 import { UserInterface } from '../interfaces';
 import baseApi from './base.api';
@@ -7,6 +7,7 @@ export const usersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<UserInterface[], void>({
       query: () => EndpointsEnum.Users,
+      providesTags: [TagsEnum.Users]
     }),
 
     updateUser: builder.mutation({
@@ -23,6 +24,7 @@ export const usersApi = baseApi.injectEndpoints({
         method: MethodsEnum.Delete,
         body,
       }),
+      invalidatesTags: [TagsEnum.Users]
     }),
   }),
 });

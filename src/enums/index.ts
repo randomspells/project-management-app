@@ -22,6 +22,7 @@ export enum ErrorMessageEnum {
   AppError = 'An application error occured',
   ClientError = 'Client network error occured',
   ServerError = 'Server network error occured',
+  IncorrectPassword = 'Incorrect password'
 }
 
 export enum StorageEnum {
@@ -35,6 +36,7 @@ export enum TagsEnum {
   Boards = 'Boards',
   Columns = 'Columns',
   Board = 'Board',
+  Users = 'Users'
 }
 
 export enum EndpointsEnum {

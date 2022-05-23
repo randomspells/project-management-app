@@ -23,7 +23,7 @@ const EditProfilePage: FC = () => {
   const [signin, { error: signinError }] = useSigninMutation();
   const [
     updateUser,
-    { error: updateUserError, isSuccess: isUpdateUserSuccess },
+    { error: updateUserError, isSuccess: isUpdateUserSuccess, isLoading },
   ] = useUpdateUserMutation();
   const [deleteUser, { error: deleteUserError }] = useDeleteUserMutation();
 
@@ -152,6 +152,7 @@ const EditProfilePage: FC = () => {
           }}
         >
           <LoadingButton
+            loading={isLoading}
             type='submit'
             disabled={!isValid}
             variant='contained'
