@@ -36,6 +36,7 @@ export enum TagsEnum {
 
 export enum EndpointsEnum {
   Boards = 'boards',
+  Columns = 'columns',
 }
 
 export enum MethodsEnum {
