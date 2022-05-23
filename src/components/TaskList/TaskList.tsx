@@ -5,13 +5,12 @@ import Task from '../Task/Task';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
+import { COLUMN_WIDTH } from '../../constants';
 
 type TaskListProps = {
   title: string;
   tasks: TaskInterface[];
 };
-
-const COLUMN_WIDTH = 270;
 
 const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
@@ -46,7 +45,7 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
             component='h4'
             variant='h5'
             onClick={toggleEditMode}
-            sx={{ width: '270px' }}
+            sx={{ width: COLUMN_WIDTH }}
           >
             {taskListTitle}
           </Typography>

@@ -125,3 +125,5 @@ export const FAKE_COLUMNS: ColumnInterface[] = [
 
 export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;
 export const VALID_PASSWORD_INPUT = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
+
+export const COLUMN_WIDTH = 280;
