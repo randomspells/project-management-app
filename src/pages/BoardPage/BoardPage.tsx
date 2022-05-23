@@ -42,7 +42,7 @@ const BoardPage: FC = () => {
         {currentBoard &&
           currentBoard.columns.map((column) => {
             const { id, title, tasks } = column;
-            return <TaskList key={id} title={title} tasks={tasks} />;
+            return <TaskList key={id} columnId={id} title={title} tasks={tasks} />;
           })}
       </Box>
     </Container>
