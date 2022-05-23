@@ -28,6 +28,7 @@ export enum StorageEnum {
   Token = 'token',
   User = 'user',
   CurrentBoard = 'currentBoard',
+  UserId = 'userId',
 }
 
 export enum TagsEnum {

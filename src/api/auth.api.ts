@@ -1,13 +1,7 @@
-import { EndpointsEnum } from '../enums';
-import { UserInterface } from '../interfaces';
 import baseApi from './base.api';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query<UserInterface[], void>({
-      query: () => EndpointsEnum.Users,
-    }),
-
     signup: builder.mutation({
       query: (body) => ({
         url: 'signup',
@@ -26,4 +20,4 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSignupMutation, useSigninMutation, useGetUsersQuery } = authApi;
+export const { useSignupMutation, useSigninMutation } = authApi;
