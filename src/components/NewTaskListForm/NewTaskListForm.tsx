@@ -37,8 +37,6 @@ const NewTaskListForm: FC = () => {
     handleClose();
   };
 
-  // POST /boards/:boardId/columns request
-
   const { type, name, label, error, rules } = TASK_LIST_TITLE_INPUT;
 
   return (

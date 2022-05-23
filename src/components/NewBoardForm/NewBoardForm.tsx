@@ -1,11 +1,12 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { useCreateBoardMutation } from '../../api/board.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { InputInterface, FormDataInterface } from '../../interfaces';
-import { setAlertError, setAlertStatus, toggleAlertIsOpen } from '../../slices/alertSlice';
+import { setAlertResult, toggleAlertIsOpen } from '../../slices/alertSlice';
 import { toggleNewBoardForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
@@ -44,13 +45,14 @@ const NewBoardForm: FC = () => {
     dispatch(toggleNewBoardForm());
   };
 
-  const [createBoard, { error, status }] = useCreateBoardMutation();
+  const [createBoard, { error, isSuccess, isLoading }] =
+    useCreateBoardMutation();
 
-  const onSubmit = ({title, description}: FormDataInterface) => {
+  const onSubmit = ({ title, description }: FormDataInterface) => {
     createBoard({
       title,
       description,
-    }).catch((e) => dispatch(setAlertError({ e })));
+    }).catch((e) => dispatch(setAlertResult({ error: e })));
     dispatch(toggleAlertIsOpen());
     handleClose();
   };
@@ -72,9 +74,8 @@ const NewBoardForm: FC = () => {
   } = BOARD_DESCRIPTION_INPUT;
 
   useEffect(() => {
-    dispatch(setAlertStatus({ status }));
-    dispatch(setAlertError({ error }));
-  }, [status, error]);
+    dispatch(setAlertResult({ isSuccess, error }));
+  }, [isSuccess, error]);
 
   return (
     <FormModal
@@ -103,7 +104,8 @@ const NewBoardForm: FC = () => {
           rows={4}
           multiline
         />
-        <Button
+        <LoadingButton
+          loading={isLoading}
           type='submit'
           fullWidth
           variant='contained'
@@ -112,7 +114,7 @@ const NewBoardForm: FC = () => {
           disabled={!isValid}
         >
           Create board
-        </Button>
+        </LoadingButton>
       </Box>
     </FormModal>
   );

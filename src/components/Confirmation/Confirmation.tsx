@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { stopPropagation } from '../../utils';
 
 type ConfirmationProps = {
   itemTitle: string;
@@ -19,17 +20,13 @@ const Confirmation: FC<ConfirmationProps> = ({
   toggleConfirmation,
   handleAccept,
 }) => {
-  const stopDialogPropagation = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
   const handleDeclineClick = (e: MouseEvent) => {
-    stopDialogPropagation(e);
+    stopPropagation(e);
     toggleConfirmation();
   };
 
   const handleAcceptClick = (e: MouseEvent) => {
-    stopDialogPropagation(e);
+    stopPropagation(e);
     toggleConfirmation();
     handleAccept();
   };
@@ -37,7 +34,7 @@ const Confirmation: FC<ConfirmationProps> = ({
   return (
     <Dialog
       open={isOpen}
-      onClick={stopDialogPropagation}
+      onClick={handleDeclineClick}
       onClose={handleDeclineClick}
       aria-describedby='confirmation dialog'
     >
