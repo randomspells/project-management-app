@@ -31,10 +31,14 @@ export enum StorageEnum {
 
 export enum TagsEnum {
   Boards = 'Boards',
+  Columns = 'columns',
+  Tasks = 'tasks',
 }
 
 export enum EndpointsEnum {
   Boards = 'boards',
+  Columns = 'columns',
+  Tasks = 'tasks',
 }
 
 export enum MethodsEnum {

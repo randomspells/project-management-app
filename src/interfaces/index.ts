@@ -27,6 +27,11 @@ export interface TaskInterface {
   files: FileInterface[];
 }
 
+export interface TasksPostInterface {
+  title: string;
+  description: string;
+}
+
 export interface ColumnInterface {
   id: string;
   title: string;

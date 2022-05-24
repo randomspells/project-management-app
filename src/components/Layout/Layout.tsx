@@ -7,6 +7,7 @@ import EditTaskForm from '../EditTaskForm/EditTaskForm';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import NewBoardForm from '../NewBoardForm/NewBoardForm';
+import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import NewTaskListForm from '../NewTaskListForm/NewTaskListForm';
 
 const Layout: FC = () => {
@@ -26,6 +27,7 @@ const Layout: FC = () => {
     <Footer />
     <NewBoardForm />
     <NewTaskListForm />
+    <NewTaskForm />
     <EditTaskForm />
   </Box>
 };

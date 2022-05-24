@@ -4,20 +4,30 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Task from '../Task/Task';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
+import { useAppDispatch } from '../../hooks/index';
+import { toggleNewTaskForm } from '../../slices/formSlice';
+import { setCurrentColumn } from '../../slices/columnSlice';
 
 type TaskListProps = {
+  columnId: string;
   title: string;
   tasks: TaskInterface[];
 };
 
 const COLUMN_WIDTH = 270;
 
-const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
+const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  dispatch(setCurrentColumn(columnId));
 
   const toggleConfirmation = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
+
+  const handleNewTaskClick = () => {
+    dispatch(toggleNewTaskForm());
+  }
 
   return (
     <Box component='article' sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}>
@@ -51,7 +61,7 @@ const TaskList: FC<TaskListProps> = ({ title: taskListTitle, tasks }) => {
         })}
       </Box>
       <Box component='section' sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <IconButton>
+        <IconButton onClick={handleNewTaskClick}>
           <AddRoundedIcon color='primary' />
         </IconButton>
         <Button color='secondary' onClick={toggleConfirmation}>

@@ -1,0 +1,28 @@
+import { EndpointsEnum, MethodsEnum, TagsEnum } from '../enums';
+import baseApi from './base.api';
+
+export const taskApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllTasks: builder.query({
+      query: ({boardId, columnId}) => (`${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}/${EndpointsEnum.Tasks}`),
+      providesTags: [TagsEnum.Tasks]
+    }),
+    createTask: builder.mutation({
+      query: ({ body , boardId, columnId }) => ({
+        url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}/${EndpointsEnum.Tasks}`,
+        method: MethodsEnum.Post,
+        body,
+      }),
+      invalidatesTags: [TagsEnum.Tasks],
+    }),
+    deleteTask: builder.mutation({
+      query: ({boardId, columnId, taskId}) => ({
+        url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}/${EndpointsEnum.Tasks}/${taskId}`,
+        method: MethodsEnum.Delete,
+      }),
+      invalidatesTags: [TagsEnum.Tasks],
+    })
+  })
+})
+
+export const { useCreateTaskMutation, useGetAllTasksQuery } = taskApi;

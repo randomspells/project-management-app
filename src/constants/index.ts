@@ -1,4 +1,4 @@
-import { BoardsGetInterface, TaskInterface } from '../interfaces';
+import { BoardsGetInterface, TaskInterface, InputInterface } from '../interfaces';
 
 export const FAKE_TASKS: TaskInterface[] = [
   {
@@ -64,6 +64,22 @@ export const FAKE_BOARDS: BoardsGetInterface[] = [
     description: 'Some description',
   },
 ];
+
+export const TITLE_INPUT: InputInterface = {
+  type: 'text',
+  name: 'title',
+  label: 'Task title',
+  errorText: 'Title is required',
+  rules: { required: true },
+}
+
+export const DESCRIPTION_INPUT: InputInterface = {
+  type: 'text',
+  name: 'description',
+  label: 'Task description',
+  errorText: 'Description is required',
+  rules: { required: true },
+};
 
 export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;
 export const VALID_PASSWORD_INPUT = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
