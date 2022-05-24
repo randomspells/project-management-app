@@ -10,7 +10,7 @@ interface FormState {
 const initialState: FormState = {
   isNewBoardFormOpen: false,
   isNewTaskListFormOpen: false,
-  isNewTaskFormOpen: true,
+  isNewTaskFormOpen: false,
   isEditTaskFormOpen: false,
 };
 
