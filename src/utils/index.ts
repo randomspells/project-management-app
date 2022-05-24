@@ -97,3 +97,6 @@ export const getUserLoginById = (users: UserInterface[], id: string) => {
   }
   return null;
 };
+
+export const countOrder = (list: Record<string, string>[]): number =>
+list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);

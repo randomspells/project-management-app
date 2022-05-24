@@ -13,6 +13,7 @@ import {
   useGetAllColumnQuery,
 } from '../../api/columns.api';
 import { setAlertResult } from '../../slices/alertSlice';
+import { countOrder } from '../../utils';
 
 const TASK_LIST_TITLE_INPUT = {
   type: 'text',
@@ -44,16 +45,17 @@ const NewTaskListForm: FC = () => {
     dispatch(toggleNewTaskListForm());
   };
 
+
+
   const onSubmit = (formData: FormDataInterface) => {
     const columnData = {
       body: {
         title: formData.taskListTitle,
-        order: columns[columns.length - 1].order + 1,
+        order: countOrder(columns),
       },
       boardId,
     };
-
-    createColumn(columnData).catch((e) =>
+        createColumn(columnData).catch((e) =>
       dispatch(setAlertResult({ error: e })),
     );
     handleClose();
