@@ -1,35 +1,55 @@
 import React, { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Typography, Box, Avatar } from '@mui/material';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Container, Typography, Box, Avatar, Link } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
-import { useSignupMutation } from '../../api/auth.api';
+import { useSigninMutation, useSignupMutation } from '../../api/auth.api';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum } from '../../enums';
-import { setAlertResult, toggleAlertIsOpen } from '../../slices/alertSlice';
+import { setAlertResult } from '../../slices/alertSlice';
 import { useAppDispatch } from '../../hooks';
+import { logIn } from '../../slices/authSlice';
 
 const SignUpPage: FC = () => {
   const {
     handleSubmit,
     control,
+    getValues,
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
+
   const [signup, { error, isSuccess, isLoading }] = useSignupMutation();
+  const [signin, { data: { token } = '' }] = useSigninMutation();
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (formData: FormDataInterface) => {
-    await signup(formData).catch((e) => dispatch(setAlertResult({ error: e })));
-    dispatch(toggleAlertIsOpen());
+    const { login, password } = formData;
+    await signup(formData)
+      .then(() =>
+        signin({
+          login,
+          password,
+        }).catch((e) => dispatch(setAlertResult({ error: e }))),
+      )
+      .catch((e) => dispatch(setAlertResult({ error: e })));
   };
 
   useEffect(() => {
     dispatch(setAlertResult({ error, isSuccess }));
   }, [error, isSuccess]);
+
+  useEffect(() => {
+    if (token) {
+      const login = getValues('login');
+      dispatch(logIn({ token, login }));
+      navigate(RouteEnum.Main);
+    }
+  }, [token]);
 
   return (
     <Container
@@ -90,7 +110,9 @@ const SignUpPage: FC = () => {
         >
           Sign Up
         </LoadingButton>
-        <Link to={RouteEnum.Login}>Already have an account? Login.</Link>
+        <Link component={RouterLink} to={RouteEnum.Login}>
+          Already have an account? Login.
+        </Link>
       </Box>
     </Container>
   );

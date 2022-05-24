@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Alert, Box, Grid, Snackbar } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { toggleAlertIsOpen } from '../../slices/alertSlice';
+import { closeAlert } from '../../slices/alertSlice';
 import { getErrorMessage } from '../../utils';
 
 const Alerts: FC = () => {
@@ -12,7 +12,7 @@ const Alerts: FC = () => {
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    dispatch(toggleAlertIsOpen());
+    dispatch(closeAlert());
   };
 
   return (

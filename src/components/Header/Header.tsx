@@ -8,15 +8,14 @@ import FormControl from '@mui/material/FormControl';
 import { Avatar } from '@mui/material';
 import { stringAvatar } from '../../utils';
 import { RouteEnum } from '../../enums';
-import { logout} from '../../slices/authSlice';
+import { logOut } from '../../slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import styles from './Header.module.scss';
 
-
 const Header: FC = () => {
-  const { navbar, headerContainer, board, headerOption, primary } = styles;
+  const { navbar, headerContainer, board, headerOption } = styles;
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
-  const login = useAppSelector(state => state.auth.currentUser?.login);
+  const login = useAppSelector((state) => state.auth.currentUser?.login);
 
   const headerRef = useRef<null | HTMLDivElement>(null);
 
@@ -28,7 +27,7 @@ const Header: FC = () => {
   };
 
   const handleSignOut = () => {
-    dispatch(logout());
+    dispatch(logOut());
     navigate(RouteEnum.Welcome);
   };
 
@@ -73,9 +72,7 @@ const Header: FC = () => {
         <Button onClick={handleOpenEditProfile}>Edit profile</Button>
         <Button onClick={handleSignOut}>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
-          <InputLabel id='label' className={primary}>
-            Lang
-          </InputLabel>
+          <InputLabel id='label'>Lang</InputLabel>
           <Select label='Lang' autoWidth labelId='label'>
             <MenuItem defaultValue=''> </MenuItem>
             <MenuItem value='ru'>Ru</MenuItem>

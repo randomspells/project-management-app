@@ -17,7 +17,7 @@ import Confirmation from '../Confirmation/Confirmation';
 import { useAppDispatch } from '../../hooks';
 import { toggleEditTaskForm } from '../../slices/formSlice';
 import { setCurrentTask } from '../../slices/taskSlice';
-import { useGetUsersQuery } from '../../api/auth.api';
+import { useGetUsersQuery } from '../../api/user.api';
 
 const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);

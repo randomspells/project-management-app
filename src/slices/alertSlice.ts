@@ -18,15 +18,16 @@ export const alertSlice = createSlice({
   initialState,
   reducers: {
     setAlertResult: (state, action) => {
+      state.isOpen = true;
       state.isSuccess = action.payload.isSuccess;
       state.error = action.payload.error;
     },
-    toggleAlertIsOpen: (state) => {
-      state.isOpen = !state.isOpen;
+    closeAlert: (state) => {
+      state.isOpen = false;
     },
   },
 });
 
-export const { setAlertResult, toggleAlertIsOpen } = alertSlice.actions;
+export const { setAlertResult, closeAlert } = alertSlice.actions;
 
 export default alertSlice.reducer;
