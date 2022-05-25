@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { FormDataInterface } from '../../interfaces';
+// import { FormDataInterface } from '../../interfaces';
 import { toggleEditTaskForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
@@ -45,8 +45,8 @@ const EditTaskForm: FC = () => {
     dispatch(toggleEditTaskForm());
   };
 
-  const onSubmit = (data: FormDataInterface) => {
-    console.log(data);
+  const onSubmit = (/* data: FormDataInterface */) => {
+    // console.log(data);
     handleClose();
   };
   

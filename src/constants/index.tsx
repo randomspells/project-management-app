@@ -6,6 +6,7 @@ import { SxProps } from '@mui/material';
 import {
   BoardsGetInterface,
   ColumnInterface,
+  InputInterface,
   TaskInterface,
   WelcomeInfoInterface,
 } from '../interfaces';
@@ -122,6 +123,22 @@ export const FAKE_COLUMNS: ColumnInterface[] = [
     tasks: [],
   },
 ];
+
+export const TITLE_INPUT: InputInterface = {
+  type: 'text',
+  name: 'title',
+  label: 'Task title',
+  errorText: 'Title is required',
+  rules: { required: true },
+};
+
+export const DESCRIPTION_INPUT: InputInterface = {
+  type: 'text',
+  name: 'description',
+  label: 'Task description',
+  errorText: 'Description is required',
+  rules: { required: true },
+};
 
 export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;
 export const VALID_PASSWORD_INPUT = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;

@@ -14,26 +14,45 @@ import ModeEditRoundedIcon from '@mui/icons-material/ModeEditRounded';
 import { getUserLoginById, stringAvatar } from '../../utils';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { toggleEditTaskForm } from '../../slices/formSlice';
 import { setCurrentTask } from '../../slices/taskSlice';
-import { useGetUsersQuery } from '../../api/auth.api';
+import { useGetUsersQuery } from '../../api/user.api';
+import { useDeleteTaskMutation } from '../../api/task.api';
+import { setAlertResult } from '../../slices/alertSlice';
 
 const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [avatarColor, setAvatarColor] = useState<string>();
   const [avatarChildren, setAvatarChildren] = useState<string>();
+
+  const boardId = useAppSelector((state) => state.board.currentBoard?.id);
+  const columnId = useAppSelector((state) => state.column.currentId);
+
+  const [deleteTask] = useDeleteTaskMutation();
   const { data: users } = useGetUsersQuery();
 
   const dispatch = useAppDispatch();
 
+  const toggleConfirmation = () => {
+    setIsConfirmationOpen(!isConfirmationOpen);
+  };
+
   const handleEditTaskClick = () => {
-    dispatch(setCurrentTask({ id, title, done, description }));
     dispatch(toggleEditTaskForm());
   };
 
-  const toggleConfirmation = () => {
-    setIsConfirmationOpen(!isConfirmationOpen);
+  const handleTaskDelete = () => {
+    toggleConfirmation();
+    deleteTask({
+      boardId,
+      columnId,
+      taskId: id,
+    }).catch((e) => setAlertResult({ error: e }));
+  };
+
+  const handleTaskClick = () => {
+    dispatch(setCurrentTask({ id, title, done, description }));
   };
 
   useEffect(() => {
@@ -55,6 +74,7 @@ const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
       id={id}
       elevation={2}
       sx={{ color: 'text.secondary', p: 2, mb: 2, mr: 1 }}
+      onClick={handleTaskClick}
     >
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between', columnGap: 1 }}
@@ -95,7 +115,7 @@ const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
           itemTitle={title}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={() => console.log('Deleting task...')}
+          handleAccept={handleTaskDelete}
         />
       </Box>
     </Paper>

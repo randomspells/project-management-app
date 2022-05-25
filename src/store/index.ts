@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import formReducer from '../slices/formSlice';
 import taskReducer from '../slices/taskSlice';
 import boardReducer from '../slices/boardSlice';
+import columnReducer from '../slices/columnSlice';
 import authReducer from '../slices/authSlice';
 import alertReducer from '../slices/alertSlice';
 import baseApi from '../api/base.api';
@@ -14,6 +15,7 @@ export const store = configureStore({
     form: formReducer,
     task: taskReducer,
     board: boardReducer,
+    column: columnReducer,
     [boardApi.reducerPath]: boardApi.reducer,
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,

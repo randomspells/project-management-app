@@ -1,15 +1,16 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { useParams } from 'react-router-dom';
 import Task from '../Task/Task';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
 import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../api/columns.api';
 import { setAlertResult } from '../../slices/alertSlice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../constants';
+import { toggleNewTaskForm } from '../../slices/formSlice';
+import { setCurrentColumnId } from '../../slices/columnSlice';
 
 type TaskListProps = {
   columnId: string;
@@ -17,12 +18,18 @@ type TaskListProps = {
   tasks: TaskInterface[];
 };
 
-const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) => {
+const TaskList: FC<TaskListProps> = ({
+  columnId,
+  title: taskListTitle,
+  tasks,
+}) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
+  const boardId = useAppSelector((state) => state.board.currentBoard?.id);
   const [ deleteColumn, { error: errorDelete, isSuccess: isSuccessDelete } ] = useDeleteColumnMutation();
   const [ updateColumn, { error: errorUpdate, isSuccess: isSuccessUpdate} ] = useUpdateColumnMutation();
-  const { boardId } = useParams();
+
   const dispatch = useAppDispatch();
 
   const toggleConfirmation = () => {
@@ -33,12 +40,11 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
     setIsEditMode(!isEditMode);
   };
 
-  
-  const handleTaskListDelete = () => {
-    deleteColumn({boardId, columnId})
-    .catch((e) => dispatch(setAlertResult({ error: e })));
-  }
-  
+
+  const handleNewTaskClick = () => {
+    dispatch(toggleNewTaskForm());
+  };
+
   const changeTitleClick = (value: string) => {
     const columnData = {
       body: {
@@ -53,6 +59,16 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
     toggleEditMode();
   };
 
+  const handleTaskListDelete = () => {
+    deleteColumn({ boardId, columnId }).catch((e) =>
+      dispatch(setAlertResult({ error: e })),
+    );
+  };
+
+  const handleTaskListClick = () => {
+    dispatch(setCurrentColumnId(columnId));
+  }
+
   useEffect(() => {
     dispatch(setAlertResult({ isSuccessDelete, errorDelete }));
   }, [isSuccessDelete, errorDelete]);
@@ -65,6 +81,7 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
     <Box
       component='article'
       sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}
+      onClick={handleTaskListClick}
     >
       <Box sx={{ flex: 1, height: '40px' }}>
         {isEditMode ? (
@@ -115,7 +132,7 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
         component='section'
         sx={{ display: 'flex', justifyContent: 'space-between' }}
       >
-        <IconButton>
+        <IconButton onClick={handleNewTaskClick}>
           <AddRoundedIcon color='primary' />
         </IconButton>
         <Button color='secondary' onClick={toggleConfirmation}>

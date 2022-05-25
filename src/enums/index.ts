@@ -22,24 +22,29 @@ export enum ErrorMessageEnum {
   AppError = 'An application error occured',
   ClientError = 'Client network error occured',
   ServerError = 'Server network error occured',
+  IncorrectPassword = 'Incorrect password',
 }
 
 export enum StorageEnum {
   Token = 'token',
   User = 'user',
   CurrentBoard = 'currentBoard',
+  UserId = 'userId',
 }
 
 export enum TagsEnum {
+  Users = 'Users',
   Boards = 'Boards',
-  Columns = 'Columns',
   Board = 'Board',
+  Columns = 'Columns',
+  Tasks = 'Tasks',
 }
 
 export enum EndpointsEnum {
+  Users = 'users',
   Boards = 'boards',
   Columns = 'columns',
-  Users = 'users',
+  Tasks = 'tasks',
 }
 
 export enum MethodsEnum {

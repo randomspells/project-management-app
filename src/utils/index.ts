@@ -1,9 +1,13 @@
 import { MouseEvent } from 'react';
+import {
+  QueryErrorInterface,
+  ApiErrorType,
+  UserInterface,
+} from '../interfaces/index';
 
 // Avatar color generator
 
 import { ErrorMessageEnum } from '../enums';
-import { ApiErrorType, UserInterface } from '../interfaces';
 
 export const stringToColor = (string: string) => {
   let hash = 0;
@@ -61,16 +65,10 @@ export const clearStorage = (): void => {
 
 export const getErrorMessage = (error: ApiErrorType): string => {
   if (error === undefined) return '';
-  if (!('status' in error)) {
-    return ErrorMessageEnum.AppError;
+  if ('data' in error) {
+    return (error.data as QueryErrorInterface).message;
   }
-  if (error.status >= 400 && error.status < 500) {
-    return ErrorMessageEnum.ClientError;
-  }
-  if (error.status >= 500 && error.status < 600) {
-    return ErrorMessageEnum.ServerError;
-  }
-  return ErrorMessageEnum.UnknownError;
+  return ErrorMessageEnum.AppError;
 };
 
 // Stop Propagation
@@ -99,3 +97,6 @@ export const getUserLoginById = (users: UserInterface[], id: string) => {
   }
   return null;
 };
+
+export const countOrder = (list: Record<string, string>[]): number =>
+list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);

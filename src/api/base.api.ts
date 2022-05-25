@@ -15,7 +15,13 @@ const baseQuery = fetchBaseQuery({
 
 const baseApi = createApi({
   baseQuery,
-  tagTypes: [TagsEnum.Boards, TagsEnum.Board, TagsEnum.Columns],
+  tagTypes: [
+    TagsEnum.Boards,
+    TagsEnum.Board,
+    TagsEnum.Columns,
+    TagsEnum.Users,
+    TagsEnum.Tasks,
+  ],
   endpoints: () => ({}),
 });
 

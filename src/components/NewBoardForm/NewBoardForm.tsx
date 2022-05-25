@@ -3,29 +3,14 @@ import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useCreateBoardMutation } from '../../api/board.api';
+import { TITLE_INPUT, DESCRIPTION_INPUT } from '../../constants';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { InputInterface, FormDataInterface } from '../../interfaces';
-import { setAlertResult, toggleAlertIsOpen } from '../../slices/alertSlice';
+import { FormDataInterface } from '../../interfaces';
+import { setAlertResult } from '../../slices/alertSlice';
 import { toggleNewBoardForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
-
-const BOARD_TITLE_INPUT: InputInterface = {
-  type: 'text',
-  name: 'title',
-  label: 'Board title',
-  errorText: 'Title is required',
-  rules: { required: true },
-};
-
-const BOARD_DESCRIPTION_INPUT: InputInterface = {
-  type: 'text',
-  name: 'description',
-  label: 'Board description',
-  errorText: 'Description is required',
-  rules: { required: true },
-};
 
 const NewBoardForm: FC = () => {
   const {
@@ -53,7 +38,6 @@ const NewBoardForm: FC = () => {
       title,
       description,
     }).catch((e) => dispatch(setAlertResult({ error: e })));
-    dispatch(toggleAlertIsOpen());
     handleClose();
   };
 
@@ -63,7 +47,7 @@ const NewBoardForm: FC = () => {
     errorText: titleErrorText,
     rules: titleRules,
     type: titleType,
-  } = BOARD_TITLE_INPUT;
+  } = TITLE_INPUT;
 
   const {
     type: descriptionType,
@@ -71,7 +55,7 @@ const NewBoardForm: FC = () => {
     label: descriptionLabel,
     errorText: descriptionErrorText,
     rules: descriptionRules,
-  } = BOARD_DESCRIPTION_INPUT;
+  } = DESCRIPTION_INPUT;
 
   useEffect(() => {
     dispatch(setAlertResult({ isSuccess, error }));

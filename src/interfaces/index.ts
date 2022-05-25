@@ -33,6 +33,11 @@ export interface TaskInterface {
   files: FileInterface[];
 }
 
+export interface TasksPostInterface {
+  title: string;
+  description: string;
+}
+
 export interface ColumnInterface {
   id: string;
   title: string;
@@ -80,6 +85,11 @@ export interface WelcomeInfoInterface {
   title: string;
   description: string;
   icon: ReactElement;
+}
+
+export interface QueryErrorInterface {
+  statusCode: number;
+  message: string;
 }
 
 export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;
