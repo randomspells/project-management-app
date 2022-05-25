@@ -14,12 +14,14 @@ import { setCurrentColumnId } from '../../slices/columnSlice';
 
 type TaskListProps = {
   columnId: string;
+  columnOrder: number;
   title: string;
   tasks: TaskInterface[];
 };
 
 const TaskList: FC<TaskListProps> = ({
   columnId,
+  columnOrder,
   title: taskListTitle,
   tasks,
 }) => {
@@ -49,7 +51,7 @@ const TaskList: FC<TaskListProps> = ({
     const columnData = {
       body: {
         title: value,
-        order: 101,
+        order: columnOrder,
       },
       boardId,
       columnId,
@@ -70,11 +72,11 @@ const TaskList: FC<TaskListProps> = ({
   }
 
   useEffect(() => {
-    dispatch(setAlertResult({ isSuccessDelete, errorDelete }));
+    dispatch(setAlertResult({ isSuccess: isSuccessDelete, error: errorDelete }));
   }, [isSuccessDelete, errorDelete]);
 
   useEffect(() => {
-    dispatch(setAlertResult({ isSuccessUpdate, errorUpdate }));
+    dispatch(setAlertResult({ isSuccess: isSuccessUpdate, error: errorUpdate }));
   }, [isSuccessUpdate, errorUpdate]);
 
   return (
