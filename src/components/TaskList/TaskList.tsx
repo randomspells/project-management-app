@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Task from '../Task/Task';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
-import { useDeleteColumnMutation } from '../../api/columns.api';
+import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../api/columns.api';
 import { setAlertResult } from '../../slices/alertSlice';
 import { useAppDispatch } from '../../hooks';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
@@ -20,7 +20,8 @@ type TaskListProps = {
 const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [ deleteColumn, { error, isSuccess } ] = useDeleteColumnMutation();
+  const [ deleteColumn, { error: errorDelete, isSuccess: isSuccessDelete } ] = useDeleteColumnMutation();
+  const [ updateColumn, { error: errorUpdate, isSuccess: isSuccessUpdate} ] = useUpdateColumnMutation();
   const { boardId } = useParams();
   const dispatch = useAppDispatch();
 
@@ -32,18 +33,33 @@ const TaskList: FC<TaskListProps> = ({ columnId, title: taskListTitle, tasks }) 
     setIsEditMode(!isEditMode);
   };
 
-  const changeTitleClick = () => {
-    toggleEditMode();
-  };
-
+  
   const handleTaskListDelete = () => {
     deleteColumn({boardId, columnId})
     .catch((e) => dispatch(setAlertResult({ error: e })));
   }
   
+  const changeTitleClick = (value: string) => {
+    const columnData = {
+      body: {
+        title: value,
+        order: 101,
+      },
+      boardId,
+      columnId,
+    };
+    updateColumn(columnData)
+      .catch((e) => dispatch(setAlertResult({ error: e })));
+    toggleEditMode();
+  };
+
   useEffect(() => {
-    dispatch(setAlertResult({ isSuccess, error }));
-  }, [isSuccess, error]);
+    dispatch(setAlertResult({ isSuccessDelete, errorDelete }));
+  }, [isSuccessDelete, errorDelete]);
+
+  useEffect(() => {
+    dispatch(setAlertResult({ isSuccessUpdate, errorUpdate }));
+  }, [isSuccessUpdate, errorUpdate]);
 
   return (
     <Box

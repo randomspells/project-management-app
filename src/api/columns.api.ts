@@ -22,7 +22,15 @@ export const columnsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
     }),
+    updateColumn: builder.mutation({
+      query: ({body, boardId, columnId}) => ({
+        url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}`,
+        method: MethodsEnum.Put,
+        body
+      }),
+      invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
+    }),
   })
 })
 
-export const { useCreateColumnMutation, useDeleteColumnMutation, useGetAllColumnQuery} = columnsApi
+export const { useCreateColumnMutation, useDeleteColumnMutation, useGetAllColumnQuery, useUpdateColumnMutation} = columnsApi
