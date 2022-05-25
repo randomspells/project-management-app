@@ -4,7 +4,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Task from '../Task/Task';
 import { TaskInterface } from '../../interfaces';
 import Confirmation from '../Confirmation/Confirmation';
-import { useDeleteColumnMutation } from '../../api/columns.api';
+import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../api/columns.api';
 import { setAlertResult } from '../../slices/alertSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import TaskTitleEditInput from '../Inputs/TaskTitleInput/TaskTitleInput';
@@ -14,12 +14,14 @@ import { setCurrentColumnId } from '../../slices/columnSlice';
 
 type TaskListProps = {
   columnId: string;
+  columnOrder: number;
   title: string;
   tasks: TaskInterface[];
 };
 
 const TaskList: FC<TaskListProps> = ({
   columnId,
+  columnOrder,
   title: taskListTitle,
   tasks,
 }) => {
@@ -27,7 +29,9 @@ const TaskList: FC<TaskListProps> = ({
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const boardId = useAppSelector((state) => state.board.currentBoard?.id);
-  const [deleteColumn, { error, isSuccess }] = useDeleteColumnMutation();
+  const [ deleteColumn, { error: errorDelete, isSuccess: isSuccessDelete } ] = useDeleteColumnMutation();
+  const [ updateColumn, { error: errorUpdate, isSuccess: isSuccessUpdate} ] = useUpdateColumnMutation();
+
   const dispatch = useAppDispatch();
 
   const toggleConfirmation = () => {
@@ -38,11 +42,22 @@ const TaskList: FC<TaskListProps> = ({
     setIsEditMode(!isEditMode);
   };
 
+
   const handleNewTaskClick = () => {
     dispatch(toggleNewTaskForm());
   };
 
-  const changeTitleClick = () => {
+  const changeTitleClick = (value: string) => {
+    const columnData = {
+      body: {
+        title: value,
+        order: columnOrder,
+      },
+      boardId,
+      columnId,
+    };
+    updateColumn(columnData)
+      .catch((e) => dispatch(setAlertResult({ error: e })));
     toggleEditMode();
   };
 
@@ -57,8 +72,12 @@ const TaskList: FC<TaskListProps> = ({
   }
 
   useEffect(() => {
-    dispatch(setAlertResult({ isSuccess, error }));
-  }, [isSuccess, error]);
+    dispatch(setAlertResult({ isSuccess: isSuccessDelete, error: errorDelete }));
+  }, [isSuccessDelete, errorDelete]);
+
+  useEffect(() => {
+    dispatch(setAlertResult({ isSuccess: isSuccessUpdate, error: errorUpdate }));
+  }, [isSuccessUpdate, errorUpdate]);
 
   return (
     <Box
