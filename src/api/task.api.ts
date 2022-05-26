@@ -5,6 +5,7 @@ export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: ({boardId, columnId}) => (`${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}/${EndpointsEnum.Tasks}`),
+      transformResponse: (response: Record<string, string>[]) => response.sort((a, b) => a.order > b.order ? 1 : -1),
       providesTags: [TagsEnum.Tasks]
     }),
     createTask: builder.mutation({
