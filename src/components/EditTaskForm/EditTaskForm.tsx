@@ -1,13 +1,12 @@
 import { Box, Button } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGetTasksQuery, useUpdateTaskMutation } from '../../api/task.api';
+import { useUpdateTaskMutation } from '../../api/task.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormDataInterface } from '../../interfaces';
 import { setAlertResult } from '../../slices/alertSlice';
 import { toggleEditTaskForm } from '../../slices/formSlice';
-import { countOrder } from '../../utils';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
 
@@ -40,13 +39,11 @@ const EditTaskForm: FC = () => {
   const isEditTaskFormOpen = useAppSelector((state) => state.form.isEditTaskFormOpen);
   const currentTaskTitle = useAppSelector((state) => state.task.currentTask?.title);
   const currentTaskDescription = useAppSelector((state) => state.task.currentTask?.description);
+  const currentTask = useAppSelector((state) => state.task.currentTask);
   const boardId = useAppSelector((state) => state.board.currentBoard?.id);
   const columnId = useAppSelector((state) => state.column.currentId);
-  const taskId = useAppSelector((state) => state.task.currentTask?.id);
-  const userId = useAppSelector((state) => state.auth.currentId);
-  const { data: tasks = [] } = useGetTasksQuery({ boardId, columnId });
 
-  const [updateTask] = useUpdateTaskMutation();
+  const [updateTask, { error: errorUpdate, isSuccess: isSuccessUpdate}] = useUpdateTaskMutation();
 
   const dispatch = useAppDispatch();
 
@@ -56,22 +53,28 @@ const EditTaskForm: FC = () => {
   };
 
   const onSubmit = (data: FormDataInterface) => {
-    const { title, description } = data;
+    const { taskTitle, taskDescription } = data;
     const updateTaskData = {
-      taskId,
       body: {
-        title,
+        title: taskTitle,
         done: false,
-        order: countOrder(tasks),
-        description,
-        userId,
+        order: currentTask?.order,
+        description: taskDescription,
+        userId: currentTask?.userId,
         boardId,
         columnId,
-      }
+      },
+      boardId,
+      columnId,
+      taskId: currentTask?.id,
     }
     updateTask(updateTaskData).catch((e) => setAlertResult({ error: e}));
     handleClose();
   };
+
+  useEffect(() => {
+    dispatch(setAlertResult({ isSuccess: isSuccessUpdate, error: errorUpdate }));
+  }, [isSuccessUpdate, errorUpdate]);
   
   return (
     <FormModal isOpen={isEditTaskFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.EditTask}>
