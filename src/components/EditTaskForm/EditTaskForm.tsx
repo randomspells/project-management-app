@@ -1,9 +1,11 @@
 import { Box, Button } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useUpdateTaskMutation } from '../../api/task.api';
 import { FormTitleEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-// import { FormDataInterface } from '../../interfaces';
+import { FormDataInterface } from '../../interfaces';
+import { setAlertResult } from '../../slices/alertSlice';
 import { toggleEditTaskForm } from '../../slices/formSlice';
 import FormModal from '../FormModal/FormModal';
 import ControlledInput from '../Inputs/ControlledInput/ControlledInput';
@@ -37,6 +39,11 @@ const EditTaskForm: FC = () => {
   const isEditTaskFormOpen = useAppSelector((state) => state.form.isEditTaskFormOpen);
   const currentTaskTitle = useAppSelector((state) => state.task.currentTask?.title);
   const currentTaskDescription = useAppSelector((state) => state.task.currentTask?.description);
+  const currentTask = useAppSelector((state) => state.task.currentTask);
+  const boardId = useAppSelector((state) => state.board.currentBoard?.id);
+  const columnId = useAppSelector((state) => state.column.currentId);
+
+  const [updateTask, { error: errorUpdate, isSuccess: isSuccessUpdate}] = useUpdateTaskMutation();
 
   const dispatch = useAppDispatch();
 
@@ -45,10 +52,29 @@ const EditTaskForm: FC = () => {
     dispatch(toggleEditTaskForm());
   };
 
-  const onSubmit = (/* data: FormDataInterface */) => {
-    // console.log(data);
+  const onSubmit = (data: FormDataInterface) => {
+    const { taskTitle, taskDescription } = data;
+    const updateTaskData = {
+      body: {
+        title: taskTitle,
+        done: false,
+        order: currentTask?.order,
+        description: taskDescription,
+        userId: currentTask?.userId,
+        boardId,
+        columnId,
+      },
+      boardId,
+      columnId,
+      taskId: currentTask?.id,
+    }
+    updateTask(updateTaskData).catch((e) => setAlertResult({ error: e}));
     handleClose();
   };
+
+  useEffect(() => {
+    dispatch(setAlertResult({ isSuccess: isSuccessUpdate, error: errorUpdate }));
+  }, [isSuccessUpdate, errorUpdate]);
   
   return (
     <FormModal isOpen={isEditTaskFormOpen} handleClose={handleClose} formTitle={FormTitleEnum.EditTask}>

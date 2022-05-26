@@ -21,7 +21,7 @@ import { useGetUsersQuery } from '../../api/user.api';
 import { useDeleteTaskMutation } from '../../api/task.api';
 import { setAlertResult } from '../../slices/alertSlice';
 
-const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
+const Task: FC<TaskInterface> = ({ id, title, order, done, description, userId }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [avatarColor, setAvatarColor] = useState<string>();
   const [avatarChildren, setAvatarChildren] = useState<string>();
@@ -52,7 +52,7 @@ const Task: FC<TaskInterface> = ({ id, title, done, description, userId }) => {
   };
 
   const handleTaskClick = () => {
-    dispatch(setCurrentTask({ id, title, done, description }));
+    dispatch(setCurrentTask({ id, title, order, done, description, userId }));
   };
 
   useEffect(() => {
