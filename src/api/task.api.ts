@@ -21,8 +21,16 @@ export const taskApi = baseApi.injectEndpoints({
         method: MethodsEnum.Delete,
       }),
       invalidatesTags: [TagsEnum.Tasks, TagsEnum.Board],
-    })
+    }),
+    updateTask: builder.mutation({
+      query: ({boardId, columnId, taskId, body}) => ({
+        url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}/${EndpointsEnum.Tasks}/${taskId}`,
+        method: MethodsEnum.Put,
+        body,
+      }),
+      invalidatesTags: [TagsEnum.Tasks, TagsEnum.Board],
+    }),
   })
 })
 
-export const { useGetTasksQuery, useCreateTaskMutation, useDeleteTaskMutation  } = taskApi;
+export const { useGetTasksQuery, useCreateTaskMutation, useDeleteTaskMutation, useUpdateTaskMutation  } = taskApi;
