@@ -31,6 +31,7 @@ const Task: FC<TaskInterface> = ({
   const [avatarColor, setAvatarColor] = useState<string>();
   const [avatarChildren, setAvatarChildren] = useState<string>();
 
+  const currentTaskId = useAppSelector((state) => state.task.currentTask?.id);
   const boardId = useAppSelector((state) => state.board.currentBoard?.id);
   const columnId = useAppSelector((state) => state.column.currentId);
 
@@ -57,7 +58,9 @@ const Task: FC<TaskInterface> = ({
   };
 
   const handleTaskClick = () => {
-    dispatch(setCurrentTask({ id, title, order, done, description, userId }));
+    if (id !== currentTaskId) {
+      dispatch(setCurrentTask({ id, title, order, done, description, userId }));
+    }
   };
 
   useEffect(() => {

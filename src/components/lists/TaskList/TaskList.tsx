@@ -35,6 +35,7 @@ const TaskList: FC<TaskListProps> = ({
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
+  const currentColumnId = useAppSelector(state => state.column.currentId);
   const boardId = useAppSelector((state) => state.board.currentBoard?.id);
   const [deleteColumn, { isSuccess: isSuccessDelete, error: errorDelete }] =
     useDeleteColumnMutation();
@@ -76,6 +77,7 @@ const TaskList: FC<TaskListProps> = ({
   };
 
   const handleTaskListClick = () => {
+    if (columnId !== currentColumnId)
     dispatch(setCurrentColumnId(columnId));
   };
 
