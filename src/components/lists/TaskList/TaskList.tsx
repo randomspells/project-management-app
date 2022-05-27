@@ -14,7 +14,7 @@ import {
   useAppSelector,
   useSetAlertResult,
 } from '../../../hooks';
-import TaskTitleEditInput from '../../inputs/TaskTitleInput/TaskTitleInput';
+import TaskTitleEditInput from '../../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../../constants';
 import { toggleNewTaskForm } from '../../../slices/formSlice';
 import { setCurrentColumnId } from '../../../slices/columnSlice';

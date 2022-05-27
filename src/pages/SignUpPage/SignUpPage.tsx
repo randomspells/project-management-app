@@ -4,7 +4,7 @@ import { Container, Typography, Box, Avatar, Link } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
-import ControlledInput from '../../components/inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
 import { useSigninMutation, useSignupMutation } from '../../api/auth.api';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
