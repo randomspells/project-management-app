@@ -64,6 +64,7 @@ export const clearStorage = (): void => {
 // Error handling
 
 export const getErrorMessage = (error: ApiErrorType): string => {
+  if (error instanceof Error) return error.message;
   if (error === undefined) return '';
   if ('data' in error) {
     return (error.data as QueryErrorInterface).message;
@@ -99,4 +100,4 @@ export const getUserLoginById = (users: UserInterface[], id: string) => {
 };
 
 export const countOrder = (list: Record<string, string>[]): number =>
-list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);
+  list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);

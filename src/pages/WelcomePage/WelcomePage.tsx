@@ -1,11 +1,17 @@
-import { Box, Button, Container, Typography } from '@mui/material';
 import React, { FC } from 'react';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import { RouteEnum } from '../../enums';
 import style from './WelcomePage.module.scss';
 import { WELCOME_INFO } from '../../constants';
+import { useAppSelector } from '../../hooks';
 
 const WelcomePage: FC = () => {
+  const isAuthenticated = useAppSelector(
+    (state) => state.auth.currentUser?.isAuthenticated,
+  );
+
   const navigate = useNavigate();
 
   const handleLogIn = () => {
@@ -14,6 +20,10 @@ const WelcomePage: FC = () => {
 
   const handleSignUp = () => {
     navigate(RouteEnum.Signup);
+  };
+
+  const handleGoToMain = () => {
+    navigate(RouteEnum.Main);
   };
 
   const { wrapper } = style;
@@ -27,12 +37,24 @@ const WelcomePage: FC = () => {
         component='nav'
         sx={{ display: 'flex', columnGap: 1, justifyContent: 'flex-end' }}
       >
-        <Button variant='contained' color='primary' onClick={handleLogIn}>
-          Log In
-        </Button>
-        <Button variant='contained' color='primary' onClick={handleSignUp}>
-          Sign Up
-        </Button>
+        {isAuthenticated ? (
+          <Button
+            variant='contained'
+            onClick={handleGoToMain}
+            endIcon={<ArrowForwardRoundedIcon />}
+          >
+            Go to main page
+          </Button>
+        ) : (
+          <>
+            <Button variant='contained' color='primary' onClick={handleLogIn}>
+              Log In
+            </Button>
+            <Button variant='contained' color='primary' onClick={handleSignUp}>
+              Sign Up
+            </Button>
+          </>
+        )}
       </Box>
       <Typography
         component='h1'

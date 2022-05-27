@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Box, Button, Container, TextField } from '@mui/material';
-import BoardList from '../../components/BoardList/BoardList';
+import BoardList from '../../components/lists/BoardList/BoardList';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { toggleNewBoardForm } from '../../slices/formSlice';
 import { useGetUsersQuery } from '../../api/user.api';
@@ -8,8 +8,7 @@ import { getCurrentUserId } from '../../utils';
 import { setUserId } from '../../slices/authSlice';
 
 export const MainPage: FC = () => {
-  const { data: users } = useGetUsersQuery();
-
+  const { currentData: users } = useGetUsersQuery();
   const login = useAppSelector((state) => state.auth.currentUser?.login);
 
   const dispatch = useAppDispatch();

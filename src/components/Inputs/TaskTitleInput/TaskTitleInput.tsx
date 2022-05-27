@@ -10,36 +10,44 @@ type TaskTitleInputProps = {
   closeHandler: () => void;
 };
 
-const TaskTitleEditInput: FC<TaskTitleInputProps> = ({ title, saveHandler, closeHandler }) => {
-    const [value, setValue] = useState(title);
-    return (
-      <OutlinedInput 
-        color='primary'
-        id='title'
-        size='small'
-        value={value}
-        sx={{ width: COLUMN_WIDTH }}
-        onChange={(event)=>{setValue(event.target.value)}}
-        endAdornment={
-          <InputAdornment position='end'>
-            <IconButton
-              aria-label='save title handler'
-              edge='end'
-              onClick={()=>{saveHandler(value)}}
-            >
-              <CheckRoundedIcon />
-            </IconButton>
-            <IconButton
-              aria-label='close edit handler'
-              edge='end'
-              onClick={closeHandler}
-            >
-              <CloseRoundedIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-    );
-  };
+const TaskTitleEditInput: FC<TaskTitleInputProps> = ({
+  title,
+  saveHandler,
+  closeHandler,
+}) => {
+  const [value, setValue] = useState(title);
+  return (
+    <OutlinedInput
+      color='primary'
+      id='title'
+      size='small'
+      value={value}
+      sx={{ width: COLUMN_WIDTH }}
+      onChange={(event) => {
+        setValue(event.target.value);
+      }}
+      endAdornment={
+        <InputAdornment position='end'>
+          <IconButton
+            aria-label='close edit handler'
+            edge='end'
+            onClick={closeHandler}
+          >
+            <CloseRoundedIcon />
+          </IconButton>
+          <IconButton
+            aria-label='save title handler'
+            edge='end'
+            onClick={() => {
+              saveHandler(value);
+            }}
+          >
+            <CheckRoundedIcon />
+          </IconButton>
+        </InputAdornment>
+      }
+    />
+  );
+};
 
 export default TaskTitleEditInput;
