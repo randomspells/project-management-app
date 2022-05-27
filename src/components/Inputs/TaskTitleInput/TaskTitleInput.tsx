@@ -16,6 +16,7 @@ const TaskTitleEditInput: FC<TaskTitleInputProps> = ({
   closeHandler,
 }) => {
   const [value, setValue] = useState(title);
+
   return (
     <OutlinedInput
       color='primary'
