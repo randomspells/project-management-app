@@ -4,14 +4,18 @@ import { Container, Typography, Box, Avatar, Link } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
-import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../components/inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
 import { useSigninMutation, useSignupMutation } from '../../api/auth.api';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum } from '../../enums';
 import { setAlertResult } from '../../slices/alertSlice';
-import { useAppDispatch } from '../../hooks';
-import { logIn } from '../../slices/authSlice';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useLogInWithRedirect,
+  useSetAlertResult,
+} from '../../hooks';
 
 const SignUpPage: FC = () => {
   const {
@@ -21,35 +25,50 @@ const SignUpPage: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const [signup, { error, isSuccess, isLoading }] = useSignupMutation();
+  const [
+    signup,
+    {
+      error: signupError,
+      isSuccess: isSignupSuccess,
+      isLoading: isSignupLoading,
+    },
+  ] = useSignupMutation();
   const [signin, { data: { token } = '' }] = useSigninMutation();
 
+  const isAuthenticated = useAppSelector(
+    (state) => state.auth.currentUser?.isAuthenticated,
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (formData: FormDataInterface) => {
-    const { login, password } = formData;
-    await signup(formData)
-      .then(() =>
-        signin({
-          login,
-          password,
-        }).catch((e) => dispatch(setAlertResult({ error: e }))),
-      )
-      .catch((e) => dispatch(setAlertResult({ error: e })));
+    const { login, password, name } = formData;
+    const signupBody = {
+      name,
+      login,
+      password,
+    };
+    const signinBody = {
+      login,
+      password,
+    };
+    try {
+      if (signupError) throw signupError;
+      await signup(signupBody);
+      await signin(signinBody);
+    } catch (e) {
+      dispatch(setAlertResult({ error: e }));
+    }
   };
 
-  useEffect(() => {
-    dispatch(setAlertResult({ error, isSuccess }));
-  }, [error, isSuccess]);
+  useSetAlertResult(isSignupSuccess, signupError);
+  useLogInWithRedirect(token, signupError, getValues('login'));
 
   useEffect(() => {
-    if (token) {
-      const login = getValues('login');
-      dispatch(logIn({ token, login }));
+    if (isAuthenticated) {
       navigate(RouteEnum.Main);
     }
-  }, [token]);
+  }, []);
 
   return (
     <Container
@@ -100,7 +119,7 @@ const SignUpPage: FC = () => {
           control={control}
         />
         <LoadingButton
-          loading={isLoading}
+          loading={isSignupLoading}
           type='submit'
           fullWidth
           variant='contained'

@@ -18,6 +18,10 @@ export interface UserInterface {
   login: string;
 }
 
+export interface TokenInterface {
+  token: string;
+}
+
 export interface FileInterface {
   filename: string;
   fileSize: number;
@@ -92,4 +96,8 @@ export interface QueryErrorInterface {
   message: string;
 }
 
-export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;
+export type ApiErrorType =
+  | FetchBaseQueryError
+  | SerializedError
+  | Error
+  | undefined;

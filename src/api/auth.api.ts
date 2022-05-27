@@ -1,13 +1,16 @@
+import { TagsEnum } from '../enums';
+import { SignUpInterface, UserInterface } from '../interfaces';
 import baseApi from './base.api';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    signup: builder.mutation({
+    signup: builder.mutation<UserInterface, SignUpInterface>({
       query: (body) => ({
         url: 'signup',
         method: 'POST',
         body,
       }),
+      invalidatesTags: [TagsEnum.Users],
     }),
 
     signin: builder.mutation({
@@ -16,6 +19,7 @@ export const authApi = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: [TagsEnum.Users],
     }),
   }),
 });
