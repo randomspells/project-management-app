@@ -1,10 +1,3 @@
-export enum FormTitleEnum {
-  NewTaskList = 'New task list',
-  NewBoard = 'New board',
-  NewTask = 'New task',
-  EditTask = 'Edit task',
-}
-
 export enum RouteEnum {
   Welcome = '/',
   Main = '/main',

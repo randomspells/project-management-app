@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { Box, Button, Container, TextField } from '@mui/material';
-import BoardList from '../../components/BoardList/BoardList';
+import { FormattedMessage } from 'react-intl';
+import BoardList from '../../components/lists/BoardList/BoardList';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { toggleNewBoardForm } from '../../slices/formSlice';
 import { useGetUsersQuery } from '../../api/user.api';
@@ -8,8 +9,7 @@ import { getCurrentUserId } from '../../utils';
 import { setUserId } from '../../slices/authSlice';
 
 export const MainPage: FC = () => {
-  const { data: users } = useGetUsersQuery();
-
+  const { currentData: users } = useGetUsersQuery();
   const login = useAppSelector((state) => state.auth.currentUser?.login);
 
   const dispatch = useAppDispatch();
@@ -41,11 +41,11 @@ export const MainPage: FC = () => {
           onClick={handleNewBoardClick}
           sx={{ width: { xs: '100%', md: 'auto' }, order: { xs: 1, md: 0 } }}
         >
-          Create Board
+          <FormattedMessage id='create_board' />
         </Button>
         <TextField
           id='filled-search'
-          label='Search field'
+          label={<FormattedMessage id='search_fields' />}
           type='search'
           sx={{ width: { xs: '100%', md: 'auto' } }}
         />

@@ -1,6 +1,6 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Control } from 'react-hook-form';
 
 export interface SignInInterface {
@@ -16,6 +16,10 @@ export interface UserInterface {
   id: string;
   name: string;
   login: string;
+}
+
+export interface TokenInterface {
+  token: string;
 }
 
 export interface FileInterface {
@@ -65,7 +69,7 @@ export interface FormDataInterface {
 export interface InputInterface {
   type: string;
   name: string;
-  label: string;
+  label: string | ReactNode;
   errorText: string;
   rules: Record<string, unknown>;
   multiline?: boolean;
@@ -92,4 +96,8 @@ export interface QueryErrorInterface {
   message: string;
 }
 
-export type ApiErrorType = FetchBaseQueryError | SerializedError | undefined;
+export type ApiErrorType =
+  | FetchBaseQueryError
+  | SerializedError
+  | Error
+  | undefined;

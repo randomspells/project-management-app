@@ -1,36 +1,51 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, Box, Stack, Typography, Container } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
-import { FormDataInterface } from '../../interfaces/index';
+import { FormDataInterface, UserInterface } from '../../interfaces/index';
 import { useSigninMutation } from '../../api/auth.api';
 import { setAlertResult } from '../../slices/alertSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector, useSetAlertResult } from '../../hooks';
 import {
+  useGetUsersQuery,
   useDeleteUserMutation,
   useUpdateUserMutation,
 } from '../../api/user.api';
-import Confirmation from '../../components/Confirmation/Confirmation';
+import Confirmation from '../../components/modals/Confirmation/Confirmation';
 import { logIn, logOut } from '../../slices/authSlice';
+import { RouteEnum } from '../../enums';
+
+export const checkIfLoginExist = (
+  users: UserInterface[],
+  login: string,
+): boolean => users.some((user: UserInterface) => user.login === login);
 
 const EditProfilePage: FC = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
-  const [signin, { error: signinError }] = useSigninMutation();
+  const { data: users = [] } = useGetUsersQuery();
+  const [signin, { error: signinError, isSuccess: isSigninSuccess }] =
+    useSigninMutation();
   const [
     updateUser,
     { error: updateUserError, isSuccess: isUpdateUserSuccess, isLoading },
   ] = useUpdateUserMutation();
-  const [deleteUser, { error: deleteUserError }] = useDeleteUserMutation();
+  const [
+    deleteUser,
+    { error: deleteUserError, isSuccess: isDeleteUserSuccess },
+  ] = useDeleteUserMutation();
 
   const currentLogin = useAppSelector((state) => state.auth.currentUser?.login);
   const currentId = useAppSelector((state) => state.auth.currentId);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -44,28 +59,41 @@ const EditProfilePage: FC = () => {
     setIsConfirmationOpen(!isConfirmationOpen);
   };
 
+  const handleCancelClick = () => {
+    navigate(RouteEnum.Main);
+  };
+
   const onSubmit = (data: FormDataInterface) => {
+    if (!currentLogin) return;
     const { oldPassword, password, login, name } = data;
-    signin({
+    const loginBody = {
       login: currentLogin,
       password: oldPassword,
-    })
-      .then((result) => {
+    };
+    const updateUserBody = {
+      login,
+      name,
+      password,
+    };
+    try {
+      const isLoginExist = checkIfLoginExist(users, login);
+      if (isLoginExist && login !== currentLogin) {
+        throw new Error('Login already exist!');
+      }
+      signin(loginBody).then((result) => {
         if (!('data' in result)) return;
         if (result.data.token) {
           const { token } = result.data;
           updateUser({
-            body: {
-              login,
-              name,
-              password,
-            },
+            body: updateUserBody,
             userId: currentId,
-          }).catch((e) => dispatch(setAlertResult({ error: e })));
+          });
           dispatch(logIn({ login, token }));
         }
-      })
-      .catch((e) => dispatch(setAlertResult({ error: e })));
+      });
+    } catch (e) {
+      dispatch(setAlertResult({ error: e }));
+    }
   };
 
   const handleUserDelete = () => {
@@ -76,24 +104,9 @@ const EditProfilePage: FC = () => {
       .catch((e) => dispatch(setAlertResult({ error: e })));
   };
 
-  useEffect(() => {
-    if (signinError) {
-      dispatch(setAlertResult({ error: signinError }));
-    } else if (updateUserError || isUpdateUserSuccess) {
-      dispatch(
-        setAlertResult({
-          error: updateUserError,
-          isSuccess: isUpdateUserSuccess,
-        }),
-      );
-    } else if (deleteUserError) {
-      dispatch(
-        setAlertResult({
-          error: deleteUserError,
-        }),
-      );
-    }
-  }, [signinError, updateUserError, isUpdateUserSuccess, deleteUserError]);
+  useSetAlertResult(isSigninSuccess, signinError);
+  useSetAlertResult(isDeleteUserSuccess, deleteUserError);
+  useSetAlertResult(isUpdateUserSuccess, updateUserError);
 
   return (
     <Container
@@ -103,7 +116,7 @@ const EditProfilePage: FC = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Typography component='h1' variant='h5' sx={{ textAlign: 'center' }}>
-        Edit profile
+        <FormattedMessage id='edit_profile' />
       </Typography>
       <Box>
         <ControlledInput
@@ -151,6 +164,9 @@ const EditProfilePage: FC = () => {
             justifyContent: 'center',
           }}
         >
+          <Button variant='outlined' onClick={handleCancelClick}>
+            <FormattedMessage id='cancel' />
+          </Button>
           <LoadingButton
             loading={isLoading}
             type='submit'
@@ -158,7 +174,7 @@ const EditProfilePage: FC = () => {
             variant='contained'
             endIcon={<SaveIcon />}
           >
-            Save
+            <FormattedMessage id='save' />
           </LoadingButton>
           <Button
             variant='outlined'
@@ -166,7 +182,7 @@ const EditProfilePage: FC = () => {
             startIcon={<DeleteIcon />}
             onClick={toggleConfirmation}
           >
-            Delete user
+            <FormattedMessage id='delete_user' />
           </Button>
           <Confirmation
             itemTitle={currentLogin || ''}

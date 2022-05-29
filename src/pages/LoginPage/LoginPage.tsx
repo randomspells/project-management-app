@@ -1,14 +1,19 @@
 import React, { FC, useEffect } from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Container, Typography, Box, Avatar, Link } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
 import { useSigninMutation } from '../../api/auth.api';
-import { useAppDispatch } from '../../hooks/index';
-import { logIn } from '../../slices/authSlice';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useLogInWithRedirect,
+  useSetAlertResult,
+} from '../../hooks/index';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { RouteEnum } from '../../enums';
 import { setAlertResult } from '../../slices/alertSlice';
@@ -21,26 +26,40 @@ const LoginPage: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const [signin, { data: { token } = '', error, isSuccess, isLoading }] =
-    useSigninMutation();
+  const [
+    signin,
+    {
+      data: { token } = '',
+      error: signinError,
+      isSuccess: isSigninSuccess,
+      isLoading: isSigninLoading,
+    },
+  ] = useSigninMutation();
+
+  const isAuthenticated = useAppSelector(
+    (state) => state.auth.currentUser?.isAuthenticated,
+  );
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (formData: FormDataInterface) => {
-    signin(formData).catch((e) => dispatch(setAlertResult({ error: e })));
+  const onSubmit = async (formData: FormDataInterface) => {
+    try {
+      if (signinError) throw signinError;
+      await signin(formData);
+    } catch (e) {
+      dispatch(setAlertResult({ error: e }));
+    }
   };
 
-  useEffect(() => {
-    dispatch(setAlertResult({ error, isSuccess }));
-  }, [error, isSuccess]);
+  useSetAlertResult(isSigninSuccess, signinError);
+  useLogInWithRedirect(token, signinError, getValues('login'));
 
   useEffect(() => {
-    if (token) {
-      const login = getValues('login');
-      dispatch(logIn({ token, login }));
+    if (isAuthenticated) {
       navigate(RouteEnum.Main);
     }
-  }, [token]);
+  }, []);
 
   return (
     <Container
@@ -56,7 +75,7 @@ const LoginPage: FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Login
+          <FormattedMessage id='login' />
         </Typography>
         <ControlledInput
           name='login'
@@ -77,7 +96,7 @@ const LoginPage: FC = () => {
           control={control}
         />
         <LoadingButton
-          loading={isLoading}
+          loading={isSigninLoading}
           type='submit'
           fullWidth
           variant='contained'
@@ -85,12 +104,12 @@ const LoginPage: FC = () => {
           sx={{ mt: 3, mb: 2 }}
           disabled={!isValid}
         >
-          Login
+          <FormattedMessage id='login' />
         </LoadingButton>
         <Link
           component={RouterLink}
           to={RouteEnum.Signup}
-        >{`Don't have an account? Sign Up`}</Link>
+        ><FormattedMessage id='dont_have_account' /></Link>
       </Box>
     </Container>
   );

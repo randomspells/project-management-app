@@ -7,7 +7,7 @@ export const usersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query<UserInterface[], void>({
       query: () => EndpointsEnum.Users,
-      providesTags: [TagsEnum.Users]
+      providesTags: [TagsEnum.Users],
     }),
 
     updateUser: builder.mutation({
@@ -16,6 +16,7 @@ export const usersApi = baseApi.injectEndpoints({
         method: MethodsEnum.Put,
         body,
       }),
+      invalidatesTags: [TagsEnum.Users],
     }),
 
     deleteUser: builder.mutation({
@@ -24,7 +25,7 @@ export const usersApi = baseApi.injectEndpoints({
         method: MethodsEnum.Delete,
         body,
       }),
-      invalidatesTags: [TagsEnum.Users]
+      invalidatesTags: [TagsEnum.Users],
     }),
   }),
 });
