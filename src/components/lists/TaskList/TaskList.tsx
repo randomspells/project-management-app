@@ -13,14 +13,11 @@ import {
   useAppDispatch,
   useAppSelector,
   useSetAlertResult,
-  useTaskListDrag,
 } from '../../../hooks';
 import TaskTitleEditInput from '../../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../../constants';
 import { toggleNewTaskForm } from '../../../slices/formSlice';
 import { setCurrentColumnId } from '../../../slices/columnSlice';
-import useTaskToListDrop from '../../../hooks/useTaskToListDrop';
-import useColumnDrop from '../../../hooks/useColumnDrop';
 
 type TaskListProps = {
   columnId: string;
@@ -89,23 +86,11 @@ const TaskList: FC<TaskListProps> = ({
     if (columnId !== currentColumnId) dispatch(setCurrentColumnId(columnId));
   };
 
-  const [taskListDrag] = useTaskListDrag({
-    title: taskListTitle,
-    id: columnId,
-  });
-
-  const [columnDrop] = useColumnDrop({ columnId });
-  const [taskToListDrop] = useTaskToListDrop({ columnId });
-
   useSetAlertResult(isSuccessColumnDelete, errorColumnDelete);
   useSetAlertResult(isSuccessColumnUpdate, errorColumnUpdate);
 
   return (
     <Box
-      ref={(node: HTMLElement) => {
-        taskListDrag(taskToListDrop(node));
-        taskListDrag(columnDrop(node));
-      }}
       component='article'
       sx={{
         bgcolor: '#eee',

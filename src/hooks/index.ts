@@ -1,13 +1,8 @@
 import { useEffect } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useDrag } from 'react-dnd';
-import {
-  ApiErrorType,
-  DraggableTaskInterface,
-  DraggableTaskListInterface,
-} from '../interfaces/index';
-import { DndTypesEnum, RouteEnum } from '../enums';
+import { ApiErrorType } from '../interfaces/index';
+import { RouteEnum } from '../enums';
 import { setAlertResult } from '../slices/alertSlice';
 import { logIn } from '../slices/authSlice';
 import type { RootState, AppDispatch } from '../store';
@@ -39,32 +34,4 @@ export const useLogInWithRedirect = (
       navigate(RouteEnum.Main);
     }
   }, [token]);
-};
-
-export const useTaskDrag = ({
-  id,
-  title,
-  description,
-  userId,
-  boardId,
-}: DraggableTaskInterface) => {
-  const [, taskDrag] = useDrag(() => ({
-    type: DndTypesEnum.Task,
-    item: { id, title, description, userId, boardId },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
-  return [taskDrag];
-};
-
-export const useTaskListDrag = ({ title, id }: DraggableTaskListInterface) => {
-  const [, taskListDrag] = useDrag(() => ({
-    type: DndTypesEnum.TaskList,
-    item: { title, id },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
-  return [taskListDrag];
 };
