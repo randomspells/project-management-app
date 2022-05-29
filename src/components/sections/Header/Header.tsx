@@ -1,8 +1,9 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, {  FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
@@ -13,8 +14,13 @@ import { RouteEnum } from '../../../enums';
 import { logOut } from '../../../slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import styles from './Header.module.scss';
+import LOCALES from '../../../translation/locales';
 
-const Header: FC = () => {
+interface HeaderProps {
+  handleChange: (e: SelectChangeEvent) => void;
+}
+
+const Header: FC<HeaderProps> = ({ handleChange }) => {
   const { navbar, headerContainer, avatarWrapper, menuWrapper } = styles;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sticky, setSticky] = useState({ isSticky: false, offset: 0 });
@@ -56,6 +62,11 @@ const Header: FC = () => {
       setSticky({ isSticky: false, offset: 0 });
     }
   };
+
+  const languages = [
+    { name: 'En', code: LOCALES.ENGLISH },
+    { name: 'Ru', code: LOCALES.RUSSIAN }
+  ];
 
   const {
     sx: { bgcolor },
@@ -125,14 +136,26 @@ const Header: FC = () => {
         className={menuWrapper}
         sx={{ display: isMenuOpen || !isMatchQuery ? 'flex' : 'none' }}
       >
-        <Button onClick={handleOpenEditProfile}>Edit profile</Button>
-        <Button onClick={handleSignOut}>Sign out</Button>
+        <Button onClick={handleOpenEditProfile}>
+          <FormattedMessage id='edit_profile' />
+        </Button>
+        <Button onClick={handleSignOut}>
+          <FormattedMessage id='sign_out' />
+        </Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
-          <InputLabel id='label'>Lang</InputLabel>
-          <Select label='Lang' autoWidth labelId='label'>
-            <MenuItem defaultValue=''> </MenuItem>
-            <MenuItem value='ru'>Ru</MenuItem>
-            <MenuItem value='en'>En</MenuItem>
+          <InputLabel id='label'>
+            <FormattedMessage id='lang' />
+          </InputLabel>
+          <Select
+            label='Lang'
+            autoWidth
+            labelId='label'
+            defaultValue=''
+            onChange={handleChange}
+          >
+            {languages.map(({ name, code }) => (
+              <MenuItem value={code} key={code}>{name}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>

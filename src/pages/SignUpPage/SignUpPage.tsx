@@ -4,6 +4,7 @@ import { Container, Typography, Box, Avatar, Link } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
 import { useSigninMutation, useSignupMutation } from '../../api/auth.api';
@@ -89,32 +90,32 @@ const SignUpPage: FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign Up
+          <FormattedMessage id='sign_up' />
         </Typography>
         <ControlledInput
           name='name'
-          label='Name'
+          label={<FormattedMessage id='name_input' />}
           type='text'
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText='Please enter only EN letters. Min length 3.'
+          errorText={<FormattedMessage id='validate_signin_input' />}
           defaultValue=''
           control={control}
         />
         <ControlledInput
           name='login'
-          label='Login'
+          label={<FormattedMessage id='login_input' />}
           type='text'
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText='Please enter only EN letters. Min length 3.'
+          errorText={<FormattedMessage id='validate_signin_input' />}
           defaultValue=''
           control={control}
         />
         <ControlledInput
           name='password'
-          label='Password'
+          label={<FormattedMessage id='password_input' />}
           type='password'
           rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
-          errorText='Please enter EN letters and numbers. Min length 6.'
+          errorText={<FormattedMessage id='validate_sigin_password' />}
           defaultValue=''
           control={control}
         />
@@ -127,10 +128,10 @@ const SignUpPage: FC = () => {
           sx={{ mt: 1, mb: 2 }}
           disabled={!isValid}
         >
-          Sign Up
+          <FormattedMessage id='sign_up' />
         </LoadingButton>
         <Link component={RouterLink} to={RouteEnum.Login}>
-          Already have an account? Login.
+          <FormattedMessage id='have_account' />
         </Link>
       </Box>
     </Container>

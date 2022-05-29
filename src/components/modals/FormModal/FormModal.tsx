@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, ReactNode } from 'react';
 
 type FormModalProps = {
-  formTitle: string;
+  formTitle: string | ReactNode;
   isOpen: boolean;
   handleClose: () => void;
   children: ReactElement;

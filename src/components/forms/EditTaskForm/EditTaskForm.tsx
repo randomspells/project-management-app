@@ -1,8 +1,8 @@
 import { Box, Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 import { useUpdateTaskMutation } from '../../../api/task.api';
-import { FormTitleEnum } from '../../../enums';
 import { useAppDispatch, useAppSelector, useSetAlertResult } from '../../../hooks';
 import { FormDataInterface } from '../../../interfaces';
 import { setAlertResult } from '../../../slices/alertSlice';
@@ -84,14 +84,14 @@ const EditTaskForm: FC = () => {
     <FormModal
       isOpen={isEditTaskFormOpen}
       handleClose={handleClose}
-      formTitle={FormTitleEnum.EditTask}
+      formTitle={<FormattedMessage id='edit_task' />}
     >
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           type={TASK_TITLE_INPUT.type}
           name={TASK_TITLE_INPUT.name}
-          label={TASK_TITLE_INPUT.label}
-          errorText={TASK_TITLE_INPUT.errorText}
+          label={<FormattedMessage id='task_title' />}
+          errorText={<FormattedMessage id='title_required' />}
           rules={TASK_TITLE_INPUT.rules}
           defaultValue={currentTaskTitle || ''}
           control={control}
@@ -99,8 +99,8 @@ const EditTaskForm: FC = () => {
         <ControlledInput
           type={TASK_DESCRIPTION_INPUT.type}
           name={TASK_DESCRIPTION_INPUT.name}
-          label={TASK_DESCRIPTION_INPUT.label}
-          errorText={TASK_DESCRIPTION_INPUT.errorText}
+          label={<FormattedMessage id='task_description' />}
+          errorText={<FormattedMessage id='description_required' />}
           rules={TASK_DESCRIPTION_INPUT.rules}
           defaultValue={currentTaskDescription || ''}
           multiline={TASK_DESCRIPTION_INPUT.multiline}
@@ -115,7 +115,7 @@ const EditTaskForm: FC = () => {
           sx={{ mt: 2, mb: 2 }}
           disabled={!isValid}
         >
-          Save task
+          <FormattedMessage id='save_task' />
         </Button>
       </Box>
     </FormModal>

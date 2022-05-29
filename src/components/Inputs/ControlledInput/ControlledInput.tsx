@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { TextField } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
 
 export type ControlledInputProps = {
   name: string;
-  label: string;
-  errorText: string;
+  label: string | ReactNode;
+  errorText: string | ReactNode;
   rules: Record<string, unknown>;
   control: Control;
   type: string;

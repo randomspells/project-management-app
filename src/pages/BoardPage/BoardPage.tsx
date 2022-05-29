@@ -3,6 +3,7 @@ import { Alert, Box, Button, Container, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { FormattedMessage } from 'react-intl';
 import TaskList from '../../components/lists/TaskList/TaskList';
 import { toggleNewTaskListForm } from '../../slices/formSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -39,7 +40,9 @@ const BoardPage: FC = () => {
         <IconButton color='primary' onClick={handleBackClick}>
           <ArrowBackRoundedIcon />
         </IconButton>
-        <Button onClick={handleNewTaskListClick}>Add task list</Button>
+        <Button onClick={handleNewTaskListClick}>
+          <FormattedMessage id='add_task_list' />
+        </Button>
       </Box>
       <Box
         component='section'
@@ -64,7 +67,7 @@ const BoardPage: FC = () => {
               />
             );
           })}
-        {!currentBoard?.columns.length && <Alert severity="info">No task lists to display.</Alert>}
+        {!currentBoard?.columns.length && <Alert severity="info"><FormattedMessage id='no_task_lists' /></Alert>}
       </Box>
     </Container>
   );

@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { FormattedMessage } from 'react-intl';
 import { useCreateBoardMutation } from '../../../api/board.api';
 import { TITLE_INPUT, DESCRIPTION_INPUT } from '../../../constants';
-import { FormTitleEnum } from '../../../enums';
 import {
   useAppDispatch,
   useAppSelector,
@@ -47,8 +47,6 @@ const NewBoardForm: FC = () => {
 
   const {
     name: titleName,
-    label: titleLabel,
-    errorText: titleErrorText,
     rules: titleRules,
     type: titleType,
   } = TITLE_INPUT;
@@ -56,8 +54,6 @@ const NewBoardForm: FC = () => {
   const {
     type: descriptionType,
     name: descriptionName,
-    label: descriptionLabel,
-    errorText: descriptionErrorText,
     rules: descriptionRules,
   } = DESCRIPTION_INPUT;
 
@@ -67,14 +63,14 @@ const NewBoardForm: FC = () => {
     <FormModal
       isOpen={isNewBoardFormOpen}
       handleClose={handleClose}
-      formTitle={FormTitleEnum.NewBoard}
+      formTitle={<FormattedMessage id='new_board' />}
     >
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           type={titleType}
           name={titleName}
-          label={titleLabel}
-          errorText={titleErrorText}
+          label={<FormattedMessage id='board_title' />}
+          errorText={<FormattedMessage id='title_required' />}
           rules={titleRules}
           control={control}
           defaultValue=''
@@ -82,8 +78,8 @@ const NewBoardForm: FC = () => {
         <ControlledInput
           type={descriptionType}
           name={descriptionName}
-          label={descriptionLabel}
-          errorText={descriptionErrorText}
+          label={<FormattedMessage id='board_description' />}
+          errorText={<FormattedMessage id='description_required' />}
           rules={descriptionRules}
           control={control}
           defaultValue=''
@@ -99,7 +95,7 @@ const NewBoardForm: FC = () => {
           sx={{ mt: 2, mb: 2 }}
           disabled={!isValid}
         >
-          Create board
+          <FormattedMessage id='create_board' />
         </LoadingButton>
       </Box>
     </FormModal>
