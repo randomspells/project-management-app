@@ -5,6 +5,7 @@ import boardReducer from '../slices/boardSlice';
 import columnReducer from '../slices/columnSlice';
 import authReducer from '../slices/authSlice';
 import alertReducer from '../slices/alertSlice';
+import translationReducer from '../slices/translationSlice';
 import baseApi from '../api/base.api';
 import { authApi } from '../api/auth.api';
 import { boardApi } from '../api/board.api';
@@ -19,6 +20,7 @@ export const store = configureStore({
     [boardApi.reducerPath]: boardApi.reducer,
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
+    translation: translationReducer,
   },
   middleware: (getDefaultMiddlware) =>
     getDefaultMiddlware().concat(baseApi.middleware),

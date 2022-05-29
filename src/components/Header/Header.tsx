@@ -1,16 +1,18 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { Avatar } from '@mui/material';
-import { stringAvatar } from '../../utils';
-import { RouteEnum } from '../../enums';
+import {  stringAvatar } from '../../utils';
+import { RouteEnum, StorageEnum } from '../../enums';
 import { logOut } from '../../slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import styles from './Header.module.scss';
+import LOCALES from '../../translation/locales';
 
 const Header: FC = () => {
   const { navbar, headerContainer, board, headerOption } = styles;
@@ -38,6 +40,17 @@ const Header: FC = () => {
       setSticky({ isSticky: false, offset: 0 });
     }
   };
+
+  const handleChangeLanguages = (e: SelectChangeEvent<string>) => {
+    localStorage.setItem(StorageEnum.Locale, e.target.value);
+  };
+
+  const currentLocale = useAppSelector((state) => state.translation.currentLang) as string;
+
+  const languages = [
+    { name: 'En', code: LOCALES.ENGLISH },
+    { name: 'Ru', code: LOCALES.RUSSIAN }
+  ];
 
   const {
     sx: { bgcolor },
@@ -69,14 +82,24 @@ const Header: FC = () => {
         </Avatar>
       </div>
       <div className={headerOption}>
-        <Button onClick={handleOpenEditProfile}>Edit profile</Button>
+        <Button onClick={handleOpenEditProfile}>
+          <FormattedMessage id='edit_profile' />
+        </Button>
         <Button onClick={handleSignOut}>Sign out</Button>
         <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
-          <InputLabel id='label'>Lang</InputLabel>
-          <Select label='Lang' autoWidth labelId='label'>
-            <MenuItem defaultValue=''> </MenuItem>
-            <MenuItem value='ru'>Ru</MenuItem>
-            <MenuItem value='en'>En</MenuItem>
+          <InputLabel id='label'>
+            <FormattedMessage id='lang' />
+          </InputLabel>
+          <Select
+            label='Lang'
+            autoWidth
+            labelId='label'
+            value={currentLocale}
+            onChange={handleChangeLanguages}
+          >
+            {languages.map(({ name, code }) => (
+              <MenuItem value={code} key={code}>{name}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>

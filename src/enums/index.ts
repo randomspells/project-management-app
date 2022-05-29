@@ -30,6 +30,7 @@ export enum StorageEnum {
   User = 'user',
   CurrentBoard = 'currentBoard',
   UserId = 'userId',
+  Locale = 'locale',
 }
 
 export enum TagsEnum {
