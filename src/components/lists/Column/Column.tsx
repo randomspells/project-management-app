@@ -2,10 +2,10 @@ import React, { FC, useState } from 'react';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Task from '../../cards/Task/Task';
-import { TaskInterface } from '../../../interfaces';
 import Confirmation from '../../modals/Confirmation/Confirmation';
 import {
   useDeleteColumnMutation,
+  useGetColumnQuery,
   useUpdateColumnMutation,
 } from '../../../api/columns.api';
 import { setAlertResult } from '../../../slices/alertSlice';
@@ -13,33 +13,28 @@ import {
   useAppDispatch,
   useAppSelector,
   useSetAlertResult,
-  useTaskListDrag,
+  useColumnDrag,
 } from '../../../hooks';
 import TaskTitleEditInput from '../../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../../constants';
 import { toggleNewTaskForm } from '../../../slices/formSlice';
-import { setCurrentColumnId } from '../../../slices/columnSlice';
+import { setCurrentColumn } from '../../../slices/columnSlice';
 import useTaskToListDrop from '../../../hooks/useTaskToListDrop';
 import useColumnDrop from '../../../hooks/useColumnDrop';
 
-type TaskListProps = {
+export type ColumnProps = {
+  boardId: string;
   columnId: string;
-  columnOrder: number;
-  title: string;
-  tasks: TaskInterface[];
 };
 
-const TaskList: FC<TaskListProps> = ({
-  columnId,
-  columnOrder,
-  title: taskListTitle,
-  tasks,
-}) => {
+const Column: FC<ColumnProps> = ({ boardId, columnId }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
-  const currentColumnId = useAppSelector((state) => state.column.currentId);
-  const board = useAppSelector((state) => state.board.currentBoard);
+  const currentColumnId =
+    useAppSelector((state) => state.column.currentColumn?.id) || null;
+
+  const { data: column } = useGetColumnQuery({ boardId, columnId });
   const [
     deleteColumn,
     { isSuccess: isSuccessColumnDelete, error: errorColumnDelete },
@@ -65,13 +60,13 @@ const TaskList: FC<TaskListProps> = ({
 
   const changeTitleClick = (title: string) => {
     toggleEditMode();
-    if (title === taskListTitle) return;
+    if (title === column?.title) return;
     const columnData = {
       body: {
         title,
-        order: columnOrder,
+        order: column?.order,
       },
-      boardId: board?.id,
+      boardId,
       columnId,
     };
     updateColumn(columnData).catch((e) =>
@@ -79,23 +74,19 @@ const TaskList: FC<TaskListProps> = ({
     );
   };
 
-  const handleTaskListDelete = () => {
-    deleteColumn({ boardId: board?.id, columnId }).catch((e) =>
+  const handleColumnDelete = () => {
+    deleteColumn({ boardId, columnId }).catch((e) =>
       dispatch(setAlertResult({ error: e })),
     );
   };
 
   const saveCurrentColumnId = () => {
-    if (columnId !== currentColumnId) dispatch(setCurrentColumnId(columnId));
+    dispatch(setCurrentColumn({ column }));
   };
 
-  const [taskListDrag] = useTaskListDrag({
-    title: taskListTitle,
-    id: columnId,
-  });
-
-  const [columnDrop] = useColumnDrop({ columnId });
-  const [taskToListDrop] = useTaskToListDrop({ columnId });
+  const [columnDrag] = useColumnDrag(column);
+  const [columnDrop] = useColumnDrop(column);
+  const [taskToListDrop] = useTaskToListDrop({ columnId: currentColumnId });
 
   useSetAlertResult(isSuccessColumnDelete, errorColumnDelete);
   useSetAlertResult(isSuccessColumnUpdate, errorColumnUpdate);
@@ -103,8 +94,8 @@ const TaskList: FC<TaskListProps> = ({
   return (
     <Box
       ref={(node: HTMLElement) => {
-        taskListDrag(taskToListDrop(node));
-        taskListDrag(columnDrop(node));
+        columnDrag(taskToListDrop(node));
+        columnDrag(columnDrop(node));
       }}
       component='article'
       sx={{
@@ -121,7 +112,7 @@ const TaskList: FC<TaskListProps> = ({
           <TaskTitleEditInput
             saveHandler={changeTitleClick}
             closeHandler={toggleEditMode}
-            title={taskListTitle}
+            title={column?.title || ''}
           />
         ) : (
           <Typography
@@ -135,7 +126,7 @@ const TaskList: FC<TaskListProps> = ({
               '&:hover': { color: 'primary.main' },
             }}
           >
-            {taskListTitle}
+            {column?.title}
           </Typography>
         )}
       </Box>
@@ -150,7 +141,7 @@ const TaskList: FC<TaskListProps> = ({
           my: 1,
         }}
       >
-        {tasks.map((task) => {
+        {column?.tasks.map((task) => {
           const { id, title, order, description, userId, files } = task;
           return (
             <Task
@@ -176,14 +167,14 @@ const TaskList: FC<TaskListProps> = ({
           Delete task list
         </Button>
         <Confirmation
-          itemTitle={taskListTitle}
+          itemTitle={column?.title || ''}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={handleTaskListDelete}
+          handleAccept={handleColumnDelete}
         />
       </Box>
     </Box>
   );
 };
 
-export default TaskList;
+export default Column;

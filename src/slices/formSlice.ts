@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface FormState {
   isNewBoardFormOpen: boolean;
-  isNewTaskListFormOpen: boolean;
+  isNewColumnFormOpen: boolean;
   isNewTaskFormOpen: boolean;
   isEditTaskFormOpen: boolean;
 }
 
 const initialState: FormState = {
   isNewBoardFormOpen: false,
-  isNewTaskListFormOpen: false,
+  isNewColumnFormOpen: false,
   isNewTaskFormOpen: false,
   isEditTaskFormOpen: false,
 };
@@ -21,8 +21,8 @@ export const formSlice = createSlice({
     toggleNewBoardForm: (state) => {
       state.isNewBoardFormOpen = !state.isNewBoardFormOpen;
     },
-    toggleNewTaskListForm: (state) => {
-      state.isNewTaskListFormOpen = !state.isNewTaskListFormOpen;
+    toggleNewColumnForm: (state) => {
+      state.isNewColumnFormOpen = !state.isNewColumnFormOpen;
     },
     toggleNewTaskForm: (state) => {
       state.isNewTaskFormOpen = !state.isNewTaskFormOpen;
@@ -33,6 +33,11 @@ export const formSlice = createSlice({
   },
 });
 
-export const { toggleNewBoardForm, toggleNewTaskListForm, toggleNewTaskForm, toggleEditTaskForm } = formSlice.actions;
+export const {
+  toggleNewBoardForm,
+  toggleNewColumnForm,
+  toggleNewTaskForm,
+  toggleEditTaskForm,
+} = formSlice.actions;
 
 export default formSlice.reducer;

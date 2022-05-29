@@ -2,10 +2,10 @@ import { useDrop } from 'react-dnd';
 import { useAppDispatch, useAppSelector, useSetAlertResult } from '.';
 import { useCreateTaskMutation, useDeleteTaskMutation } from '../api/task.api';
 import { DndTypesEnum } from '../enums';
-import { ColumnIdInterface, DraggableTaskInterface } from '../interfaces';
+import { TaskDropInterface, DraggableTaskInterface } from '../interfaces';
 import { setAlertResult } from '../slices/alertSlice';
 
-const useTaskToListDrop = ({ columnId }: ColumnIdInterface) => {
+const useTaskToListDrop = ({ columnId }: TaskDropInterface) => {
   const currentTaskId = useAppSelector((state) => state.task.currentTask?.id);
   const currentColumnId = useAppSelector((state) => state.column.currentId);
   const board = useAppSelector((state) => state.board.currentBoard);
@@ -27,7 +27,7 @@ const useTaskToListDrop = ({ columnId }: ColumnIdInterface) => {
         title: draggedTitle,
         description: draggedDescription,
         userId: draggedUserId,
-        id: draggedTaskId,
+        taskId: draggedTaskId,
       }: DraggableTaskInterface) => {
         if (columnId === currentColumnId) return;
         if (!board || !columnId || !draggedTaskId) return;

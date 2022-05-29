@@ -1,36 +1,53 @@
-import baseApi from './base.api'
+import { ColumnInterface } from '../interfaces/index';
+import baseApi from './base.api';
 import { TagsEnum, MethodsEnum, EndpointsEnum } from '../enums/index';
 
 export const columnsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllColumn: builder.query({
-      query: (boardId) => (`${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}`),
+      query: (boardId) =>
+        `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}`,
       providesTags: [TagsEnum.Columns],
     }),
+
+    getColumn: builder.query<ColumnInterface, unknown>({
+      query: ({ boardId, columnId }) =>
+        `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}`,
+      providesTags: [TagsEnum.Column],
+    }),
+
     createColumn: builder.mutation({
-      query: ({body, boardId}) => ({
+      query: ({ body, boardId }) => ({
         url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}`,
         method: MethodsEnum.Post,
-        body
+        body,
       }),
       invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
     }),
+
     deleteColumn: builder.mutation({
-      query: ({boardId, columnId}) => ({
+      query: ({ boardId, columnId }) => ({
         url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}`,
         method: MethodsEnum.Delete,
       }),
       invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
     }),
+
     updateColumn: builder.mutation({
-      query: ({body, boardId, columnId}) => ({
+      query: ({ body, boardId, columnId }) => ({
         url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}`,
         method: MethodsEnum.Put,
-        body
+        body,
       }),
       invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
     }),
-  })
-})
+  }),
+});
 
-export const { useCreateColumnMutation, useDeleteColumnMutation, useGetAllColumnQuery, useUpdateColumnMutation} = columnsApi
+export const {
+  useCreateColumnMutation,
+  useGetColumnQuery,
+  useDeleteColumnMutation,
+  useGetAllColumnQuery,
+  useUpdateColumnMutation,
+} = columnsApi;

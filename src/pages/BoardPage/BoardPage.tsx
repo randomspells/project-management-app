@@ -3,8 +3,8 @@ import { Alert, Box, Button, Container, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
-import TaskList from '../../components/lists/TaskList/TaskList';
-import { toggleNewTaskListForm } from '../../slices/formSlice';
+import Column from '../../components/lists/Column/Column';
+import { toggleNewColumnForm } from '../../slices/formSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RouteEnum } from '../../enums';
 import { useGetBoardQuery } from '../../api/board.api';
@@ -19,8 +19,8 @@ const BoardPage: FC = () => {
 
   const { data: board } = useGetBoardQuery(boardId || skipToken);
 
-  const handleNewTaskListClick = () => {
-    dispatch(toggleNewTaskListForm());
+  const handleNewColumnClick = () => {
+    dispatch(toggleNewColumnForm());
   };
 
   const handleBackClick = () => {
@@ -39,7 +39,7 @@ const BoardPage: FC = () => {
         <IconButton color='primary' onClick={handleBackClick}>
           <ArrowBackRoundedIcon />
         </IconButton>
-        <Button variant='outlined' onClick={handleNewTaskListClick}>
+        <Button variant='outlined' onClick={handleNewColumnClick}>
           Add task list
         </Button>
       </Box>
@@ -54,18 +54,9 @@ const BoardPage: FC = () => {
         }}
       >
         {currentBoard &&
-          currentBoard.columns.map((column) => {
-            const { id, order, title, tasks } = column;
-            return (
-              <TaskList
-                key={id}
-                columnId={id}
-                columnOrder={order}
-                title={title}
-                tasks={tasks}
-              />
-            );
-          })}
+          currentBoard.columns.map((column) => (
+            <Column key={column.id} boardId={currentBoard.id} columnId={column.id} />
+          ))}
         {!currentBoard?.columns.length && (
           <Alert severity='info'>No task lists to display.</Alert>
         )}

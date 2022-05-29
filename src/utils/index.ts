@@ -108,16 +108,16 @@ export const countOrder = (list: Record<string, string>[]): number =>
 
 export const findColumnOrderById = (
   item: BoardInterface | null,
-  id: string,
+  id: string | null,
 ): number | null => {
-  if (!item) return null;
+  if (!item || !id) return null;
   return item.columns.find((column) => column.id === id)?.order || null;
 };
 
 export const findTaskOrderById = (
   item: ColumnInterface | null,
-  id: string,
+  taskId: string | null,
 ): number | null => {
-  if (!item) return null;
-  return item.tasks.find((task) => task.id === id)?.order || null;
+  if (!item || !taskId) return null;
+  return item.tasks.find((task) => task.id === taskId)?.order || null;
 };

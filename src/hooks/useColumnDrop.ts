@@ -1,8 +1,5 @@
 import { useDrop } from 'react-dnd';
-import {
-  ColumnIdInterface,
-  DraggableTaskListInterface,
-} from '../interfaces/index';
+import { ColumnInterface } from '../interfaces/index';
 import { useAppSelector, useAppDispatch, useSetAlertResult } from '.';
 
 import { useUpdateColumnMutation } from '../api/columns.api';
@@ -11,7 +8,7 @@ import { DndTypesEnum } from '../enums';
 import { setAlertResult } from '../slices/alertSlice';
 import { findColumnOrderById } from '../utils';
 
-const useColumnDrop = ({ columnId }: ColumnIdInterface) => {
+const useColumnDrop = (column?: ColumnInterface) => {
   const board = useAppSelector((state) => state.board.currentBoard);
   const [
     updateColumn,
@@ -22,16 +19,15 @@ const useColumnDrop = ({ columnId }: ColumnIdInterface) => {
 
   const [, columnDrop] = useDrop(
     () => ({
-      accept: DndTypesEnum.TaskList,
-      drop: ({
-        title: draggedTitle,
-        id: draggedId,
-      }: DraggableTaskListInterface) => {
-        if (!board) return;
-        const newOrder = findColumnOrderById(board, columnId);
+      accept: DndTypesEnum.Column,
+      drop: ({ id: draggedId }: ColumnInterface) => {
+        console.log(draggedId);
+        if (!column || !board || !draggedId) return;
+        const { id, title } = column;
+        const newOrder = findColumnOrderById(board, id);
         const updateBody = {
           body: {
-            title: draggedTitle,
+            title,
             order: newOrder,
           },
           boardId: board?.id,
@@ -42,9 +38,11 @@ const useColumnDrop = ({ columnId }: ColumnIdInterface) => {
         );
       },
     }),
-    [findColumnOrderById, board],
+    [findColumnOrderById, board, column],
   );
+
   useSetAlertResult(isSuccessColumnUpdate, errorColumnUpdate);
+
   return [columnDrop];
 };
 

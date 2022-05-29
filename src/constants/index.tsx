@@ -139,3 +139,8 @@ export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;
 export const VALID_PASSWORD_INPUT = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
 
 export const COLUMN_WIDTH = 270;
+
+export const sortItems = (
+  a: TaskInterface | ColumnInterface,
+  b: TaskInterface | ColumnInterface,
+) => a.order - b.order;

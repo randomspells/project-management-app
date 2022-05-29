@@ -1,5 +1,5 @@
 export enum FormTitleEnum {
-  NewTaskList = 'New task list',
+  NewColumn = 'New task list',
   NewBoard = 'New board',
   NewTask = 'New task',
   EditTask = 'Edit task',
@@ -38,6 +38,7 @@ export enum TagsEnum {
   Board = 'Board',
   Columns = 'Columns',
   Tasks = 'Tasks',
+  Column = 'Column',
 }
 
 export enum EndpointsEnum {
@@ -55,6 +56,6 @@ export enum MethodsEnum {
 }
 
 export enum DndTypesEnum {
-  TaskList = 'tasklist',
+  Column = 'tasklist',
   Task = 'task',
 }

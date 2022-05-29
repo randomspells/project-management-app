@@ -20,14 +20,13 @@ import { useDeleteTaskMutation } from '../../../api/task.api';
 import { setAlertResult } from '../../../slices/alertSlice';
 import useTaskToTaskDrop from '../../../hooks/useTaskToTaskDrop';
 
-const Task: FC<TaskInterface> = ({ id, title, order, description, userId }) => {
+const Task: FC<TaskInterface> = ({ id, title, description, userId, order }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [avatarColor, setAvatarColor] = useState<string>();
   const [avatarChildren, setAvatarChildren] = useState<string>();
 
   const board = useAppSelector((state) => state.board.currentBoard);
-  const currentTaskId =
-    useAppSelector((state) => state.task.currentTask?.id) || null;
+  const taskId = useAppSelector((state) => state.task.currentTask?.id) || null;
   const boardId =
     useAppSelector((state) => state.board.currentBoard?.id) || null;
   const columnId = useAppSelector((state) => state.column.currentId);
@@ -50,31 +49,20 @@ const Task: FC<TaskInterface> = ({ id, title, order, description, userId }) => {
     deleteTask({
       boardId,
       columnId,
-      taskId: id,
+      taskId,
     }).catch((e) => setAlertResult({ error: e }));
   };
 
   const handleTaskClick = () => {
-    if (id !== currentTaskId) {
-      dispatch(setCurrentTask({ id, title, order, description, userId }));
-    }
+    dispatch(setCurrentTask({ id, title, description, userId, order }));
   };
 
-  const dragItem = {
-    id,
-    title,
-    description,
-    userId,
-    boardId,
-  };
-
-  const [taskDrag] = useTaskDrag(dragItem);
+  const [taskDrag] = useTaskDrag();
   const [taskToTaskDrop] = useTaskToTaskDrop({
-    id,
+    taskId,
     board,
     columnId,
     boardId,
-    currentTaskId,
   });
 
   useEffect(() => {

@@ -21,6 +21,7 @@ const baseApi = createApi({
     TagsEnum.Columns,
     TagsEnum.Users,
     TagsEnum.Tasks,
+    TagsEnum.Column
   ],
   endpoints: () => ({}),
 });

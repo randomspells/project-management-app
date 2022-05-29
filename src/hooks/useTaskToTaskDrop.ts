@@ -1,12 +1,17 @@
-import { useDrop } from "react-dnd";
-import { useAppDispatch, useSetAlertResult } from ".";
-import { useUpdateTaskMutation } from "../api/task.api";
-import { DndTypesEnum } from "../enums";
-import { DraggableTaskInterface, TaskToTaskInterface } from "../interfaces";
-import { setAlertResult } from "../slices/alertSlice";
-import { findTaskOrderById } from "../utils";
+import { useDrop } from 'react-dnd';
+import { useAppDispatch, useSetAlertResult } from '.';
+import { useUpdateTaskMutation } from '../api/task.api';
+import { DndTypesEnum } from '../enums';
+import { DraggableTaskInterface, TaskToTaskDropInterface } from '../interfaces';
+import { setAlertResult } from '../slices/alertSlice';
+import { findTaskOrderById } from '../utils';
 
- const useTaskToTaskDrop = ({ id, boardId, board, columnId, currentTaskId }: TaskToTaskInterface) => {
+const useTaskToTaskDrop = ({
+  taskId,
+  boardId,
+  board,
+  columnId,
+}: TaskToTaskDropInterface) => {
   const [updateTask, { error: errorUpdate, isSuccess: isSuccessUpdate }] =
     useUpdateTaskMutation();
   const dispatch = useAppDispatch();
@@ -25,7 +30,7 @@ import { findTaskOrderById } from "../utils";
         const droppedColumnIndex = columns.findIndex(
           (column) => column.id === columnId,
         );
-        const newOrder = findTaskOrderById(columns[droppedColumnIndex], id);
+        const newOrder = findTaskOrderById(columns[droppedColumnIndex], taskId);
         if (!newOrder) return;
         const updateBody = {
           body: {
@@ -38,14 +43,14 @@ import { findTaskOrderById } from "../utils";
           },
           boardId,
           columnId,
-          taskId: currentTaskId,
+          taskId,
         };
         updateTask(updateBody).catch((e) =>
           dispatch(setAlertResult({ error: e })),
         );
       },
     }),
-    [findTaskOrderById, board, columnId, currentTaskId],
+    [findTaskOrderById, board, columnId, taskId],
   );
 
   useSetAlertResult(isSuccessUpdate, errorUpdate);

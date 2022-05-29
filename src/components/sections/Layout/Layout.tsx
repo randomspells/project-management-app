@@ -6,7 +6,7 @@ import Alerts from '../../modals/Alerts/Alerts';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import NewBoardForm from '../../forms/NewBoardForm/NewBoardForm';
-import NewTaskListForm from '../../forms/NewTaskListForm/NewTaskListForm';
+import NewColumnForm from '../../forms/NewColumnForm/NewColumnForm';
 import NewTaskForm from '../../forms/NewTaskForm/NewTaskForm';
 import EditTaskForm from '../../forms/EditTaskForm/EditTaskForm';
 
@@ -29,7 +29,7 @@ const Layout: FC = () => {
       <Outlet />
       <Footer />
       <NewBoardForm />
-      <NewTaskListForm />
+      <NewColumnForm />
       <NewTaskForm />
       <EditTaskForm />
     </Box>

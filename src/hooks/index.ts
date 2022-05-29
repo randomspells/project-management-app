@@ -2,11 +2,8 @@ import { useEffect } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
-import {
-  ApiErrorType,
-  DraggableTaskInterface,
-  DraggableTaskListInterface,
-} from '../interfaces/index';
+import { ApiErrorType, ColumnInterface } from '../interfaces/index';
+
 import { DndTypesEnum, RouteEnum } from '../enums';
 import { setAlertResult } from '../slices/alertSlice';
 import { logIn } from '../slices/authSlice';
@@ -41,16 +38,11 @@ export const useLogInWithRedirect = (
   }, [token]);
 };
 
-export const useTaskDrag = ({
-  id,
-  title,
-  description,
-  userId,
-  boardId,
-}: DraggableTaskInterface) => {
+export const useTaskDrag = () => {
+  const task = useAppSelector((state) => state.task.currentTask);
   const [, taskDrag] = useDrag(() => ({
     type: DndTypesEnum.Task,
-    item: { id, title, description, userId, boardId },
+    item: task,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -58,13 +50,13 @@ export const useTaskDrag = ({
   return [taskDrag];
 };
 
-export const useTaskListDrag = ({ title, id }: DraggableTaskListInterface) => {
-  const [, taskListDrag] = useDrag(() => ({
-    type: DndTypesEnum.TaskList,
-    item: { title, id },
+export const useColumnDrag = (column: ColumnInterface) => {
+  const [, columnDrag] = useDrag(() => ({
+    type: DndTypesEnum.Column,
+    item: { title: column.title, id: column.id },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
-  return [taskListDrag];
+  return [columnDrag];
 };

@@ -33,7 +33,9 @@ export interface TaskInterface {
   order: number;
   description: string;
   userId: string;
-  files: FileInterface[];
+  boardId?: string;
+  columnId?: string;
+  files?: FileInterface[];
 }
 
 export interface TasksPostInterface {
@@ -95,32 +97,31 @@ export interface QueryErrorInterface {
   message: string;
 }
 
-export interface DraggableTaskListInterface {
-  title: string;
-  id: string;
-}
-
 export interface DraggableTaskInterface {
-  id: string;
+  taskId: string;
   title: string;
   description: string;
   userId: string;
   boardId: string | null;
 }
 
-export interface ColumnIdInterface {
-  columnId: string;
+export interface ColumnDropInterface {
+  columnId: string | null;
+  title: string;
 }
 
-export interface TaskToTaskInterface {
-  id: string;
+export interface TaskDropInterface {
+  columnId: string | null;
+}
+
+export interface TaskToTaskDropInterface {
+  taskId: string | null;
   boardId: string | null;
   board: BoardInterface | null;
   columnId: string | null;
-  currentTaskId: string | null;
 }
 
-export interface TaskToListInterface {
+export interface TaskToListDropInterface {
   columnId: string;
 }
 

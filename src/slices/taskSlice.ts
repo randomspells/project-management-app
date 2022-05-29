@@ -1,16 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface CurrentTaskInterface {
-  id: string;
-  title: string;
-  order: number;
-  done: boolean;
-  description: string;
-  userId: string;
-}
+import { TaskInterface } from '../interfaces';
 
 interface TaskState {
-  currentTask: CurrentTaskInterface | null;
+  currentTask: TaskInterface | null;
 }
 
 const initialState: TaskState = {
