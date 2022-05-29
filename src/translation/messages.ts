@@ -10,7 +10,7 @@ const translation = {
     no_task_lists: 'Нет списков задач.',
     cancel: 'Отменить',
     save: 'сохранить',
-    delete_user: 'Удалить пользователя',
+    delete_user: 'Удалить',
     error: 'Страница не найдена',
     login: 'Войти',
     dont_have_account: 'У вас нет аккаунта? Зарегистрироваться',
@@ -38,6 +38,11 @@ const translation = {
     board_description: 'Описание доски',
     task_list_title: 'Название списка задач',
     search_fields: 'Поиск',
+    login_input: 'Логин',
+    password_input: 'Пароль',
+    name_input: 'Имя',
+    old_password: 'Старый пароль',
+    new_password: 'Новый пароль',
   },
   [LOCALES.ENGLISH]: {
     welcome: 'Welcome!',
@@ -76,6 +81,11 @@ const translation = {
     board_description: 'Board description',
     task_list_title: 'Task list title',
     search_fields: 'Search Fields',
+    login_input: 'Login',
+    password_input: 'Password',
+    name_input: 'Name',
+    old_password: 'Old password',
+    new_password: 'New password',
   },
 };
 

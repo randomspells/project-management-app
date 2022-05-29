@@ -121,7 +121,7 @@ const EditProfilePage: FC = () => {
       <Box>
         <ControlledInput
           name='name'
-          label='Name'
+          label={<FormattedMessage id='name_input' />}
           errorText='Please, enter only letters'
           type='text'
           defaultValue=''
@@ -130,7 +130,7 @@ const EditProfilePage: FC = () => {
         />
         <ControlledInput
           name='login'
-          label='Login'
+          label={<FormattedMessage id='login_input' />}
           errorText='Please, enter only letters'
           type='text'
           defaultValue=''
@@ -139,7 +139,7 @@ const EditProfilePage: FC = () => {
         />
         <ControlledInput
           name='oldPassword'
-          label='Old password'
+          label={<FormattedMessage id='old_password' />}
           errorText='Please, enter old password'
           type='password'
           defaultValue=''
@@ -148,7 +148,7 @@ const EditProfilePage: FC = () => {
         />
         <ControlledInput
           name='password'
-          label='New password'
+          label={<FormattedMessage id='new_password' />}
           errorText='Please, enter letters and numbers'
           type='password'
           defaultValue=''

@@ -79,7 +79,7 @@ const LoginPage: FC = () => {
         </Typography>
         <ControlledInput
           name='login'
-          label='Login'
+          label={<FormattedMessage id='login_input' />}
           type='text'
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
           errorText='Please enter only EN letters. Min length 3.'
@@ -88,7 +88,7 @@ const LoginPage: FC = () => {
         />
         <ControlledInput
           name='password'
-          label='Password'
+          label={<FormattedMessage id='password_input' />}
           type='password'
           rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
           errorText='Please enter EN letters and numbers. Min length 6.'
