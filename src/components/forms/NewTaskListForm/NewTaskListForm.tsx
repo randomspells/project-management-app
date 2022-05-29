@@ -60,7 +60,7 @@ const NewTaskListForm: FC = () => {
     handleClose();
   };
 
-  const { type, name, errorText, rules } = TASK_LIST_TITLE_INPUT;
+  const { type, name, rules } = TASK_LIST_TITLE_INPUT;
 
   useSetAlertResult(isCreateColumnSuccess, createColumnError);
 
@@ -75,7 +75,7 @@ const NewTaskListForm: FC = () => {
           type={type}
           name={name}
           label={<FormattedMessage id='task_list_title' />}
-          errorText={errorText}
+          errorText={<FormattedMessage id='title_required' />}
           rules={rules}
           control={control}
           defaultValue=''

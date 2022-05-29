@@ -70,7 +70,7 @@ export interface InputInterface {
   type: string;
   name: string;
   label: string | ReactNode;
-  errorText: string;
+  errorText: string | ReactNode;
   rules: Record<string, unknown>;
   multiline?: boolean;
   rows?: number;

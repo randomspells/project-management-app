@@ -43,6 +43,13 @@ const translation = {
     name_input: 'Имя',
     old_password: 'Старый пароль',
     new_password: 'Новый пароль',
+    only_letters: 'Только буквы',
+    validate_old_password: 'Введите старый пароль',
+    validate_new_password: 'Введите только буквы и цифры',
+    validate_signin_input: 'Только английские буквы, не меньше 3 букв.',
+    validate_sigin_password: 'Введите цифры и аанглийские буквы, не меньше 6 символов.',
+    title_required: 'Название обязательно должно быть заполнено',
+    description_required: 'Описание обязательно должно быть заполнено',
   },
   [LOCALES.ENGLISH]: {
     welcome: 'Welcome!',
@@ -86,6 +93,13 @@ const translation = {
     name_input: 'Name',
     old_password: 'Old password',
     new_password: 'New password',
+    only_letters: 'Please, enter only letters',
+    validate_old_password: 'Please, enter old password',
+    validate_new_password: 'Please, enter letters and numbers',
+    validate_signin_input: 'Please enter only EN letters. Min length 3.',
+    validate_sigin_password: 'Please enter EN letters and numbers. Min length 6.',
+    title_required: 'Title is required',
+    description_required: 'Description is required',
   },
 };
 

@@ -5,7 +5,7 @@ import { Control, Controller } from 'react-hook-form';
 export type ControlledInputProps = {
   name: string;
   label: string | ReactNode;
-  errorText: string;
+  errorText: string | ReactNode;
   rules: Record<string, unknown>;
   control: Control;
   type: string;

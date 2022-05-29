@@ -47,7 +47,6 @@ const NewBoardForm: FC = () => {
 
   const {
     name: titleName,
-    errorText: titleErrorText,
     rules: titleRules,
     type: titleType,
   } = TITLE_INPUT;
@@ -55,7 +54,6 @@ const NewBoardForm: FC = () => {
   const {
     type: descriptionType,
     name: descriptionName,
-    errorText: descriptionErrorText,
     rules: descriptionRules,
   } = DESCRIPTION_INPUT;
 
@@ -72,7 +70,7 @@ const NewBoardForm: FC = () => {
           type={titleType}
           name={titleName}
           label={<FormattedMessage id='board_title' />}
-          errorText={titleErrorText}
+          errorText={<FormattedMessage id='title_required' />}
           rules={titleRules}
           control={control}
           defaultValue=''
@@ -81,7 +79,7 @@ const NewBoardForm: FC = () => {
           type={descriptionType}
           name={descriptionName}
           label={<FormattedMessage id='board_description' />}
-          errorText={descriptionErrorText}
+          errorText={<FormattedMessage id='description_required' />}
           rules={descriptionRules}
           control={control}
           defaultValue=''

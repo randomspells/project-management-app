@@ -90,8 +90,8 @@ const EditTaskForm: FC = () => {
         <ControlledInput
           type={TASK_TITLE_INPUT.type}
           name={TASK_TITLE_INPUT.name}
-          label={TASK_TITLE_INPUT.label}
-          errorText={TASK_TITLE_INPUT.errorText}
+          label={<FormattedMessage id='task_title' />}
+          errorText={<FormattedMessage id='title_required' />}
           rules={TASK_TITLE_INPUT.rules}
           defaultValue={currentTaskTitle || ''}
           control={control}
@@ -99,8 +99,8 @@ const EditTaskForm: FC = () => {
         <ControlledInput
           type={TASK_DESCRIPTION_INPUT.type}
           name={TASK_DESCRIPTION_INPUT.name}
-          label={TASK_DESCRIPTION_INPUT.label}
-          errorText={TASK_DESCRIPTION_INPUT.errorText}
+          label={<FormattedMessage id='task_description' />}
+          errorText={<FormattedMessage id='description_required' />}
           rules={TASK_DESCRIPTION_INPUT.rules}
           defaultValue={currentTaskDescription || ''}
           multiline={TASK_DESCRIPTION_INPUT.multiline}

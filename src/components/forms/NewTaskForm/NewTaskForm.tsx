@@ -59,7 +59,6 @@ const NewTaskForm: FC = () => {
 
   const {
     name: titleName,
-    errorText: titleErrorText,
     rules: titleRules,
     type: titleType,
   } = TITLE_INPUT;
@@ -67,7 +66,6 @@ const NewTaskForm: FC = () => {
   const {
     type: descriptionType,
     name: descriptionName,
-    errorText: descriptionErrorText,
     rules: descriptionRules,
   } = DESCRIPTION_INPUT;
 
@@ -85,7 +83,7 @@ const NewTaskForm: FC = () => {
           label={<FormattedMessage id='task_title' />}
           type={titleType}
           rules={titleRules}
-          errorText={titleErrorText}
+          errorText={<FormattedMessage id='title_required' />}
           defaultValue=''
           control={control}
         />
@@ -96,7 +94,7 @@ const NewTaskForm: FC = () => {
           multiline
           rows={4}
           rules={descriptionRules}
-          errorText={descriptionErrorText}
+          errorText={<FormattedMessage id='description_required' />}
           defaultValue=''
           control={control}
         />
