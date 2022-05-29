@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Grid } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 import Board from '../../cards/Board/Board';
 import { useGetBoardsQuery } from '../../../api/board.api';
 import Loader from '../../other/Loader/Loader';
@@ -21,6 +21,11 @@ const BoardList: FC = () => {
       }}
     >
       {isLoading && <Loader />}
+      {!boards.length && (
+        <Grid item>
+          <Alert severity='info'>No boards to display.</Alert>
+        </Grid>
+      )}
       {boards.map((board) => {
         const { id, title, description } = board;
         return (

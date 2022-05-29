@@ -31,7 +31,6 @@ export interface TaskInterface {
   id: string;
   title: string;
   order: number;
-  done: boolean;
   description: string;
   userId: string;
   files: FileInterface[];
@@ -94,6 +93,35 @@ export interface WelcomeInfoInterface {
 export interface QueryErrorInterface {
   statusCode: number;
   message: string;
+}
+
+export interface DraggableTaskListInterface {
+  title: string;
+  id: string;
+}
+
+export interface DraggableTaskInterface {
+  id: string;
+  title: string;
+  description: string;
+  userId: string;
+  boardId: string | null;
+}
+
+export interface ColumnIdInterface {
+  columnId: string;
+}
+
+export interface TaskToTaskInterface {
+  id: string;
+  boardId: string | null;
+  board: BoardInterface | null;
+  columnId: string | null;
+  currentTaskId: string | null;
+}
+
+export interface TaskToListInterface {
+  columnId: string;
 }
 
 export type ApiErrorType =

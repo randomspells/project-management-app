@@ -39,7 +39,9 @@ const BoardPage: FC = () => {
         <IconButton color='primary' onClick={handleBackClick}>
           <ArrowBackRoundedIcon />
         </IconButton>
-        <Button onClick={handleNewTaskListClick}>Add task list</Button>
+        <Button variant='outlined' onClick={handleNewTaskListClick}>
+          Add task list
+        </Button>
       </Box>
       <Box
         component='section'
@@ -48,7 +50,7 @@ const BoardPage: FC = () => {
           flexWrap: 'nowrap',
           overflowX: 'scroll',
           columnGap: 1.5,
-          my: 1,
+          my: 2,
         }}
       >
         {currentBoard &&
@@ -64,7 +66,9 @@ const BoardPage: FC = () => {
               />
             );
           })}
-        {!currentBoard?.columns.length && <Alert severity="info">No task lists to display.</Alert>}
+        {!currentBoard?.columns.length && (
+          <Alert severity='info'>No task lists to display.</Alert>
+        )}
       </Box>
     </Container>
   );

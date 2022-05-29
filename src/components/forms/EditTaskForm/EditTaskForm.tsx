@@ -8,7 +8,7 @@ import { FormDataInterface } from '../../../interfaces';
 import { setAlertResult } from '../../../slices/alertSlice';
 import { toggleEditTaskForm } from '../../../slices/formSlice';
 import FormModal from '../../modals/FormModal/FormModal';
-import ControlledInput from '../../inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../Inputs/ControlledInput/ControlledInput';
 
 const TASK_TITLE_INPUT = {
   type: 'text',

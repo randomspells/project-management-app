@@ -11,7 +11,7 @@ import {
 import { FormDataInterface } from '../../../interfaces';
 import { toggleNewTaskListForm } from '../../../slices/formSlice';
 import FormModal from '../../modals/FormModal/FormModal';
-import ControlledInput from '../../inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../Inputs/ControlledInput/ControlledInput';
 import { useCreateColumnMutation } from '../../../api/columns.api';
 import { setAlertResult } from '../../../slices/alertSlice';
 

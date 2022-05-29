@@ -45,7 +45,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     order: 1,
     description: 'Domestic cat needs to be stroked gently',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: true,
     files: [],
   },
   {
@@ -55,7 +54,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. More words... And more...',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: true,
     files: [],
   },
   {
@@ -65,7 +63,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: false,
     files: [],
   },
   {
@@ -75,7 +72,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: false,
     files: [],
   },
   {
@@ -85,7 +81,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: false,
     files: [],
   },
 ];

@@ -3,7 +3,7 @@ import { Button, Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import FormModal from '../../modals/FormModal/FormModal';
 import { FormTitleEnum } from '../../../enums';
-import ControlledInput from '../../inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../Inputs/ControlledInput/ControlledInput';
 import {
   useAppDispatch,
   useAppSelector,

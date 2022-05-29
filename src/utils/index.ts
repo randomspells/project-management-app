@@ -1,5 +1,7 @@
 import { MouseEvent } from 'react';
 import {
+  ColumnInterface,
+  BoardInterface,
   QueryErrorInterface,
   ApiErrorType,
   UserInterface,
@@ -101,3 +103,21 @@ export const getUserLoginById = (users: UserInterface[], id: string) => {
 
 export const countOrder = (list: Record<string, string>[]): number =>
   list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);
+
+// get item order by id
+
+export const findColumnOrderById = (
+  item: BoardInterface | null,
+  id: string,
+): number | null => {
+  if (!item) return null;
+  return item.columns.find((column) => column.id === id)?.order || null;
+};
+
+export const findTaskOrderById = (
+  item: ColumnInterface | null,
+  id: string,
+): number | null => {
+  if (!item) return null;
+  return item.tasks.find((task) => task.id === id)?.order || null;
+};

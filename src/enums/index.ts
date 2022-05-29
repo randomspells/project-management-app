@@ -53,3 +53,8 @@ export enum MethodsEnum {
   Delete = 'DELETE',
   Post = 'POST',
 }
+
+export enum DndTypesEnum {
+  TaskList = 'tasklist',
+  Task = 'task',
+}

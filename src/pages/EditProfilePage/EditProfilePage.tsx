@@ -5,7 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
-import ControlledInput from '../../components/inputs/ControlledInput/ControlledInput';
+import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { FormDataInterface, UserInterface } from '../../interfaces/index';
 import { useSigninMutation } from '../../api/auth.api';

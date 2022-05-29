@@ -13,11 +13,14 @@ import {
   useAppDispatch,
   useAppSelector,
   useSetAlertResult,
+  useTaskListDrag,
 } from '../../../hooks';
-import TaskTitleEditInput from '../../inputs/TaskTitleInput/TaskTitleInput';
+import TaskTitleEditInput from '../../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../../constants';
 import { toggleNewTaskForm } from '../../../slices/formSlice';
 import { setCurrentColumnId } from '../../../slices/columnSlice';
+import useTaskToListDrop from '../../../hooks/useTaskToListDrop';
+import useColumnDrop from '../../../hooks/useColumnDrop';
 
 type TaskListProps = {
   columnId: string;
@@ -35,11 +38,16 @@ const TaskList: FC<TaskListProps> = ({
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
-  const currentColumnId = useAppSelector(state => state.column.currentId);
-  const boardId = useAppSelector((state) => state.board.currentBoard?.id);
-  const [deleteColumn, { isSuccess: isSuccessDelete, error: errorDelete }] =
-    useDeleteColumnMutation();
-  const [updateColumn] = useUpdateColumnMutation();
+  const currentColumnId = useAppSelector((state) => state.column.currentId);
+  const board = useAppSelector((state) => state.board.currentBoard);
+  const [
+    deleteColumn,
+    { isSuccess: isSuccessColumnDelete, error: errorColumnDelete },
+  ] = useDeleteColumnMutation();
+  const [
+    updateColumn,
+    { isSuccess: isSuccessColumnUpdate, error: errorColumnUpdate },
+  ] = useUpdateColumnMutation();
 
   const dispatch = useAppDispatch();
 
@@ -55,39 +63,58 @@ const TaskList: FC<TaskListProps> = ({
     dispatch(toggleNewTaskForm());
   };
 
-  const changeTitleClick = (value: string) => {
+  const changeTitleClick = (title: string) => {
+    toggleEditMode();
+    if (title === taskListTitle) return;
     const columnData = {
       body: {
-        title: value,
+        title,
         order: columnOrder,
       },
-      boardId,
+      boardId: board?.id,
       columnId,
     };
     updateColumn(columnData).catch((e) =>
       dispatch(setAlertResult({ error: e })),
     );
-    toggleEditMode();
   };
 
   const handleTaskListDelete = () => {
-    deleteColumn({ boardId, columnId }).catch((e) =>
+    deleteColumn({ boardId: board?.id, columnId }).catch((e) =>
       dispatch(setAlertResult({ error: e })),
     );
   };
 
-  const handleTaskListClick = () => {
-    if (columnId !== currentColumnId)
-    dispatch(setCurrentColumnId(columnId));
+  const saveCurrentColumnId = () => {
+    if (columnId !== currentColumnId) dispatch(setCurrentColumnId(columnId));
   };
 
-  useSetAlertResult(isSuccessDelete, errorDelete);
+  const [taskListDrag] = useTaskListDrag({
+    title: taskListTitle,
+    id: columnId,
+  });
+
+  const [columnDrop] = useColumnDrop({ columnId });
+  const [taskToListDrop] = useTaskToListDrop({ columnId });
+
+  useSetAlertResult(isSuccessColumnDelete, errorColumnDelete);
+  useSetAlertResult(isSuccessColumnUpdate, errorColumnUpdate);
 
   return (
     <Box
+      ref={(node: HTMLElement) => {
+        taskListDrag(taskToListDrop(node));
+        taskListDrag(columnDrop(node));
+      }}
       component='article'
-      sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}
-      onClick={handleTaskListClick}
+      sx={{
+        bgcolor: '#eee',
+        borderRadius: 1,
+        p: 1,
+        mb: 1,
+        cursor: 'move',
+      }}
+      onMouseDown={saveCurrentColumnId}
     >
       <Box sx={{ flex: 1, height: '40px' }}>
         {isEditMode ? (
@@ -101,7 +128,12 @@ const TaskList: FC<TaskListProps> = ({
             component='h4'
             variant='h5'
             onClick={toggleEditMode}
-            sx={{ width: COLUMN_WIDTH }}
+            sx={{
+              width: COLUMN_WIDTH,
+              cursor: 'pointer',
+              transition: '0.4s',
+              '&:hover': { color: 'primary.main' },
+            }}
           >
             {taskListTitle}
           </Typography>
@@ -119,7 +151,7 @@ const TaskList: FC<TaskListProps> = ({
         }}
       >
         {tasks.map((task) => {
-          const { id, title, order, description, userId, done, files } = task;
+          const { id, title, order, description, userId, files } = task;
           return (
             <Task
               key={id}
@@ -128,7 +160,6 @@ const TaskList: FC<TaskListProps> = ({
               order={order}
               description={description}
               userId={userId}
-              done={done}
               files={files}
             />
           );
