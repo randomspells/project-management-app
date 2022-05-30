@@ -70,7 +70,11 @@ const NewColumnForm: FC = () => {
       handleClose={handleClose}
       formTitle={<FormattedMessage id='new_task_list' />}
     >
-      <Box component='form' onSubmit={handleSubmit(onSubmit)}>
+      <Box
+        component='form'
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{ width: 500 }}
+      >
         <ControlledInput
           type={type}
           name={name}

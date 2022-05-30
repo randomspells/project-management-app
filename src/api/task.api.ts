@@ -17,7 +17,7 @@ export const taskApi = baseApi.injectEndpoints({
         method: MethodsEnum.Post,
         body,
       }),
-      invalidatesTags: [TagsEnum.Tasks, TagsEnum.Board],
+      invalidatesTags: [TagsEnum.Board],
     }),
 
     deleteTask: builder.mutation({
@@ -25,7 +25,7 @@ export const taskApi = baseApi.injectEndpoints({
         url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}/${EndpointsEnum.Tasks}/${taskId}`,
         method: MethodsEnum.Delete,
       }),
-      invalidatesTags: [TagsEnum.Tasks, TagsEnum.Board],
+      invalidatesTags: [TagsEnum.Board],
     }),
 
     updateTask: builder.mutation({
@@ -34,7 +34,7 @@ export const taskApi = baseApi.injectEndpoints({
         method: MethodsEnum.Put,
         body,
       }),
-      invalidatesTags: [TagsEnum.Tasks, TagsEnum.Board],
+      invalidatesTags: [TagsEnum.Board],
     }),
   }),
 });

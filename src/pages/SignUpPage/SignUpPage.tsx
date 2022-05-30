@@ -8,7 +8,11 @@ import { FormattedMessage } from 'react-intl';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { FormDataInterface } from '../../interfaces';
 import { useSigninMutation, useSignupMutation } from '../../api/auth.api';
-import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
+import {
+  VALID_PASSWORD_INPUT,
+  VALID_NAME_INPUT,
+  VALID_LOGIN_INPUT,
+} from '../../constants';
 import { RouteEnum } from '../../enums';
 import { setAlertResult } from '../../slices/alertSlice';
 import {
@@ -95,8 +99,8 @@ const SignUpPage: FC = () => {
           name='name'
           label={<FormattedMessage id='name_input' />}
           type='text'
-          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText={<FormattedMessage id='validate_signin_input' />}
+          rules={{ required: true, pattern: VALID_NAME_INPUT }}
+          errorText={<FormattedMessage id='validate_name_input' />}
           defaultValue=''
           control={control}
         />
@@ -104,8 +108,8 @@ const SignUpPage: FC = () => {
           name='login'
           label={<FormattedMessage id='login_input' />}
           type='text'
-          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText={<FormattedMessage id='validate_signin_input' />}
+          rules={{ required: true, pattern: VALID_LOGIN_INPUT }}
+          errorText={<FormattedMessage id='validate_login_input' />}
           defaultValue=''
           control={control}
         />

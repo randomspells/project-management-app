@@ -22,7 +22,7 @@ export const columnsApi = baseApi.injectEndpoints({
         method: MethodsEnum.Post,
         body,
       }),
-      invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
+      invalidatesTags: [TagsEnum.Board],
     }),
 
     deleteColumn: builder.mutation({
@@ -30,7 +30,7 @@ export const columnsApi = baseApi.injectEndpoints({
         url: `${EndpointsEnum.Boards}/${boardId}/${EndpointsEnum.Columns}/${columnId}`,
         method: MethodsEnum.Delete,
       }),
-      invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
+      invalidatesTags: [TagsEnum.Board],
     }),
 
     updateColumn: builder.mutation({
@@ -39,7 +39,7 @@ export const columnsApi = baseApi.injectEndpoints({
         method: MethodsEnum.Put,
         body,
       }),
-      invalidatesTags: [TagsEnum.Columns, TagsEnum.Board],
+      invalidatesTags: [TagsEnum.Board],
     }),
   }),
 });

@@ -39,7 +39,7 @@ const translation = {
     irreversible: '. Это действие необратимо.',
     new_board: 'Новая доска',
     edit_task: 'Изменить задачу',
-    new_task: 'Новое задача',
+    new_task: 'Новая задача',
     new_task_list: 'Новый список задач',
     task_title: 'Название задачи',
     task_description: 'Описание задачи',
@@ -52,10 +52,11 @@ const translation = {
     name_input: 'Имя',
     old_password: 'Старый пароль',
     new_password: 'Новый пароль',
-    only_letters: 'Только буквы',
     validate_old_password: 'Введите старый пароль',
-    validate_new_password: 'Введите только буквы и цифры',
-    validate_signin_input: 'Только английские буквы, не меньше 3 букв.',
+    validate_new_password:
+      'Введите только английские буквы и цифры, не меньше 6',
+    validate_name_input: 'Только буквы, не меньше 3 букв.',
+    validate_login_input: 'Только английские буквы, не меньше 3 букв.',
     validate_sigin_password:
       'Введите цифры и аанглийские буквы, не меньше 6 символов.',
     title_required: 'Название обязательно должно быть заполнено',
@@ -112,10 +113,11 @@ const translation = {
     name_input: 'Name',
     old_password: 'Old password',
     new_password: 'New password',
-    only_letters: 'Please, enter only letters',
     validate_old_password: 'Please, enter old password',
-    validate_new_password: 'Please, enter letters and numbers',
-    validate_signin_input: 'Please enter only EN letters. Min length 3.',
+    validate_new_password:
+      'Please, enter only EN letters and numbers. Min length 6.',
+    validate_name_input: 'Please enter only letters. Min length 3.',
+    validate_login_input: 'Please enter only EN letters. Min length 3.',
     validate_sigin_password:
       'Please enter EN letters and numbers. Min length 6.',
     title_required: 'Title is required',

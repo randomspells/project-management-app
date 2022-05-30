@@ -14,7 +14,7 @@ import {
   useLogInWithRedirect,
   useSetAlertResult,
 } from '../../hooks/index';
-import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
+import { VALID_LOGIN_INPUT, VALID_PASSWORD_INPUT } from '../../constants';
 import { RouteEnum } from '../../enums';
 import { setAlertResult } from '../../slices/alertSlice';
 
@@ -80,8 +80,8 @@ const LoginPage: FC = () => {
           name='login'
           label={<FormattedMessage id='login_input' />}
           type='text'
-          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
-          errorText={<FormattedMessage id='validate_signin_input' />}
+          rules={{ required: true, pattern: VALID_LOGIN_INPUT }}
+          errorText={<FormattedMessage id='validate_login_input' />}
           defaultValue=''
           control={control}
         />
@@ -105,10 +105,9 @@ const LoginPage: FC = () => {
         >
           <FormattedMessage id='login' />
         </LoadingButton>
-        <Link
-          component={RouterLink}
-          to={RouteEnum.Signup}
-        ><FormattedMessage id='dont_have_account' /></Link>
+        <Link component={RouterLink} to={RouteEnum.Signup}>
+          <FormattedMessage id='dont_have_account' />
+        </Link>
       </Box>
     </Container>
   );

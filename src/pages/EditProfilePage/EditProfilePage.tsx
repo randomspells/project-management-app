@@ -7,7 +7,11 @@ import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
-import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
+import {
+  VALID_LOGIN_INPUT,
+  VALID_NAME_INPUT,
+  VALID_PASSWORD_INPUT,
+} from '../../constants';
 import { FormDataInterface, UserInterface } from '../../interfaces/index';
 import { useSigninMutation } from '../../api/auth.api';
 import { setAlertResult } from '../../slices/alertSlice';
@@ -122,19 +126,19 @@ const EditProfilePage: FC = () => {
         <ControlledInput
           name='name'
           label={<FormattedMessage id='name_input' />}
-          errorText={<FormattedMessage id='only_letters' />}
+          errorText={<FormattedMessage id='validate_name_input' />}
           type='text'
           defaultValue=''
-          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
+          rules={{ required: true, pattern: VALID_NAME_INPUT }}
           control={control}
         />
         <ControlledInput
           name='login'
           label={<FormattedMessage id='login_input' />}
-          errorText={<FormattedMessage id='only_letters' />}
+          errorText={<FormattedMessage id='validate_login_input' />}
           type='text'
           defaultValue=''
-          rules={{ required: true, pattern: VALID_TEXT_INPUT }}
+          rules={{ required: true, pattern: VALID_LOGIN_INPUT }}
           control={control}
         />
         <ControlledInput
@@ -143,7 +147,7 @@ const EditProfilePage: FC = () => {
           errorText={<FormattedMessage id='validate_old_password' />}
           type='password'
           defaultValue=''
-          rules={{ required: true }}
+          rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
           control={control}
         />
         <ControlledInput
@@ -162,6 +166,7 @@ const EditProfilePage: FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            mt: 2,
           }}
         >
           <Button variant='outlined' onClick={handleCancelClick}>

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, KeyboardEvent, useState } from 'react';
 import { InputAdornment, OutlinedInput, IconButton } from '@mui/material';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -17,6 +17,12 @@ const TaskTitleEditInput: FC<TaskTitleInputProps> = ({
 }) => {
   const [value, setValue] = useState(title);
 
+  const handleEnterPress = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      saveHandler(value);
+    }
+  };
+
   return (
     <OutlinedInput
       color='primary'
@@ -27,6 +33,7 @@ const TaskTitleEditInput: FC<TaskTitleInputProps> = ({
       onChange={(event) => {
         setValue(event.target.value);
       }}
+      onKeyDown={handleEnterPress}
       endAdornment={
         <InputAdornment position='end'>
           <IconButton
