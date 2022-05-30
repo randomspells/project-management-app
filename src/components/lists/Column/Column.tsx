@@ -144,7 +144,7 @@ const Column: FC<ColumnInterface> = ({
           minWidth: COLUMN_WIDTH,
           width: COLUMN_WIDTH,
           overflowY: 'scroll',
-          height: { xs: '55vh', md: '65vh' },
+          height: { xs: '45vh', md: '60vh' },
           my: 1,
         }}
       >
