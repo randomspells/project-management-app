@@ -3,6 +3,7 @@ import {
   QueryErrorInterface,
   ApiErrorType,
   UserInterface,
+  FilterBoardInterface,
 } from '../interfaces/index';
 
 // Avatar color generator
@@ -98,6 +99,14 @@ export const getUserLoginById = (users: UserInterface[], id: string) => {
   }
   return null;
 };
+
+export const filterData = (data: FilterBoardInterface[], searchValue: string) => 
+  data.filter((arr) => {
+    if (searchValue.length > 0) {
+      return arr.title.toLowerCase().includes(searchValue.toLowerCase()) || arr.description.toLowerCase().includes(searchValue.toLowerCase());
+    }
+    return true;
+});
 
 export const countOrder = (list: Record<string, string>[]): number =>
   list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);

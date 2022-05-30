@@ -62,6 +62,12 @@ export interface BoardInterface extends BoardsGetInterface {
   columns: ColumnInterface[];
 }
 
+export interface FilterBoardInterface {
+  id: string;
+  title: string;
+  description: string;
+}
+
 export interface FormDataInterface {
   [x: string]: string;
 }
