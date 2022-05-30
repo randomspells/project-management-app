@@ -25,8 +25,6 @@ const Task: FC<TaskInterface> = ({ id, title, description, userId, order }) => {
   const [avatarColor, setAvatarColor] = useState<string>();
   const [avatarChildren, setAvatarChildren] = useState<string>();
 
-  const board = useAppSelector((state) => state.board.currentBoard);
-  const taskId = useAppSelector((state) => state.task.currentTask?.id) || null;
   const boardId =
     useAppSelector((state) => state.board.currentBoard?.id) || null;
   const columnId = useAppSelector((state) => state.column.currentId);
@@ -49,20 +47,34 @@ const Task: FC<TaskInterface> = ({ id, title, description, userId, order }) => {
     deleteTask({
       boardId,
       columnId,
-      taskId,
+      taskId: id,
     }).catch((e) => setAlertResult({ error: e }));
   };
 
   const handleTaskClick = () => {
-    dispatch(setCurrentTask({ id, title, description, userId, order }));
+    dispatch(
+      setCurrentTask({
+        id,
+        title,
+        description,
+        userId,
+        order,
+      }),
+    );
   };
 
-  const [taskDrag] = useTaskDrag();
-  const [taskToTaskDrop] = useTaskToTaskDrop({
-    taskId,
-    board,
+  const { taskDrag, isDragging } = useTaskDrag({
+    id,
+    title,
+    description,
+    userId,
+    order,
+  });
+
+  const { taskToTaskDrop, backgroundColor } = useTaskToTaskDrop({
+    taskId: id,
+    title,
     columnId,
-    boardId,
   });
 
   useEffect(() => {
@@ -83,8 +95,17 @@ const Task: FC<TaskInterface> = ({ id, title, description, userId, order }) => {
       <Paper
         component='div'
         id={id}
-        elevation={2}
-        sx={{ color: 'text.secondary', p: 2, mb: 2, mr: 1 }}
+        elevation={isDragging ? 8 : 2}
+        sx={{
+          backgroundColor,
+          color: 'text.secondary',
+          p: 2,
+          mb: 2,
+          mr: 1,
+          opacity: isDragging ? 0.7 : 1,
+          transition: '0.4s',
+          '&:hover': { transform: 'translate(4px)' },
+        }}
         onMouseDown={handleTaskClick}
       >
         <Box

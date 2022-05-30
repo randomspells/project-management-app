@@ -98,11 +98,10 @@ export interface QueryErrorInterface {
 }
 
 export interface DraggableTaskInterface {
-  taskId: string;
   title: string;
   description: string;
   userId: string;
-  boardId: string | null;
+  id: string;
 }
 
 export interface ColumnDropInterface {
@@ -115,9 +114,8 @@ export interface TaskDropInterface {
 }
 
 export interface TaskToTaskDropInterface {
+  title: string;
   taskId: string | null;
-  boardId: string | null;
-  board: BoardInterface | null;
   columnId: string | null;
 }
 

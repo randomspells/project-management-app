@@ -1,4 +1,3 @@
-import { sortItems } from '../constants';
 import { MethodsEnum, EndpointsEnum, TagsEnum } from '../enums/index';
 import {
   BoardsPostInterface,

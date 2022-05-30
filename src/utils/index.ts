@@ -10,6 +10,7 @@ import {
 // Avatar color generator
 
 import { ErrorMessageEnum } from '../enums';
+import LOCALES from '../translation/locales';
 
 export const stringToColor = (string: string) => {
   let hash = 0;
@@ -121,3 +122,28 @@ export const findTaskOrderById = (
   if (!item || !taskId) return null;
   return item.tasks.find((task) => task.id === taskId)?.order || null;
 };
+
+// set color for draggable object
+
+export const setDndBackgroundColor = (
+  isOver: boolean,
+  canDrop: boolean,
+  activeColor: string,
+  canDropColor: string,
+): string => {
+  const isActive = canDrop && isOver;
+  let backgroundColor = '';
+  if (isActive) {
+    backgroundColor = activeColor;
+  } else if (canDrop) {
+    backgroundColor = canDropColor;
+  }
+  return backgroundColor;
+};
+
+// initial localization
+
+export function getInitialLocale() {
+  const savedLocale = localStorage.getItem('locale');
+  return savedLocale || LOCALES.ENGLISH;
+}

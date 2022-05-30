@@ -4,38 +4,43 @@ import { useCreateTaskMutation, useDeleteTaskMutation } from '../api/task.api';
 import { DndTypesEnum } from '../enums';
 import { TaskDropInterface, DraggableTaskInterface } from '../interfaces';
 import { setAlertResult } from '../slices/alertSlice';
+import { findTaskOrderById, setDndBackgroundColor } from '../utils';
 
-const useTaskToListDrop = ({ columnId }: TaskDropInterface) => {
-  const currentTaskId = useAppSelector((state) => state.task.currentTask?.id);
+const useTaskToColumnDrop = ({ columnId }: TaskDropInterface) => {
+  const currentTask = useAppSelector((state) => state.task.currentTask);
   const currentColumnId = useAppSelector((state) => state.column.currentId);
   const board = useAppSelector((state) => state.board.currentBoard);
+
   const dispatch = useAppDispatch();
 
-  const [
-    createTask,
-    { isSuccess: isSuccessTaskCreate, error: errorTaskCreate },
-  ] = useCreateTaskMutation();
-  const [
-    deleteTask,
-    { isSuccess: isSuccessTaskDelete, error: errorTaskDelete },
-  ] = useDeleteTaskMutation();
+  const [createTask, { error: errorTaskCreate }] = useCreateTaskMutation();
+  const [deleteTask, { error: errorTaskDelete }] = useDeleteTaskMutation();
 
-  const [, taskToListDrop] = useDrop(
+  const [{ canDrop, isOver }, taskToColumnDrop] = useDrop(
     () => ({
       accept: DndTypesEnum.Task,
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
       drop: ({
-        title: draggedTitle,
-        description: draggedDescription,
         userId: draggedUserId,
-        taskId: draggedTaskId,
+        id: draggedTaskId,
       }: DraggableTaskInterface) => {
         if (columnId === currentColumnId) return;
         if (!board || !columnId || !draggedTaskId) return;
-
+        if (!currentTask) return;
+        const droppedColumn = board.columns.find(
+          (column) => column.id === columnId,
+        );
+        if (!droppedColumn) return;
+        console.log(currentTask);
+        const newOrder = findTaskOrderById(droppedColumn, currentTask.id);
+        console.log(newOrder);
         const bodyTaskCreate = {
           body: {
-            title: draggedTitle,
-            description: draggedDescription,
+            title: currentTask.title,
+            description: currentTask.description,
             userId: draggedUserId,
           },
           boardId: board.id,
@@ -56,13 +61,20 @@ const useTaskToListDrop = ({ columnId }: TaskDropInterface) => {
         );
       },
     }),
-    [board, currentColumnId, currentTaskId, columnId],
+    [board, currentTask],
   );
 
-  useSetAlertResult(isSuccessTaskCreate, errorTaskCreate);
-  useSetAlertResult(isSuccessTaskDelete, errorTaskDelete);
+  const backgroundColor = setDndBackgroundColor(
+    canDrop,
+    isOver,
+    'primary.main',
+    '#ddd',
+  );
 
-  return [taskToListDrop];
+  useSetAlertResult(false, errorTaskCreate);
+  useSetAlertResult(false, errorTaskDelete);
+
+  return { taskToColumnDrop, backgroundColor };
 };
 
-export default useTaskToListDrop;
+export default useTaskToColumnDrop;

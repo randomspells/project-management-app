@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
-import { ApiErrorType, ColumnInterface } from '../interfaces/index';
-
+import { ApiErrorType, TaskInterface } from '../interfaces/index';
 import { DndTypesEnum, RouteEnum } from '../enums';
 import { setAlertResult } from '../slices/alertSlice';
 import { logIn } from '../slices/authSlice';
 import type { RootState, AppDispatch } from '../store';
+import { ColumnDropProps } from './useColumnDrop';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -38,25 +38,37 @@ export const useLogInWithRedirect = (
   }, [token]);
 };
 
-export const useTaskDrag = () => {
-  const task = useAppSelector((state) => state.task.currentTask);
-  const [, taskDrag] = useDrag(() => ({
+export const useTaskDrag = ({
+  id,
+  title,
+  description,
+  userId,
+  order,
+}: TaskInterface) => {
+  const [{ isDragging }, taskDrag] = useDrag(() => ({
     type: DndTypesEnum.Task,
-    item: task,
+    item: { id, title, description, userId, order },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
     }),
   }));
-  return [taskDrag];
+  return { taskDrag, isDragging };
 };
 
-export const useColumnDrag = (column: ColumnInterface) => {
-  const [, columnDrag] = useDrag(() => ({
+export const useColumnDrag = ({ columnId }: ColumnDropProps) => {
+  const columnTitle = useAppSelector(
+    (state) =>
+      state.board.currentBoard?.columns.find((column) => column.id === columnId)
+        ?.title,
+  );
+  const [{ isDragging }, columnDrag] = useDrag(() => ({
     type: DndTypesEnum.Column,
-    item: { title: column.title, id: column.id },
+    item: { title: columnTitle, id: columnId },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
     }),
   }));
-  return [columnDrag];
+  return { columnDrag, isDragging };
 };

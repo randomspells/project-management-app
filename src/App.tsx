@@ -12,11 +12,7 @@ import AppRouter from './routes/AppRouter/AppRouter';
 import translation from './translation/messages';
 import LOCALES from './translation/locales';
 import ErrorBoundary from './components/other/ErrorBoundary/ErrorBoundary';
-
-function getInitialLocale() {
-  const savedLocale = localStorage.getItem('locale');
-  return savedLocale || LOCALES.ENGLISH;
-}
+import { getInitialLocale } from './utils';
 
 const App = () => {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());

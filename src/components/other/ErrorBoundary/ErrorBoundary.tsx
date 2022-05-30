@@ -17,16 +17,10 @@ class ErrorBoundary extends React.Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error) {
-    // You can also log the error to an error reporting service
-    console.log(error);
-  }
-
   render() {
     const { hasError } = this.state;
     const { children } = this.props;
     if (hasError) {
-      // You can render any custom fallback UI
       return <h1>Something went wrong.</h1>;
     }
 

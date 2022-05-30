@@ -1,30 +1,35 @@
 import { useDrop } from 'react-dnd';
 import { ColumnInterface } from '../interfaces/index';
 import { useAppSelector, useAppDispatch, useSetAlertResult } from '.';
-
 import { useUpdateColumnMutation } from '../api/columns.api';
 import { DndTypesEnum } from '../enums';
-
 import { setAlertResult } from '../slices/alertSlice';
-import { findColumnOrderById } from '../utils';
+import { findColumnOrderById, setDndBackgroundColor } from '../utils';
 
-const useColumnDrop = (column?: ColumnInterface) => {
+export type ColumnDropProps = {
+  columnId: string;
+};
+
+const useColumnDrop = ({ columnId }: ColumnDropProps) => {
   const board = useAppSelector((state) => state.board.currentBoard);
-  const [
-    updateColumn,
-    { isSuccess: isSuccessColumnUpdate, error: errorColumnUpdate },
-  ] = useUpdateColumnMutation();
+  const [updateColumn, { error: errorColumnUpdate }] =
+    useUpdateColumnMutation();
 
   const dispatch = useAppDispatch();
 
-  const [, columnDrop] = useDrop(
+  const [{ canDrop, isOver }, columnDrop] = useDrop(
     () => ({
       accept: DndTypesEnum.Column,
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
       drop: ({ id: draggedId }: ColumnInterface) => {
-        console.log(draggedId);
-        if (!column || !board || !draggedId) return;
-        const { id, title } = column;
-        const newOrder = findColumnOrderById(board, id);
+        if (!columnId || !board || !draggedId) return;
+        const newOrder = findColumnOrderById(board, columnId);
+        const title = board.columns.find(
+          (column) => column.id === draggedId,
+        )?.title;
         const updateBody = {
           body: {
             title,
@@ -38,12 +43,18 @@ const useColumnDrop = (column?: ColumnInterface) => {
         );
       },
     }),
-    [findColumnOrderById, board, column],
+    [findColumnOrderById, board, columnId],
   );
 
-  useSetAlertResult(isSuccessColumnUpdate, errorColumnUpdate);
+  useSetAlertResult(false, errorColumnUpdate);
 
-  return [columnDrop];
+  const backgroundColor = setDndBackgroundColor(
+    isOver,
+    canDrop,
+    'primary.main',
+    '#ddd',
+  );
+  return { columnDrop, backgroundColor };
 };
 
 export default useColumnDrop;

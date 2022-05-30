@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, lazy, Suspense } from 'react';
 import { Alert, Grid } from '@mui/material';
-import Board from '../../cards/Board/Board';
 import { useGetBoardsQuery } from '../../../api/board.api';
 import Loader from '../../other/Loader/Loader';
+
+const Board = lazy(() => import('../../cards/Board/Board'));
 
 const BoardList: FC = () => {
   const { data: boards = [], isLoading } = useGetBoardsQuery();
@@ -20,20 +21,21 @@ const BoardList: FC = () => {
         pr: 1,
       }}
     >
-      {isLoading && <Loader />}
-      {!boards.length && (
-        <Grid item>
-          <Alert severity='info'>No boards to display.</Alert>
-        </Grid>
-      )}
-      {boards.map((board) => {
-        const { id, title, description } = board;
-        return (
-          <Grid item component='li' key={id} xs={12} md={6} lg={3}>
-            <Board title={title} id={id} description={description} />
+      <Suspense fallback={<Loader />}>
+        {!boards.length && !isLoading && (
+          <Grid item>
+            <Alert severity='info'>No boards to display.</Alert>
           </Grid>
-        );
-      })}
+        )}
+        {boards.map((board) => {
+          const { id, title, description } = board;
+          return (
+            <Grid item component='li' key={id} xs={12} md={6} lg={3}>
+              <Board title={title} id={id} description={description} />
+            </Grid>
+          );
+        })}
+      </Suspense>
     </Grid>
   );
 };

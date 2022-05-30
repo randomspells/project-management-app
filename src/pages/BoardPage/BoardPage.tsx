@@ -1,15 +1,17 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, lazy, Suspense, useEffect } from 'react';
 import { Alert, Box, Button, Container, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { FormattedMessage } from 'react-intl';
-import Column from '../../components/lists/Column/Column';
 import { toggleNewColumnForm } from '../../slices/formSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RouteEnum } from '../../enums';
 import { useGetBoardQuery } from '../../api/board.api';
 import { setCurrentBoard } from '../../slices/boardSlice';
+import Loader from '../../components/other/Loader/Loader';
+
+const Column = lazy(() => import('../../components/lists/Column/Column'));
 
 const BoardPage: FC = () => {
   const currentBoard = useAppSelector((state) => state.board.currentBoard);
@@ -47,6 +49,7 @@ const BoardPage: FC = () => {
       <Box
         component='section'
         sx={{
+          flex: '1',
           display: 'flex',
           flexWrap: 'nowrap',
           overflowX: 'scroll',
@@ -54,19 +57,26 @@ const BoardPage: FC = () => {
           my: 2,
         }}
       >
-        {currentBoard &&
-          currentBoard.columns.map((column) => (
-            <Column
-              key={column.id}
-              boardId={currentBoard.id}
-              columnId={column.id}
-            />
-          ))}
-        {!currentBoard?.columns.length && (
-          <Alert severity='info'>
-            <FormattedMessage id='no_task_lists' />
-          </Alert>
-        )}
+        <Suspense fallback={<Loader />}>
+          {currentBoard &&
+            currentBoard.columns.map((column) => {
+              const { id, title, order, tasks } = column;
+              return (
+                <Column
+                  key={id}
+                  id={id}
+                  title={title}
+                  order={order}
+                  tasks={tasks}
+                />
+              );
+            })}
+          {!currentBoard?.columns.length && (
+            <Alert severity='info'>
+              <FormattedMessage id='no_task_lists' />
+            </Alert>
+          )}
+        </Suspense>
       </Box>
     </Container>
   );
