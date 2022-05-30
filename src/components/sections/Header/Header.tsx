@@ -90,7 +90,9 @@ const Header: FC<HeaderProps> = ({ handleChange }) => {
     <Box
       component='header'
       id='sticky-header'
-      className={`${navbar}${sticky.isSticky ? ` ${headerContainer}` : ''}`}
+      className={`${navbar}${
+        sticky.isSticky && !isMenuOpen ? ` ${headerContainer}` : ''
+      }`}
       ref={headerRef}
     >
       <Box component='section' className={avatarWrapper}>
