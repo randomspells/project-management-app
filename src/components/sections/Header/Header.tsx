@@ -150,7 +150,7 @@ const Header: FC<HeaderProps> = ({ handleChange }) => {
             label='Lang'
             autoWidth
             labelId='label'
-            defaultValue={getInitialLocale()}
+            value={getInitialLocale()}
             onChange={handleChange}
           >
             {languages.map(({ name, code }) => (

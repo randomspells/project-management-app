@@ -59,7 +59,7 @@ const WelcomePage: FC = () => {
       </Box>
       <Typography
         component='h1'
-        variant='h1'
+        variant='h2'
         textAlign='center'
         sx={{ my: { xs: 2, md: 4 } }}
       >
@@ -69,17 +69,17 @@ const WelcomePage: FC = () => {
         component='article'
         sx={{
           display: 'flex',
-          columnGap: 2,
+          columnGap: 4,
           flexDirection: { xs: 'column', md: 'row' },
           rowGap: 4,
         }}
       >
         {WELCOME_INFO.map((section) => (
-          <Box component='section' key={section.title}>
+          <Box component='section' key={section.id} sx={{ flex: 1 }}>
             <Typography
               component='h2'
-              variant='h2'
-              sx={{ display: 'flex', alignItems: 'center' }}
+              variant='h3'
+              sx={{ display: 'flex', alignItems: 'center', mb: 1 }}
             >
               {section.icon}
               {section.title}

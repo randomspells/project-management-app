@@ -3,6 +3,7 @@ import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import SchemaRoundedIcon from '@mui/icons-material/SchemaRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import { SxProps } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import {
   BoardsGetInterface,
   ColumnInterface,
@@ -19,21 +20,21 @@ const ICON_STYLE: SxProps = {
 
 export const WELCOME_INFO: WelcomeInfoInterface[] = [
   {
-    title: 'Team',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis numquam adipisci eveniet nesciunt qui aut sapiente facere ex voluptatum asperiores ad doloribus iusto aliquid rem, at molestias reiciendis labore!',
+    id: 1,
+    title: <FormattedMessage id='team' />,
+    description: <FormattedMessage id='team_desc' />,
     icon: <GroupsRoundedIcon sx={ICON_STYLE} />,
   },
   {
-    title: 'Project',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis numquam adipisci eveniet nesciunt qui aut sapiente facere ex voluptatum asperiores ad doloribus iusto aliquid rem, at molestias reiciendis labore!',
+    id: 2,
+    title: <FormattedMessage id='project' />,
+    description: <FormattedMessage id='project_desc' />,
     icon: <SchemaRoundedIcon sx={ICON_STYLE} />,
   },
   {
-    title: 'Course',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis numquam adipisci eveniet nesciunt qui aut sapiente facere ex voluptatum asperiores ad doloribus iusto aliquid rem, at molestias reiciendis labore!',
+    id: 3,
+    title: <FormattedMessage id='course' />,
+    description: <FormattedMessage id='course_desc' />,
     icon: <SchoolRoundedIcon sx={ICON_STYLE} />,
   },
 ];

@@ -93,8 +93,9 @@ export interface ProtectedRouteInterface {
 }
 
 export interface WelcomeInfoInterface {
-  title: string;
-  description: string;
+  id: number;
+  title: string | ReactNode;
+  description: string | ReactNode;
   icon: ReactElement;
 }
 
