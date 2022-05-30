@@ -1,4 +1,4 @@
-import React, {  FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { CloseRounded, MenuRounded } from '@mui/icons-material';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { stringAvatar } from '../../../utils';
+import { getInitialLocale, stringAvatar } from '../../../utils';
 import { RouteEnum } from '../../../enums';
 import { logOut } from '../../../slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
@@ -65,7 +65,7 @@ const Header: FC<HeaderProps> = ({ handleChange }) => {
 
   const languages = [
     { name: 'En', code: LOCALES.ENGLISH },
-    { name: 'Ru', code: LOCALES.RUSSIAN }
+    { name: 'Ru', code: LOCALES.RUSSIAN },
   ];
 
   const {
@@ -150,11 +150,13 @@ const Header: FC<HeaderProps> = ({ handleChange }) => {
             label='Lang'
             autoWidth
             labelId='label'
-            defaultValue=''
+            value={getInitialLocale()}
             onChange={handleChange}
           >
             {languages.map(({ name, code }) => (
-              <MenuItem value={code} key={code}>{name}</MenuItem>
+              <MenuItem value={code} key={code}>
+                {name}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

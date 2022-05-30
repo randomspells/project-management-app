@@ -9,7 +9,7 @@ export type ControlledInputProps = {
   rules: Record<string, unknown>;
   control: Control;
   type: string;
-  defaultValue: string;
+  defaultValue?: string;
   multiline?: boolean;
   rows?: number;
 };
@@ -38,7 +38,7 @@ const ControlledInput: FC<ControlledInputProps> = ({
         helperText={error ? errorText : ' '}
         multiline={multiline}
         rows={rows}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue || ''}
         margin='normal'
         autoComplete='off'
         fullWidth
@@ -48,6 +48,7 @@ const ControlledInput: FC<ControlledInputProps> = ({
 );
 
 ControlledInput.defaultProps = {
+  defaultValue: '',
   multiline: false,
   rows: 1,
 };

@@ -3,7 +3,6 @@ import { Box, Button, IconButton, Typography } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { FormattedMessage } from 'react-intl';
 import Task from '../../cards/Task/Task';
-import { TaskInterface } from '../../../interfaces';
 import Confirmation from '../../modals/Confirmation/Confirmation';
 import {
   useDeleteColumnMutation,
@@ -14,33 +13,35 @@ import {
   useAppDispatch,
   useAppSelector,
   useSetAlertResult,
+  useColumnDrag,
 } from '../../../hooks';
 import TaskTitleEditInput from '../../Inputs/TaskTitleInput/TaskTitleInput';
 import { COLUMN_WIDTH } from '../../../constants';
 import { toggleNewTaskForm } from '../../../slices/formSlice';
 import { setCurrentColumnId } from '../../../slices/columnSlice';
+import useColumnDrop from '../../../hooks/useColumnDrop';
+import { ColumnInterface } from '../../../interfaces';
+import useTaskToColumnDrop from '../../../hooks/useTaskToColumnDrop';
 
-type TaskListProps = {
-  columnId: string;
-  columnOrder: number;
-  title: string;
-  tasks: TaskInterface[];
-};
-
-const TaskList: FC<TaskListProps> = ({
-  columnId,
-  columnOrder,
-  title: taskListTitle,
-  tasks,
+const Column: FC<ColumnInterface> = ({
+  id: columnId,
+  title: columnTitle,
+  order: columnOrder,
+  tasks: columnTasks,
 }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
-  const currentColumnId = useAppSelector(state => state.column.currentId);
   const boardId = useAppSelector((state) => state.board.currentBoard?.id);
-  const [deleteColumn, { isSuccess: isSuccessDelete, error: errorDelete }] =
-    useDeleteColumnMutation();
-  const [updateColumn] = useUpdateColumnMutation();
+
+  const [
+    deleteColumn,
+    { isSuccess: isSuccessColumnDelete, error: errorColumnDelete },
+  ] = useDeleteColumnMutation();
+  const [
+    updateColumn,
+    { isSuccess: isSuccessColumnUpdate, error: errorColumnUpdate },
+  ] = useUpdateColumnMutation();
 
   const dispatch = useAppDispatch();
 
@@ -56,10 +57,12 @@ const TaskList: FC<TaskListProps> = ({
     dispatch(toggleNewTaskForm());
   };
 
-  const changeTitleClick = (value: string) => {
+  const changeTitleClick = (title: string) => {
+    toggleEditMode();
+    if (title === columnTitle) return;
     const columnData = {
       body: {
-        title: value,
+        title,
         order: columnOrder,
       },
       boardId,
@@ -68,43 +71,69 @@ const TaskList: FC<TaskListProps> = ({
     updateColumn(columnData).catch((e) =>
       dispatch(setAlertResult({ error: e })),
     );
-    toggleEditMode();
   };
 
-  const handleTaskListDelete = () => {
+  const handleColumnDelete = () => {
     deleteColumn({ boardId, columnId }).catch((e) =>
       dispatch(setAlertResult({ error: e })),
     );
   };
 
-  const handleTaskListClick = () => {
-    if (columnId !== currentColumnId)
-    dispatch(setCurrentColumnId(columnId));
+  const saveCurrentColumnId = () => {
+    dispatch(setCurrentColumnId({ columnId }));
   };
 
-  useSetAlertResult(isSuccessDelete, errorDelete);
+  const { columnDrag, isDragging } = useColumnDrag({ columnId });
+  const { columnDrop, backgroundColor: columnBgColor } = useColumnDrop({
+    columnId,
+  });
+  const { taskToColumnDrop, backgroundColor: taskBgColor } =
+    useTaskToColumnDrop({
+      columnId,
+    });
+
+  useSetAlertResult(isSuccessColumnDelete, errorColumnDelete);
+  useSetAlertResult(isSuccessColumnUpdate, errorColumnUpdate);
 
   return (
     <Box
+      ref={(node: HTMLElement) => {
+        columnDrag(taskToColumnDrop(node));
+        columnDrag(columnDrop(node));
+      }}
       component='article'
-      sx={{ bgcolor: '#eee', borderRadius: 1, p: 1, mb: 1 }}
-      onClick={handleTaskListClick}
+      sx={{
+        bgcolor: columnBgColor || taskBgColor || '#eee',
+        borderRadius: 1,
+        p: 1,
+        mb: 1,
+        cursor: 'move',
+        opacity: isDragging ? 0.7 : 1,
+        transition: '0.4s',
+        '&:hover': { backgroundColor: 'primary.light' },
+      }}
+      onMouseDown={saveCurrentColumnId}
     >
       <Box sx={{ flex: 1, height: '40px' }}>
         {isEditMode ? (
           <TaskTitleEditInput
             saveHandler={changeTitleClick}
             closeHandler={toggleEditMode}
-            title={taskListTitle}
+            title={columnTitle || ''}
           />
         ) : (
           <Typography
             component='h4'
             variant='h5'
             onClick={toggleEditMode}
-            sx={{ width: COLUMN_WIDTH }}
+            sx={{
+              width: COLUMN_WIDTH,
+              cursor: 'pointer',
+              transition: '0.4s',
+              '&:hover': { color: 'primary.main' },
+            }}
           >
-            {taskListTitle}
+            {columnTitle}
           </Typography>
         )}
       </Box>
@@ -119,8 +148,8 @@ const TaskList: FC<TaskListProps> = ({
           my: 1,
         }}
       >
-        {tasks.map((task) => {
-          const { id, title, order, description, userId, done, files } = task;
+        {columnTasks.map((task) => {
+          const { id, title, order, description, userId, files } = task;
           return (
             <Task
               key={id}
@@ -129,7 +158,6 @@ const TaskList: FC<TaskListProps> = ({
               order={order}
               description={description}
               userId={userId}
-              done={done}
               files={files}
             />
           );
@@ -146,14 +174,14 @@ const TaskList: FC<TaskListProps> = ({
           <FormattedMessage id='delete_task_list' />
         </Button>
         <Confirmation
-          itemTitle={taskListTitle}
+          itemTitle={columnTitle || ''}
           isOpen={isConfirmationOpen}
           toggleConfirmation={toggleConfirmation}
-          handleAccept={handleTaskListDelete}
+          handleAccept={handleColumnDelete}
         />
       </Box>
     </Box>
   );
 };
 
-export default TaskList;
+export default Column;

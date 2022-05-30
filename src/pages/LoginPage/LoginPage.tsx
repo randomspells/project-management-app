@@ -45,7 +45,6 @@ const LoginPage: FC = () => {
 
   const onSubmit = async (formData: FormDataInterface) => {
     try {
-      if (signinError) throw signinError;
       await signin(formData);
     } catch (e) {
       dispatch(setAlertResult({ error: e }));

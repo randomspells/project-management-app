@@ -54,7 +54,6 @@ const SignUpPage: FC = () => {
       password,
     };
     try {
-      if (signupError) throw signupError;
       await signup(signupBody);
       await signin(signinBody);
     } catch (e) {

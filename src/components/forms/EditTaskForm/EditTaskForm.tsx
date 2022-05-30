@@ -1,10 +1,13 @@
 import { Box, Button } from '@mui/material';
-import React, { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { FC, useEffect } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { useUpdateTaskMutation } from '../../../api/task.api';
-import { useAppDispatch, useAppSelector, useSetAlertResult } from '../../../hooks';
-import { FormDataInterface } from '../../../interfaces';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useSetAlertResult,
+} from '../../../hooks';
 import { setAlertResult } from '../../../slices/alertSlice';
 import { toggleEditTaskForm } from '../../../slices/formSlice';
 import FormModal from '../../modals/FormModal/FormModal';
@@ -23,28 +26,16 @@ const TASK_DESCRIPTION_INPUT = {
   name: 'taskDescription',
   label: 'Task Description',
   errorText: ' ',
-  rules: { required: false },
+  rules: { required: true },
   multiline: true,
   rows: 4,
 };
 
 const EditTaskForm: FC = () => {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { isValid },
-  } = useForm({ mode: 'onChange' });
-
   const isEditTaskFormOpen = useAppSelector(
     (state) => state.form.isEditTaskFormOpen,
   );
-  const currentTaskTitle = useAppSelector(
-    (state) => state.task.currentTask?.title,
-  );
-  const currentTaskDescription = useAppSelector(
-    (state) => state.task.currentTask?.description,
-  );
+
   const currentTask = useAppSelector((state) => state.task.currentTask);
   const boardId = useAppSelector((state) => state.board.currentBoard?.id);
   const columnId = useAppSelector((state) => state.column.currentId);
@@ -54,13 +45,26 @@ const EditTaskForm: FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const {
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+    formState: { isValid, isDirty },
+  } = useForm({
+    mode: 'onChange',
+  });
+
   const handleClose = () => {
     reset();
     dispatch(toggleEditTaskForm());
   };
 
-  const onSubmit = (data: FormDataInterface) => {
-    const { taskTitle, taskDescription } = data;
+  const onSubmit = (data: FieldValues) => {
+    const {
+      taskTitle = currentTask?.title,
+      taskDescription = currentTask?.description,
+    } = data;
     const updateTaskData = {
       body: {
         title: taskTitle,
@@ -80,6 +84,12 @@ const EditTaskForm: FC = () => {
 
   useSetAlertResult(isSuccessUpdate, errorUpdate);
 
+  useEffect(() => {
+    if (!currentTask) return;
+    setValue('taskTitle', currentTask.title);
+    setValue('taskDescription', currentTask.description);
+  }, [setValue, currentTask]);
+
   return (
     <FormModal
       isOpen={isEditTaskFormOpen}
@@ -93,7 +103,7 @@ const EditTaskForm: FC = () => {
           label={<FormattedMessage id='task_title' />}
           errorText={<FormattedMessage id='title_required' />}
           rules={TASK_TITLE_INPUT.rules}
-          defaultValue={currentTaskTitle || ''}
+          defaultValue={currentTask?.title}
           control={control}
         />
         <ControlledInput
@@ -102,7 +112,7 @@ const EditTaskForm: FC = () => {
           label={<FormattedMessage id='task_description' />}
           errorText={<FormattedMessage id='description_required' />}
           rules={TASK_DESCRIPTION_INPUT.rules}
-          defaultValue={currentTaskDescription || ''}
+          defaultValue={currentTask?.description}
           multiline={TASK_DESCRIPTION_INPUT.multiline}
           rows={4}
           control={control}
@@ -113,7 +123,7 @@ const EditTaskForm: FC = () => {
           variant='contained'
           size='large'
           sx={{ mt: 2, mb: 2 }}
-          disabled={!isValid}
+          disabled={!isValid || !isDirty}
         >
           <FormattedMessage id='save_task' />
         </Button>

@@ -1,5 +1,9 @@
 import { MethodsEnum, EndpointsEnum, TagsEnum } from '../enums/index';
-import { BoardsPostInterface, BoardsGetInterface, BoardInterface } from '../interfaces/index';
+import {
+  BoardsPostInterface,
+  BoardsGetInterface,
+  BoardInterface,
+} from '../interfaces/index';
 import baseApi from './base.api';
 
 export const boardApi = baseApi.injectEndpoints({
@@ -34,13 +38,13 @@ export const boardApi = baseApi.injectEndpoints({
         method: MethodsEnum.Delete,
       }),
       invalidatesTags: [TagsEnum.Boards],
-    })
+    }),
   }),
 });
 
-export const { 
-  useCreateBoardMutation, 
-  useGetBoardsQuery, 
-  useGetBoardQuery, 
-  useDeleteBoardMutation 
+export const {
+  useCreateBoardMutation,
+  useGetBoardsQuery,
+  useGetBoardQuery,
+  useDeleteBoardMutation,
 } = boardApi;

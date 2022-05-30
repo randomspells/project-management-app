@@ -31,10 +31,11 @@ export interface TaskInterface {
   id: string;
   title: string;
   order: number;
-  done: boolean;
   description: string;
   userId: string;
-  files: FileInterface[];
+  boardId?: string;
+  columnId?: string;
+  files?: FileInterface[];
 }
 
 export interface TasksPostInterface {
@@ -92,14 +93,41 @@ export interface ProtectedRouteInterface {
 }
 
 export interface WelcomeInfoInterface {
-  title: string;
-  description: string;
+  id: number;
+  title: string | ReactNode;
+  description: string | ReactNode;
   icon: ReactElement;
 }
 
 export interface QueryErrorInterface {
   statusCode: number;
   message: string;
+}
+
+export interface DraggableTaskInterface {
+  title: string;
+  description: string;
+  userId: string;
+  id: string;
+}
+
+export interface ColumnDropInterface {
+  columnId: string | null;
+  title: string;
+}
+
+export interface TaskDropInterface {
+  columnId: string | null;
+}
+
+export interface TaskToTaskDropInterface {
+  title: string;
+  taskId: string | null;
+  columnId: string | null;
+}
+
+export interface TaskToListDropInterface {
+  columnId: string;
 }
 
 export type ApiErrorType =

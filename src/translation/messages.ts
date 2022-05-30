@@ -1,8 +1,17 @@
-import LOCALES from "./locales";
+import LOCALES from './locales';
 
 const translation = {
   [LOCALES.RUSSIAN]: {
     welcome: 'Добро пожаловать!',
+    team: 'Команда',
+    project: 'Проект',
+    course: 'Курс',
+    team_desc:
+      'Мы - команда #80 из трех человек: Андрей, Виктор и Женя. Всю приложуху сделали, общаясь в дискорде. У нас состоялось два созвона за месяц, но в принципе всем все было понятно, так что даже почти успели. Кроме рефакторинга...',
+    project_desc:
+      'Перед вами безмерно упрощенный клон Trello. При создании была использована библиотека React, Material UI для элементов интерфейса и Redux для управления состоянием приложения и сетевых запросов. Здесь можно создавать доски с задачами, списки задач, сами задачи, менять их, удалять и так далее. Возможно даже завалялась парочка багов.',
+    course_desc:
+      'Это приложение стало итогом выполнения бесплатного курса по React от сообщества разработчиков The Rolling Scopes. Обучение в RS School доступно всем желающим и для начинающего разработчика это очень полезное вложение времени.',
     lang: 'Язык',
     edit_profile: 'Редактировать профиль',
     sign_out: 'Выйти',
@@ -47,12 +56,22 @@ const translation = {
     validate_old_password: 'Введите старый пароль',
     validate_new_password: 'Введите только буквы и цифры',
     validate_signin_input: 'Только английские буквы, не меньше 3 букв.',
-    validate_sigin_password: 'Введите цифры и аанглийские буквы, не меньше 6 символов.',
+    validate_sigin_password:
+      'Введите цифры и аанглийские буквы, не меньше 6 символов.',
     title_required: 'Название обязательно должно быть заполнено',
     description_required: 'Описание обязательно должно быть заполнено',
   },
   [LOCALES.ENGLISH]: {
     welcome: 'Welcome!',
+    team: 'Team',
+    project: 'Project',
+    course: 'Course',
+    team_desc:
+      'We are the three members of team #80: Andrey, Viktor, and Eugenia. We communicated throughout the development process via Discord and also had two whole meetings (!) during last month. We completed almost all task goals, except for refactoring.',
+    project_desc:
+      'This application is a simplified clone of Trello. We used React library, Material UI for UI components, and also Redux to manage the state of our app. You can create workspaces, task lists and tasks; remove or edit them, and so on. Probably you could even find a couple of bugs.',
+    course_desc:
+      'Our app is the result of a free React course conducted by The Rolling Scopes developer community. Everyone can study at RS School and for beginners it is a very valuable investment of time.',
     lang: 'Lang',
     edit_profile: 'Edit profile',
     sign_out: 'Sign out',
@@ -97,7 +116,8 @@ const translation = {
     validate_old_password: 'Please, enter old password',
     validate_new_password: 'Please, enter letters and numbers',
     validate_signin_input: 'Please enter only EN letters. Min length 3.',
-    validate_sigin_password: 'Please enter EN letters and numbers. Min length 6.',
+    validate_sigin_password:
+      'Please enter EN letters and numbers. Min length 6.',
     title_required: 'Title is required',
     description_required: 'Description is required',
   },

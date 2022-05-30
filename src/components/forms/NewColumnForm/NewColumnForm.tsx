@@ -9,7 +9,7 @@ import {
   useSetAlertResult,
 } from '../../../hooks';
 import { FormDataInterface } from '../../../interfaces';
-import { toggleNewTaskListForm } from '../../../slices/formSlice';
+import { toggleNewColumnForm } from '../../../slices/formSlice';
 import FormModal from '../../modals/FormModal/FormModal';
 import ControlledInput from '../../Inputs/ControlledInput/ControlledInput';
 import { useCreateColumnMutation } from '../../../api/columns.api';
@@ -17,12 +17,12 @@ import { setAlertResult } from '../../../slices/alertSlice';
 
 const TASK_LIST_TITLE_INPUT = {
   type: 'text',
-  name: 'taskListTitle',
+  name: 'columnTitle',
   errorText: 'Title is required',
   rules: { required: true },
 };
 
-const NewTaskListForm: FC = () => {
+const NewColumnForm: FC = () => {
   const {
     handleSubmit,
     control,
@@ -30,8 +30,8 @@ const NewTaskListForm: FC = () => {
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
 
-  const isNewTaskListFormOpen = useAppSelector(
-    (state) => state.form.isNewTaskListFormOpen,
+  const isNewColumnFormOpen = useAppSelector(
+    (state) => state.form.isNewColumnFormOpen,
   );
 
   const dispatch = useAppDispatch();
@@ -44,13 +44,13 @@ const NewTaskListForm: FC = () => {
 
   const handleClose = () => {
     reset();
-    dispatch(toggleNewTaskListForm());
+    dispatch(toggleNewColumnForm());
   };
 
   const onSubmit = (formData: FormDataInterface) => {
     const columnData = {
       body: {
-        title: formData.taskListTitle,
+        title: formData.columnTitle,
       },
       boardId,
     };
@@ -66,7 +66,7 @@ const NewTaskListForm: FC = () => {
 
   return (
     <FormModal
-      isOpen={isNewTaskListFormOpen}
+      isOpen={isNewColumnFormOpen}
       handleClose={handleClose}
       formTitle={<FormattedMessage id='new_task_list' />}
     >
@@ -95,4 +95,4 @@ const NewTaskListForm: FC = () => {
   );
 };
 
-export default NewTaskListForm;
+export default NewColumnForm;

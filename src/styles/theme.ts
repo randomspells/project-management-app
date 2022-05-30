@@ -5,7 +5,7 @@ const theme = responsiveFontSizes(
     palette: {
       primary: {
         main: '#006064',
-        light: '#428e92',
+        light: '#dde5f0',
         dark: '#00363a',
       },
       secondary: {

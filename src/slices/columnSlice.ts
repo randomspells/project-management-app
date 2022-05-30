@@ -13,7 +13,7 @@ export const columnSlice = createSlice({
   initialState,
   reducers: {
     setCurrentColumnId: (state, action) => {
-      state.currentId = action.payload;
+      state.currentId = action.payload.columnId;
     },
   },
 });

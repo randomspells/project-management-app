@@ -3,6 +3,7 @@ import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import SchemaRoundedIcon from '@mui/icons-material/SchemaRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import { SxProps } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import {
   BoardsGetInterface,
   ColumnInterface,
@@ -19,21 +20,21 @@ const ICON_STYLE: SxProps = {
 
 export const WELCOME_INFO: WelcomeInfoInterface[] = [
   {
-    title: 'Team',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis numquam adipisci eveniet nesciunt qui aut sapiente facere ex voluptatum asperiores ad doloribus iusto aliquid rem, at molestias reiciendis labore!',
+    id: 1,
+    title: <FormattedMessage id='team' />,
+    description: <FormattedMessage id='team_desc' />,
     icon: <GroupsRoundedIcon sx={ICON_STYLE} />,
   },
   {
-    title: 'Project',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis numquam adipisci eveniet nesciunt qui aut sapiente facere ex voluptatum asperiores ad doloribus iusto aliquid rem, at molestias reiciendis labore!',
+    id: 2,
+    title: <FormattedMessage id='project' />,
+    description: <FormattedMessage id='project_desc' />,
     icon: <SchemaRoundedIcon sx={ICON_STYLE} />,
   },
   {
-    title: 'Course',
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis numquam adipisci eveniet nesciunt qui aut sapiente facere ex voluptatum asperiores ad doloribus iusto aliquid rem, at molestias reiciendis labore!',
+    id: 3,
+    title: <FormattedMessage id='course' />,
+    description: <FormattedMessage id='course_desc' />,
     icon: <SchoolRoundedIcon sx={ICON_STYLE} />,
   },
 ];
@@ -45,7 +46,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     order: 1,
     description: 'Domestic cat needs to be stroked gently',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: true,
     files: [],
   },
   {
@@ -55,7 +55,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. More words... And more...',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: true,
     files: [],
   },
   {
@@ -65,7 +64,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: false,
     files: [],
   },
   {
@@ -75,7 +73,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: false,
     files: [],
   },
   {
@@ -85,7 +82,6 @@ export const FAKE_TASKS: TaskInterface[] = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     userId: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    done: false,
     files: [],
   },
 ];
@@ -144,3 +140,8 @@ export const VALID_TEXT_INPUT = /^[A-z]{3,}$/;
 export const VALID_PASSWORD_INPUT = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
 
 export const COLUMN_WIDTH = 270;
+
+export const sortItems = (
+  a: TaskInterface | ColumnInterface,
+  b: TaskInterface | ColumnInterface,
+) => a.order - b.order;

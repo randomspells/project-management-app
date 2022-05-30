@@ -1,5 +1,7 @@
 import { MouseEvent } from 'react';
 import {
+  ColumnInterface,
+  BoardInterface,
   QueryErrorInterface,
   ApiErrorType,
   UserInterface,
@@ -9,6 +11,7 @@ import {
 // Avatar color generator
 
 import { ErrorMessageEnum } from '../enums';
+import LOCALES from '../translation/locales';
 
 export const stringToColor = (string: string) => {
   let hash = 0;
@@ -110,3 +113,46 @@ export const filterData = (data: FilterBoardInterface[], searchValue: string) =>
 
 export const countOrder = (list: Record<string, string>[]): number =>
   list.length === 0 ? 1 : Number(list[list.length - 1].order + 1);
+
+// get item order by id
+
+export const findColumnOrderById = (
+  item: BoardInterface | null,
+  id: string | null,
+): number | null => {
+  if (!item || !id) return null;
+  return item.columns.find((column) => column.id === id)?.order || null;
+};
+
+export const findTaskOrderById = (
+  item: ColumnInterface | null,
+  taskId: string | null,
+): number | null => {
+  if (!item || !taskId) return null;
+  return item.tasks.find((task) => task.id === taskId)?.order || null;
+};
+
+// set color for draggable object
+
+export const setDndBackgroundColor = (
+  isOver: boolean,
+  canDrop: boolean,
+  activeColor: string,
+  canDropColor: string,
+): string => {
+  const isActive = canDrop && isOver;
+  let backgroundColor = '';
+  if (isActive) {
+    backgroundColor = activeColor;
+  } else if (canDrop) {
+    backgroundColor = canDropColor;
+  }
+  return backgroundColor;
+};
+
+// initial localization
+
+export function getInitialLocale() {
+  const savedLocale = localStorage.getItem('locale');
+  return savedLocale || LOCALES.ENGLISH;
+}

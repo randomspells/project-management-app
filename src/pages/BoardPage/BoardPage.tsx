@@ -1,15 +1,17 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, lazy, Suspense, useEffect } from 'react';
 import { Alert, Box, Button, Container, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { FormattedMessage } from 'react-intl';
-import TaskList from '../../components/lists/TaskList/TaskList';
-import { toggleNewTaskListForm } from '../../slices/formSlice';
+import { toggleNewColumnForm } from '../../slices/formSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RouteEnum } from '../../enums';
 import { useGetBoardQuery } from '../../api/board.api';
 import { setCurrentBoard } from '../../slices/boardSlice';
+import Loader from '../../components/other/Loader/Loader';
+
+const Column = lazy(() => import('../../components/lists/Column/Column'));
 
 const BoardPage: FC = () => {
   const currentBoard = useAppSelector((state) => state.board.currentBoard);
@@ -20,8 +22,8 @@ const BoardPage: FC = () => {
 
   const { data: board } = useGetBoardQuery(boardId || skipToken);
 
-  const handleNewTaskListClick = () => {
-    dispatch(toggleNewTaskListForm());
+  const handleNewColumnClick = () => {
+    dispatch(toggleNewColumnForm());
   };
 
   const handleBackClick = () => {
@@ -40,34 +42,41 @@ const BoardPage: FC = () => {
         <IconButton color='primary' onClick={handleBackClick}>
           <ArrowBackRoundedIcon />
         </IconButton>
-        <Button onClick={handleNewTaskListClick}>
+        <Button variant='outlined' onClick={handleNewColumnClick}>
           <FormattedMessage id='add_task_list' />
         </Button>
       </Box>
       <Box
         component='section'
         sx={{
+          flex: '1',
           display: 'flex',
           flexWrap: 'nowrap',
           overflowX: 'scroll',
           columnGap: 1.5,
-          my: 1,
+          my: 2,
         }}
       >
-        {currentBoard &&
-          currentBoard.columns.map((column) => {
-            const { id, order, title, tasks } = column;
-            return (
-              <TaskList
-                key={id}
-                columnId={id}
-                columnOrder={order}
-                title={title}
-                tasks={tasks}
-              />
-            );
-          })}
-        {!currentBoard?.columns.length && <Alert severity="info"><FormattedMessage id='no_task_lists' /></Alert>}
+        <Suspense fallback={<Loader />}>
+          {currentBoard &&
+            currentBoard.columns.map((column) => {
+              const { id, title, order, tasks } = column;
+              return (
+                <Column
+                  key={id}
+                  id={id}
+                  title={title}
+                  order={order}
+                  tasks={tasks}
+                />
+              );
+            })}
+          {!currentBoard?.columns.length && (
+            <Alert severity='info'>
+              <FormattedMessage id='no_task_lists' />
+            </Alert>
+          )}
+        </Suspense>
       </Box>
     </Container>
   );

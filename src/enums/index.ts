@@ -32,6 +32,7 @@ export enum TagsEnum {
   Board = 'Board',
   Columns = 'Columns',
   Tasks = 'Tasks',
+  Column = 'Column',
 }
 
 export enum EndpointsEnum {
@@ -46,4 +47,9 @@ export enum MethodsEnum {
   Put = 'PUT',
   Delete = 'DELETE',
   Post = 'POST',
+}
+
+export enum DndTypesEnum {
+  Column = 'tasklist',
+  Task = 'task',
 }
