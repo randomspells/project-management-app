@@ -24,7 +24,7 @@ const BoardList: FC<BoardListProps> = ({ searchValue }) => {
         height: { xs: 'auto', sm: '60vh', md: '75vh' },
         overflowY: 'auto',
         alignContent: 'start',
-        my: 2,
+        my: 0,
         pr: 1,
       }}
     >
