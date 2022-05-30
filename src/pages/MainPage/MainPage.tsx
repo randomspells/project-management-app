@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Box, Button, Container, TextField } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import BoardList from '../../components/lists/BoardList/BoardList';
@@ -10,8 +10,8 @@ import { setUserId } from '../../slices/authSlice';
 
 export const MainPage: FC = () => {
   const { currentData: users } = useGetUsersQuery();
+  const [searchValue, setSearchValue] = useState("");
   const login = useAppSelector((state) => state.auth.currentUser?.login);
-
   const dispatch = useAppDispatch();
 
   const handleNewBoardClick = () => {
@@ -47,10 +47,11 @@ export const MainPage: FC = () => {
           id='filled-search'
           label={<FormattedMessage id='search_fields' />}
           type='search'
+          onChange={(event) => setSearchValue(event.target.value)}
           sx={{ width: { xs: '100%', md: 'auto' } }}
         />
       </Box>
-      <BoardList />
+      <BoardList searchValue={searchValue} />
     </Container>
   );
 };
