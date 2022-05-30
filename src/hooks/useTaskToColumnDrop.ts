@@ -4,7 +4,7 @@ import { useCreateTaskMutation, useDeleteTaskMutation } from '../api/task.api';
 import { DndTypesEnum } from '../enums';
 import { TaskDropInterface, DraggableTaskInterface } from '../interfaces';
 import { setAlertResult } from '../slices/alertSlice';
-import { findTaskOrderById, setDndBackgroundColor } from '../utils';
+import { setDndBackgroundColor } from '../utils';
 
 const useTaskToColumnDrop = ({ columnId }: TaskDropInterface) => {
   const currentTask = useAppSelector((state) => state.task.currentTask);
@@ -34,9 +34,6 @@ const useTaskToColumnDrop = ({ columnId }: TaskDropInterface) => {
           (column) => column.id === columnId,
         );
         if (!droppedColumn) return;
-        console.log(currentTask);
-        const newOrder = findTaskOrderById(droppedColumn, currentTask.id);
-        console.log(newOrder);
         const bodyTaskCreate = {
           body: {
             title: currentTask.title,
