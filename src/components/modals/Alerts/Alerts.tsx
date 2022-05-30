@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Alert, Box, Grid, Snackbar } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { closeAlert } from '../../../slices/alertSlice';
 import { getErrorMessage } from '../../../utils';
@@ -36,7 +37,7 @@ const Alerts: FC = () => {
       >
         <Box>
           {error && <Alert severity='error'>{getErrorMessage(error)}</Alert>}
-          {isSuccess && <Alert severity='success'>Success</Alert>}
+          {isSuccess && <Alert severity='success'><FormattedMessage id='success' /></Alert>}
         </Box>
       </Snackbar>
     </Grid>

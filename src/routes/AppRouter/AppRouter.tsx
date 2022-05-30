@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { SelectChangeEvent } from '@mui/material/Select';
 import Layout from '../../components/sections/Layout/Layout';
 import WelcomePage from '../../pages/WelcomePage/WelcomePage';
 import MainPage from '../../pages/MainPage/MainPage';
@@ -11,10 +12,14 @@ import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { RouteEnum } from '../../enums';
 
-const AppRouter = () => (
+interface AppProps {
+  handleChange: (e: SelectChangeEvent) => void;
+}
+
+const AppRouter: FC<AppProps> = ({ handleChange }) => (
   <BrowserRouter>
     <Routes>
-      <Route path={RouteEnum.Welcome} element={<Layout />}>
+      <Route path={RouteEnum.Welcome} element={<Layout handleChange={handleChange} />}>
         <Route index element={<WelcomePage />} />
         <Route element={<ProtectedRoute />}>
           <Route path={RouteEnum.Main} element={<MainPage />} />

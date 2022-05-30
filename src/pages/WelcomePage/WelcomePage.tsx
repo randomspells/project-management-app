@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import { FormattedMessage } from 'react-intl';
 import { RouteEnum } from '../../enums';
 import style from './WelcomePage.module.scss';
 import { WELCOME_INFO } from '../../constants';
@@ -43,15 +44,15 @@ const WelcomePage: FC = () => {
             onClick={handleGoToMain}
             endIcon={<ArrowForwardRoundedIcon />}
           >
-            Go to main page
+            <FormattedMessage id='go_to_main_page' />
           </Button>
         ) : (
           <>
             <Button variant='contained' color='primary' onClick={handleLogIn}>
-              Log In
+              <FormattedMessage id='login' />
             </Button>
             <Button variant='contained' color='primary' onClick={handleSignUp}>
-              Sign Up
+              <FormattedMessage id='sign_up' />
             </Button>
           </>
         )}
@@ -62,7 +63,7 @@ const WelcomePage: FC = () => {
         textAlign='center'
         sx={{ my: { xs: 2, md: 4 } }}
       >
-        Welcome!
+        <FormattedMessage id='welcome' />
       </Typography>
       <Box
         component='article'

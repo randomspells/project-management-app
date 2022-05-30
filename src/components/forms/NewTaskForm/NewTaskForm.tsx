@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { Button, Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 import FormModal from '../../modals/FormModal/FormModal';
-import { FormTitleEnum } from '../../../enums';
 import ControlledInput from '../../Inputs/ControlledInput/ControlledInput';
 import {
   useAppDispatch,
@@ -59,8 +59,6 @@ const NewTaskForm: FC = () => {
 
   const {
     name: titleName,
-    label: titleLabel,
-    errorText: titleErrorText,
     rules: titleRules,
     type: titleType,
   } = TITLE_INPUT;
@@ -68,8 +66,6 @@ const NewTaskForm: FC = () => {
   const {
     type: descriptionType,
     name: descriptionName,
-    label: descriptionLabel,
-    errorText: descriptionErrorText,
     rules: descriptionRules,
   } = DESCRIPTION_INPUT;
 
@@ -79,26 +75,26 @@ const NewTaskForm: FC = () => {
     <FormModal
       isOpen={isNewTaskFormOpen}
       handleClose={handleClose}
-      formTitle={FormTitleEnum.NewTask}
+      formTitle={<FormattedMessage id='new_task' />}
     >
       <Box component='form' sx={{ p: 5 }} onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           name={titleName}
-          label={titleLabel}
+          label={<FormattedMessage id='task_title' />}
           type={titleType}
           rules={titleRules}
-          errorText={titleErrorText}
+          errorText={<FormattedMessage id='title_required' />}
           defaultValue=''
           control={control}
         />
         <ControlledInput
           name={descriptionName}
-          label={descriptionLabel}
+          label={<FormattedMessage id='task_description' />}
           type={descriptionType}
           multiline
           rows={4}
           rules={descriptionRules}
-          errorText={descriptionErrorText}
+          errorText={<FormattedMessage id='description_required' />}
           defaultValue=''
           control={control}
         />
@@ -110,7 +106,7 @@ const NewTaskForm: FC = () => {
           sx={{ mt: 2, mb: 2 }}
           disabled={!isValid}
         >
-          Create task
+          <FormattedMessage id='create_task' />
         </Button>
       </Box>
     </FormModal>

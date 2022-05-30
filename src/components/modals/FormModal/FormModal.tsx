@@ -1,9 +1,9 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, ReactNode } from 'react';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 type FormModalProps = {
-  formTitle: string;
+  formTitle: string | ReactNode;
   isOpen: boolean;
   handleClose: () => void;
   children: ReactElement;

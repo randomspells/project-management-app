@@ -16,6 +16,11 @@ export const boardApi = baseApi.injectEndpoints({
 
     getBoard: builder.query<BoardInterface, string>({
       query: (boardId: string) => `${EndpointsEnum.Boards}/${boardId}`,
+      transformResponse: (response: BoardInterface) => {
+        response.columns.sort((a, b) => a.order > b.order ? 1 : -1)
+        response.columns.forEach((column) => column.tasks.sort((a, b) => a.order > b.order ? 1 : -1))
+        return response;
+      },
       providesTags: [TagsEnum.Board],
     }),
 

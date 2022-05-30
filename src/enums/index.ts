@@ -1,10 +1,3 @@
-export enum FormTitleEnum {
-  NewColumn = 'New task list',
-  NewBoard = 'New board',
-  NewTask = 'New task',
-  EditTask = 'Edit task',
-}
-
 export enum RouteEnum {
   Welcome = '/',
   Main = '/main',
@@ -30,6 +23,7 @@ export enum StorageEnum {
   User = 'user',
   CurrentBoard = 'currentBoard',
   UserId = 'userId',
+  Locale = 'locale',
 }
 
 export enum TagsEnum {

@@ -3,6 +3,7 @@ import { Alert, Box, Button, Container, IconButton } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { FormattedMessage } from 'react-intl';
 import Column from '../../components/lists/Column/Column';
 import { toggleNewColumnForm } from '../../slices/formSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -40,7 +41,7 @@ const BoardPage: FC = () => {
           <ArrowBackRoundedIcon />
         </IconButton>
         <Button variant='outlined' onClick={handleNewColumnClick}>
-          Add task list
+          <FormattedMessage id='add_task_list' />
         </Button>
       </Box>
       <Box
@@ -55,10 +56,16 @@ const BoardPage: FC = () => {
       >
         {currentBoard &&
           currentBoard.columns.map((column) => (
-            <Column key={column.id} boardId={currentBoard.id} columnId={column.id} />
+            <Column
+              key={column.id}
+              boardId={currentBoard.id}
+              columnId={column.id}
+            />
           ))}
         {!currentBoard?.columns.length && (
-          <Alert severity='info'>No task lists to display.</Alert>
+          <Alert severity='info'>
+            <FormattedMessage id='no_task_lists' />
+          </Alert>
         )}
       </Box>
     </Container>

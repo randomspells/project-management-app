@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { useAppSelector } from '../../../hooks';
 import Alerts from '../../modals/Alerts/Alerts';
 import Footer from '../Footer/Footer';
@@ -10,7 +11,11 @@ import NewColumnForm from '../../forms/NewColumnForm/NewColumnForm';
 import NewTaskForm from '../../forms/NewTaskForm/NewTaskForm';
 import EditTaskForm from '../../forms/EditTaskForm/EditTaskForm';
 
-const Layout: FC = () => {
+interface LayoutProps {
+  handleChange: (e: SelectChangeEvent) => void;
+}
+
+const Layout: FC<LayoutProps> = ({ handleChange }) => {
   const isAuthenticated = useAppSelector(
     (state) => state.auth.currentUser?.isAuthenticated,
   );
@@ -25,7 +30,7 @@ const Layout: FC = () => {
       }}
     >
       <Alerts />
-      {isAuthenticated && <Header />}
+      {isAuthenticated && <Header handleChange={handleChange} />}
       <Outlet />
       <Footer />
       <NewBoardForm />

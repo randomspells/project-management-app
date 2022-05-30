@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { FormTitleEnum } from '../../../enums';
+import { FormattedMessage } from 'react-intl';
 import {
   useAppDispatch,
   useAppSelector,
@@ -18,7 +18,6 @@ import { setAlertResult } from '../../../slices/alertSlice';
 const TASK_LIST_TITLE_INPUT = {
   type: 'text',
   name: 'columnTitle',
-  label: 'Task list title',
   errorText: 'Title is required',
   rules: { required: true },
 };
@@ -61,7 +60,7 @@ const NewColumnForm: FC = () => {
     handleClose();
   };
 
-  const { type, name, label, errorText, rules } = TASK_LIST_TITLE_INPUT;
+  const { type, name, rules } = TASK_LIST_TITLE_INPUT;
 
   useSetAlertResult(isCreateColumnSuccess, createColumnError);
 
@@ -69,14 +68,14 @@ const NewColumnForm: FC = () => {
     <FormModal
       isOpen={isNewColumnFormOpen}
       handleClose={handleClose}
-      formTitle={FormTitleEnum.NewColumn}
+      formTitle={<FormattedMessage id='new_task_list' />}
     >
       <Box component='form' onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput
           type={type}
           name={name}
-          label={label}
-          errorText={errorText}
+          label={<FormattedMessage id='task_list_title' />}
+          errorText={<FormattedMessage id='title_required' />}
           rules={rules}
           control={control}
           defaultValue=''
@@ -89,7 +88,7 @@ const NewColumnForm: FC = () => {
           sx={{ mt: 2, mb: 2 }}
           disabled={!isValid}
         >
-          Create task list
+          <FormattedMessage id='create_task_list' />
         </Button>
       </Box>
     </FormModal>

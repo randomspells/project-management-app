@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import { stopPropagation } from '../../../utils';
 
 type ConfirmationProps = {
@@ -41,17 +42,16 @@ const Confirmation: FC<ConfirmationProps> = ({
     >
       <Box onClick={stopPropagation}>
         <DialogTitle sx={{ color: 'text.secondary' }}>
-          Are you sure?
+          <FormattedMessage id='sure' />
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='confirmation'>
-            You are going to delete &#34;{itemTitle}&#34;. This action is
-            irreversible.
+            <FormattedMessage id='you_are_going_to_delete' /> &#34;{itemTitle}&#34;<FormattedMessage id='irreversible' />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeclineClick}>No</Button>
-          <Button onClick={handleAcceptClick}>Yes</Button>
+          <Button onClick={handleDeclineClick}><FormattedMessage id='no' /></Button>
+          <Button onClick={handleAcceptClick}><FormattedMessage id='yes' /></Button>
         </DialogActions>
       </Box>
     </Dialog>

@@ -5,6 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import ControlledInput from '../../components/Inputs/ControlledInput/ControlledInput';
 import { VALID_PASSWORD_INPUT, VALID_TEXT_INPUT } from '../../constants';
 import { FormDataInterface, UserInterface } from '../../interfaces/index';
@@ -115,13 +116,13 @@ const EditProfilePage: FC = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Typography component='h1' variant='h5' sx={{ textAlign: 'center' }}>
-        Edit profile
+        <FormattedMessage id='edit_profile' />
       </Typography>
       <Box>
         <ControlledInput
           name='name'
-          label='Name'
-          errorText='Please, enter only letters'
+          label={<FormattedMessage id='name_input' />}
+          errorText={<FormattedMessage id='only_letters' />}
           type='text'
           defaultValue=''
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
@@ -129,8 +130,8 @@ const EditProfilePage: FC = () => {
         />
         <ControlledInput
           name='login'
-          label='Login'
-          errorText='Please, enter only letters'
+          label={<FormattedMessage id='login_input' />}
+          errorText={<FormattedMessage id='only_letters' />}
           type='text'
           defaultValue=''
           rules={{ required: true, pattern: VALID_TEXT_INPUT }}
@@ -138,8 +139,8 @@ const EditProfilePage: FC = () => {
         />
         <ControlledInput
           name='oldPassword'
-          label='Old password'
-          errorText='Please, enter old password'
+          label={<FormattedMessage id='old_password' />}
+          errorText={<FormattedMessage id='validate_old_password' />}
           type='password'
           defaultValue=''
           rules={{ required: true }}
@@ -147,8 +148,8 @@ const EditProfilePage: FC = () => {
         />
         <ControlledInput
           name='password'
-          label='New password'
-          errorText='Please, enter letters and numbers'
+          label={<FormattedMessage id='new_password' />}
+          errorText={<FormattedMessage id='validate_new_password' />}
           type='password'
           defaultValue=''
           rules={{ required: true, pattern: VALID_PASSWORD_INPUT }}
@@ -164,7 +165,7 @@ const EditProfilePage: FC = () => {
           }}
         >
           <Button variant='outlined' onClick={handleCancelClick}>
-            Cancel
+            <FormattedMessage id='cancel' />
           </Button>
           <LoadingButton
             loading={isLoading}
@@ -173,7 +174,7 @@ const EditProfilePage: FC = () => {
             variant='contained'
             endIcon={<SaveIcon />}
           >
-            Save
+            <FormattedMessage id='save' />
           </LoadingButton>
           <Button
             variant='outlined'
@@ -181,7 +182,7 @@ const EditProfilePage: FC = () => {
             startIcon={<DeleteIcon />}
             onClick={toggleConfirmation}
           >
-            Delete user
+            <FormattedMessage id='delete_user' />
           </Button>
           <Confirmation
             itemTitle={currentLogin || ''}

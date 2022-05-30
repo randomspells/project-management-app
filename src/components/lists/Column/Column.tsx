@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { FormattedMessage } from 'react-intl';
 import Task from '../../cards/Task/Task';
 import Confirmation from '../../modals/Confirmation/Confirmation';
 import {
@@ -164,7 +165,7 @@ const Column: FC<ColumnProps> = ({ boardId, columnId }) => {
           <AddRoundedIcon color='primary' />
         </IconButton>
         <Button color='secondary' onClick={toggleConfirmation}>
-          Delete task list
+          <FormattedMessage id='delete_task_list' />
         </Button>
         <Confirmation
           itemTitle={column?.title || ''}
